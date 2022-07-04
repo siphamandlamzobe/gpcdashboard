@@ -1,0 +1,55 @@
+.report-item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+    margin: 1rem 0;
+    color: #686767;
+    -webkit-box-shadow: 2px 4px 10px 1px rgba(0,0,0,0.47);
+    box-shadow: 2px 4px 10px 1px rgba(160, 160, 160, 0.47);
+}
+
+.report-item__description {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-end;
+    flex-flow: column-reverse;
+    justify-content: flex-start;
+    flex: 1;
+}
+
+.report-item__review{
+    width: 100%;
+    display: flex;
+    color: rgb(0, 0, 0);
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    flex: 2;
+}
+
+.report-item__attendance{
+    font-size: 1.25rem;
+    padding: 0.5rem 1.5rem;
+    color: rgb(0, 0, 0);
+}
+
+.reports-list__fallback {
+    color: white;
+    text-align: center;
+  }
+
+  .report-item h2 {
+    color: #3a3a3a;
+    font-size: 1rem;
+    flex: 1;
+    margin: 0 1rem;
+    color: rgb(0, 0, 0);
+  }
+
+  span{
+    display: flex;
+    font-size: 10px;
+    flex-direction: column;
+  }
