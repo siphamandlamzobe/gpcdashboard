@@ -1,0 +1,22 @@
+.new{
+    display: flex;
+    width: 100%;
+}
+
+.newContainer{
+    flex: 6;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+
+.reportTitle{
+    font-size: 20px;
+    display: flex;
+    font-weight: bold;
+    color: rgb(0, 0, 0);
+    /* text-align: center;
+    justify-content: center;
+    flex-direction: column; */
+    background-color: rgb(243, 95, 95);
+}

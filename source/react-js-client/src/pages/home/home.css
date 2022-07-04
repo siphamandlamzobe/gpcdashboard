@@ -1,0 +1,9 @@
+.home{
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.homeContainer{
+    flex: 6;
+}
