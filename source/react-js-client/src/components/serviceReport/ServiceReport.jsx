@@ -1,19 +1,22 @@
 import ReportDate from "./ReportDate";
-import "./serviceReport.css";
 
 const ServiceReport = (props) => {
   return (
-    <div className="report-item">
+    <div className="flex items-center p-2 m-4 justify-between shadow-3xl">
       <ReportDate serviceDate={props.serviceDate} />
-      <div className="report-item__review">{props.serviceReview}</div>
-      <div className="report-item__description">
-        <h2>
+      <div className="flex text-black justify-between items-center p-5 w-full">
+        {props.serviceReview}
+      </div>
+      <div className="flex flex-col-reverse justify-center flex-1 items-end">
+        <h2 className="text-base flex-1 mx-0 my-1 text-black font-bold">
           {props.serviceType}
-          <span>SERVICE TYPE</span>
+          <span className="flex flex-col text-xs font-normal">
+            SERVICE TYPE
+          </span>
         </h2>
-        <div className="report-item__attendance">
+        <div className="text-sm px-2 py-6 text-black font-bold">
           {props.attendance}
-          <span>ATTENDANCE</span>
+          <span className="flex flex-col text-xs font-normal">ATTENDANCE</span>
         </div>
       </div>
     </div>

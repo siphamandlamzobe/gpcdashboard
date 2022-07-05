@@ -1,13 +1,12 @@
 import React from "react";
 import ServiceReport from "./ServiceReport";
-import "./serviceReportList.css";
 
 const ServiceReportList = (props) => {
   if (props.serviceReports.length === 0) {
-    return <h2 className="reports-list__fallback">Found no reports</h2>;
+    return <h2 className="text-white text-center">Found no reports</h2>;
   }
   return (
-    <ul className="reports-list">
+    <ul className="list-none">
       {props.serviceReports.map((report) => (
         <ServiceReport
           key={report.id}

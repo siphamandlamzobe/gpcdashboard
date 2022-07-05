@@ -1,5 +1,4 @@
 import React from "react";
-import "./serviceDate.css";
 
 const ReportDate = (props) => {
   const month = props.serviceDate?.toLocaleString("en-US", { month: "long" });
@@ -7,10 +6,10 @@ const ReportDate = (props) => {
   const year = props.serviceDate?.getFullYear();
 
   return (
-    <div className="service-date">
-      <div className="service-date__month">{month}</div>
-      <div className="service-date__year">{year}</div>
-      <div className="service-date__day">{day}</div>
+    <div className="flex flex-col w-20 h-20 items-center justify-center bg-black text-white rounded-xl border-white ">
+      <div className="text-sm font-bold">{month}</div>
+      <div className="text-sm font-bold">{year}</div>
+      <div className="text-base font-bold">{day}</div>
     </div>
   );
 };
