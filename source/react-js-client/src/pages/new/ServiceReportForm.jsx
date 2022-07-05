@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./serviceReportForm.css";
+// import "./serviceReportForm.css";
 
 const ServiceReportForm = (props) => {
   const [attendance, setAttendance] = useState("");
@@ -60,9 +60,12 @@ const ServiceReportForm = (props) => {
     navigate("/serviceReports");
   };
   return (
-    <form onSubmit={submitHandler}>
-      <div className="form-container">
-        <div className="form-field">
+    <form
+      onSubmit={submitHandler}
+      className="flex w-full flex-col"
+    >
+      <div className="flex flex-col content-center justify-center w-full">
+        <div className="flex flex-col border-2 border-black content-center p-1">
           <label htmlFor="attendance">Attendance</label>
           <input
             type="number"
@@ -130,12 +133,10 @@ const ServiceReportForm = (props) => {
             rows="4"
           ></textarea>
         </div>
-      </div>
-      <div className="form-actions">
-        <button type="button">Cancel</button>
-      </div>
-      <div className="form-actions">
-        <button type="submit">Submit</button>
+        <div className="flex-none inline-block pt-2">
+          <button type="button" className="bg-red-700 rounded-lg p-1 m-1">Cancel</button>
+          <button type="submit" className="bg-green-700 rounded-lg p-1">Submit</button>
+        </div>
       </div>
     </form>
   );

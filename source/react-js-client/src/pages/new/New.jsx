@@ -1,5 +1,5 @@
 import Sidebar from "../../components/sidebar/Sidebar";
-import "./new.css";
+// import "./new.css";
 import ServiceReportForm from "./ServiceReportForm";
 
 const New = (props) => {
@@ -9,27 +9,24 @@ const New = (props) => {
       id: Math.random().toString(),
     };
 
-    // alert(`Report Created!
-    //     ID: ${serviceReportData.id}
-    //     Attendance: ${serviceReportData.attendance}
-    //     FF: ${serviceReportData.firsttimer}
-    //     SS: ${serviceReportData.soulsSaved}
-    //     SS: ${serviceReportData.serviceDate}
-    //     SS: ${serviceReportData.serviceReview}
-    //     ServiceType: ${serviceReportData.serviceType}`);
-
     props.onAddServiceReport(serviceReportData);
   };
 
   return (
-    <div className="new">
+    <div className="flex">
       <Sidebar />
-      <div className="newContainer">
-        {/* <div className="reportTitle">
-          <h1>This is the title</h1>
-        </div> */}
+      <div className="flex flex-col w-full justify-center content-center">
 
-        <ServiceReportForm onSaveServiceReport={onSaveServiceReportHandler} />
+        <div className="flex p-4 items-center m-8 max-w-[95%] w-auto shadow-3xl">
+          <div className="text-2xl m-2 justify-between bg-white text-gray-500">
+            Add New Service Report
+          </div>
+        </div>
+
+        <div className="flex p-4 items-center m-8 max-w-[95%] shadow-3xl">
+          <ServiceReportForm onSaveServiceReport={onSaveServiceReportHandler} />
+        </div>
+        
       </div>
     </div>
   );
