@@ -8,13 +8,15 @@ const ServiceReport = (props) => {
         {props.serviceReview}
       </div>
       <div className="flex flex-col-reverse justify-center flex-1 items-end">
-        <h2 className="text-base flex-1 mx-0 my-1 text-black">
+        <h2 className="text-base flex-1 mx-0 my-1 text-black font-bold">
           {props.serviceType}
-          <span className="flex flex-col text-xs">SERVICE TYPE</span>
+          <span className="flex flex-col text-xs font-normal">
+            SERVICE TYPE
+          </span>
         </h2>
-        <div className="text-sm px-2 py-6 text-black">
+        <div className="text-sm px-2 py-6 text-black font-bold">
           {props.attendance}
-          <span className="flex flex-col text-xs">ATTENDANCE</span>
+          <span className="flex flex-col text-xs font-normal">ATTENDANCE</span>
         </div>
       </div>
     </div>
