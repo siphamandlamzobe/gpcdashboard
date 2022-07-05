@@ -6,7 +6,7 @@ const ServiceReportList = (props) => {
     return <h2 className="text-white text-center">Found no reports</h2>;
   }
   return (
-    <ul role="list">
+    <ul className="list-none">
       {props.serviceReports.map((report) => (
         <ServiceReport
           key={report.id}
