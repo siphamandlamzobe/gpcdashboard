@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import "./serviceReportForm.css";
 
 const ServiceReportForm = (props) => {
   const [attendance, setAttendance] = useState("");
@@ -60,14 +59,12 @@ const ServiceReportForm = (props) => {
     navigate("/serviceReports");
   };
   return (
-    <form
-      onSubmit={submitHandler}
-      className="flex w-full flex-col"
-    >
+    <form onSubmit={submitHandler} className="flex w-full flex-col">
       <div className="flex flex-col content-center justify-center w-full">
-        <div className="flex flex-col border-2 border-black content-center p-1">
-          <label htmlFor="attendance">Attendance</label>
+        <div className="flex flex-col content-center p-1">
+          <label className="font-bold" htmlFor="attendance">Attendance</label>
           <input
+            className="rounded-md border-2 border-black"
             type="number"
             name="attendance"
             value={attendance}
@@ -77,9 +74,10 @@ const ServiceReportForm = (props) => {
             required
           />
         </div>
-        <div className="form-field">
-          <label htmlFor="firsttimer">First Timers</label>
+        <div className="flex flex-col content-center p-1">
+          <label className="font-bold" htmlFor="firsttimer">First Timers</label>
           <input
+            className="rounded-md border-2 border-black"
             type="number"
             name="firsttimer"
             value={firsttimer}
@@ -89,9 +87,10 @@ const ServiceReportForm = (props) => {
             required
           />
         </div>
-        <div className="form-field">
-          <label htmlFor="soulsSaved">Souls Saved</label>
+        <div className="flex flex-col content-center p-1">
+          <label className="font-bold" htmlFor="soulsSaved">Souls Saved</label>
           <input
+            className="rounded-md border-2 border-black"
             type="number"
             name="soulsSaved"
             value={soulsSaved}
@@ -101,9 +100,10 @@ const ServiceReportForm = (props) => {
             required
           />
         </div>
-        <div className="form-field">
-          <label htmlFor="serviceDate">Service Date</label>
+        <div className="flex flex-col content-center p-1">
+          <label className="font-bold" htmlFor="serviceDate">Service Date</label>
           <input
+            className="rounded-md border-2 border-black"
             type="date"
             name="serviceDate"
             value={serviceDate}
@@ -114,17 +114,22 @@ const ServiceReportForm = (props) => {
           />
         </div>
 
-        <div className="form-field">
-          <label htmlFor="serviceType">Service Type</label>
-          <select value={serviceType} onChange={serviceTypeHandler}>
+        <div className="flex flex-col content-center p-1">
+          <label className="font-bold" htmlFor="serviceType">Service Type</label>
+          <select
+            value={serviceType}
+            onChange={serviceTypeHandler}
+            className="rounded-md border-2 border-black"
+          >
             <option value="">Select...</option>
-            <option value="A">Option A</option>
-            <option value="B">Option B</option>
+            <option value="Sunday">Option A</option>
+            <option value="Wednesday">Option B</option>
           </select>
         </div>
-        <div className="form-field">
-          <label htmlFor="serviceReview">Service Review</label>
+        <div className="flex flex-col content-center p-1">
+          <label className="font-bold" htmlFor="serviceReview">Service Review</label>
           <textarea
+            className="rounded-md border-2 border-black"
             name="serviceReview"
             value={serviceReview}
             onChange={serviceReviewHandler}
@@ -134,8 +139,12 @@ const ServiceReportForm = (props) => {
           ></textarea>
         </div>
         <div className="flex-none inline-block pt-2">
-          <button type="button" className="bg-red-700 rounded-lg p-1 m-1">Cancel</button>
-          <button type="submit" className="bg-green-700 rounded-lg p-1">Submit</button>
+          <button type="button" className="bg-gray-500 rounded-lg p-1 text-white font-bold m-1">
+            Cancel
+          </button>
+          <button type="submit" className="bg-green-700 rounded-lg p-1 text-white font-bold">
+            Submit
+          </button>
         </div>
       </div>
     </form>
