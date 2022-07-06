@@ -28,20 +28,20 @@ const New = (props) => {
       <Sidebar />
       <div className="flex-auto">
         <Navbar />
-        <div className="flex flex-col w-full justify-center content-center">
-          <div className="flex p-4 items-center m-8 mb-1 max-w-[95%] w-auto shadow-3xl">
-            <div className="text-2xl m-2 justify-between bg-white text-gray-500">
-              Add New Service Report
-            </div>
-          </div>
 
-          <div className="flex p-4 items-center m-8 max-w-[95%] shadow-3xl">
+        <div className="flex p-4 items-center m-8 max-w-[80%] mx-auto w-auto shadow-3xl">
+          <div className="flex w-full text-2xl m-2 justify-between bg-white text-gray-500">
+            Add New Service Report
+            
+          </div>
+        </div>
+
+        <div className="flex p-4 items-center m-8 mx-auto w-auto max-w-[80%] shadow-3xl">
             <ServiceReportForm
               onSaveServiceReport={onSaveServiceReportHandler}
               onCancel={stopEditingHandler}
             />
           </div>
-        </div>
       </div>
     </div>
   );

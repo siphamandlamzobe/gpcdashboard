@@ -3,8 +3,11 @@ import ServiceReportList from "./ServiceReportList";
 
 const ServiceReports = (props) => {
   return (
-    <div className="container mx-8 my-auto px-8 max-w-[95%] w-auto">
-      <ServiceReportList serviceReports={props.serviceReports} />
+    <div className="flex my-auto max-w-[80%] mx-auto w-auto mx-auto w-full">
+      <div className="flex">
+        <div className="w-1/5 rounded-2xl my-3 h-60 shadow-3xl"></div>
+        <ServiceReportList serviceReports={props.serviceReports} />
+      </div>
     </div>
   );
 };
