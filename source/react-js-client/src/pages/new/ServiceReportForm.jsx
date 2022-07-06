@@ -62,7 +62,9 @@ const ServiceReportForm = (props) => {
     <form onSubmit={submitHandler} className="flex w-full flex-col">
       <div className="flex flex-col content-center justify-center w-full">
         <div className="flex flex-col content-center p-1">
-          <label className="font-bold" htmlFor="attendance">Attendance</label>
+          <label className="font-bold" htmlFor="attendance">
+            Attendance
+          </label>
           <input
             className="rounded-md border-2 border-black"
             type="number"
@@ -75,7 +77,9 @@ const ServiceReportForm = (props) => {
           />
         </div>
         <div className="flex flex-col content-center p-1">
-          <label className="font-bold" htmlFor="firsttimer">First Timers</label>
+          <label className="font-bold" htmlFor="firsttimer">
+            First Timers
+          </label>
           <input
             className="rounded-md border-2 border-black"
             type="number"
@@ -88,7 +92,9 @@ const ServiceReportForm = (props) => {
           />
         </div>
         <div className="flex flex-col content-center p-1">
-          <label className="font-bold" htmlFor="soulsSaved">Souls Saved</label>
+          <label className="font-bold" htmlFor="soulsSaved">
+            Souls Saved
+          </label>
           <input
             className="rounded-md border-2 border-black"
             type="number"
@@ -101,7 +107,9 @@ const ServiceReportForm = (props) => {
           />
         </div>
         <div className="flex flex-col content-center p-1">
-          <label className="font-bold" htmlFor="serviceDate">Service Date</label>
+          <label className="font-bold" htmlFor="serviceDate">
+            Service Date
+          </label>
           <input
             className="rounded-md border-2 border-black"
             type="date"
@@ -115,19 +123,23 @@ const ServiceReportForm = (props) => {
         </div>
 
         <div className="flex flex-col content-center p-1">
-          <label className="font-bold" htmlFor="serviceType">Service Type</label>
+          <label className="font-bold" htmlFor="serviceType">
+            Service Type
+          </label>
           <select
             value={serviceType}
             onChange={serviceTypeHandler}
             className="rounded-md border-2 border-black"
           >
             <option value="">Select...</option>
-            <option value="Sunday">Option A</option>
-            <option value="Wednesday">Option B</option>
+            <option value="Sunday">Sunday</option>
+            <option value="Wednesday">Wednesday</option>
           </select>
         </div>
         <div className="flex flex-col content-center p-1">
-          <label className="font-bold" htmlFor="serviceReview">Service Review</label>
+          <label className="font-bold" htmlFor="serviceReview">
+            Service Review
+          </label>
           <textarea
             className="rounded-md border-2 border-black"
             name="serviceReview"
@@ -139,10 +151,17 @@ const ServiceReportForm = (props) => {
           ></textarea>
         </div>
         <div className="flex-none inline-block pt-2">
-          <button type="button" className="bg-gray-500 rounded-lg p-1 text-white font-bold m-1">
+          <button
+            type="button"
+            className="bg-gray-500 rounded-lg p-1 text-white font-bold m-1"
+            onClick={props.onCancel}
+          >
             Cancel
           </button>
-          <button type="submit" className="bg-green-700 rounded-lg p-1 text-white font-bold">
+          <button
+            type="submit"
+            className="bg-green-700 rounded-lg p-1 text-white font-bold"
+          >
             Submit
           </button>
         </div>
