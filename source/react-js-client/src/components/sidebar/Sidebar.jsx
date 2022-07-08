@@ -4,11 +4,11 @@ import { Link } from "react-router-dom";
 const Sidebar = () => {
   return (
     <div className="flex">
-      <div className="flex-none w-48 border-r-2 border-indigo-100 min-h-screen bg-white">
-        <div className="flex h-14 bg-slate-400 items-center justify-center">
+      <div className="flex-none w-48 border-r-2 border-slate-100 min-h-screen  bg-slate-100">
+        <div className="flex h-14 bg-slate-500 items-center justify-center">
           <span className="text-lg font-bold">GPC</span>
         </div>
-        <hr className="h-0 border-solid border-gray-200" />
+        <hr className="h-0 border-solid border-slate-100" />
         <div className="pl-3">
           <ul className="list-none m-0 p-0">
             <p className="text-sm font-light mt-4 mb-1">REPORTS</p>

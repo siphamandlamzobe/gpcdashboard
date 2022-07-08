@@ -5,12 +5,15 @@ import { Link } from "react-router-dom";
 import Navbar from "../../components/navbar/Navbar";
 
 const List = (props) => {
+  const getQuery = (query) =>{
+    props.searchTerm(query);
+  }
   return (
     <div className="flex w-full h-screen">
       <Sidebar />
 
       <div className="flex-auto">
-        <Navbar />
+        <Navbar getSearchKeyword={getQuery}/>
         <div className="flex p-4 items-center m-8 max-w-[80%] mx-auto w-auto shadow-3xl">
           <div className="flex w-full text-2xl m-2 justify-between bg-white text-gray-500">
             Add New Service Report
@@ -24,7 +27,7 @@ const List = (props) => {
           </div>
         </div>
 
-        <ServiceReports serviceReports={props.serviceReports} />
+        <ServiceReports serviceReports={props.serviceReports} onEditHandler={props.onEditHandler} onDeleteHandler={props.onDeleteHandler}/>
       </div>
     </div>
   );
