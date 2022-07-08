@@ -1,13 +1,35 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
-const ServiceReportForm = (props) => {
+const ServiceReportEditForm = (props) => {
+  const [obj, setObj] = useState({
+    id: null,
+    attendance: "",
+    firsttimer: "",
+    soulsSaved: "",
+    serviceDate: "",
+    serviceType: "",
+    serviceReview: "",
+  });
   const [attendance, setAttendance] = useState("");
   const [firsttimer, setFirsttimer] = useState("");
   const [soulsSaved, setSoulsSaved] = useState("");
   const [serviceReview, setServiceReview] = useState("");
   const [serviceDate, setServiceDate] = useState("");
   const [serviceType, setServiceType] = useState("");
+
+  let params = useParams();
+  console.log("props", props.onEditServiceReport);
+
+  useEffect(() => {
+    const id = params.id;
+    console.log("id  ", id);
+    if (id) {
+      console.log("object ", props.onEditServiceReport);
+      setObj(props.onEditServiceReport);
+      console.log("attendance: ", obj);
+    }
+  }, []);
 
   const attendanceHandler = (e) => {
     setAttendance(e.target.value);
@@ -160,9 +182,9 @@ const ServiceReportForm = (props) => {
           </button>
           <button
             type="submit"
-            className="bg-green-700 rounded-lg p-1 text-white font-bold"
+            className="bg-orange-600 rounded-lg p-1 text-white font-bold"
           >
-            Submit
+            Update
           </button>
         </div>
       </div>
@@ -170,4 +192,4 @@ const ServiceReportForm = (props) => {
   );
 };
 
-export default ServiceReportForm;
+export default ServiceReportEditForm;

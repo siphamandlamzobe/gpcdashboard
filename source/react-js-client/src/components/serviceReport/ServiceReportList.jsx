@@ -3,12 +3,22 @@ import ServiceReport from "./ServiceReport";
 
 const ServiceReportList = (props) => {
   if (props.serviceReports.length === 0) {
-    return <h2 className="text-white text-center">Found no reports</h2>;
+    return (
+      <div className="container flex w-full items-center p-2 mx-4 justify-between shadow-3xl">
+        <h2 className="text-black text-xl font-bold text-center">
+          Found no reports
+        </h2>
+      </div>
+    );
   }
+
   return (
     <ul className="list-none">
       {props.serviceReports.map((report) => (
         <ServiceReport
+          onEditHandler={props.onEditHandler}
+          onDeleteHandler={props.onDeleteHandler}
+          id={report.id}
           key={report.id}
           attendance={report.attendance}
           serviceDate={report.serviceDate}

@@ -1,10 +1,20 @@
 import React from "react";
+import FilterServiceReports from "./FilterServiceReports";
 import ServiceReportList from "./ServiceReportList";
 
 const ServiceReports = (props) => {
   return (
-    <div className="container mx-8 my-auto px-8 max-w-[95%] w-auto">
-      <ServiceReportList serviceReports={props.serviceReports} />
+    <div className="flex my-auto max-w-[80%] mx-auto w-full">
+      <div className="flex w-full">
+        <FilterServiceReports />
+        <div className="w-4/5">
+          <ServiceReportList
+            serviceReports={props.serviceReports}
+            onEditHandler={props.onEditHandler}
+            onDeleteHandler={props.onDeleteHandler}
+          />
+        </div>
+      </div>
     </div>
   );
 };
