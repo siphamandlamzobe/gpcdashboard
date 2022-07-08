@@ -13,7 +13,7 @@ function App() {
       id: "e1",
       attendance: "10",
       serviceType: "Sunday",
-      serviceDate: new Date(2022, 5, 3),
+      serviceDate: new Date(2020, 5, 2),
       serviceReview:
         "New Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
     },
@@ -21,7 +21,7 @@ function App() {
       id: "e2",
       attendance: "13",
       serviceType: "Wednesday",
-      serviceDate: new Date(2022, 5, 4),
+      serviceDate: new Date(2021, 7, 4),
       serviceReview:
         "Review Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
     },
@@ -29,9 +29,17 @@ function App() {
       id: "e3",
       attendance: "100",
       serviceType: "Wednesday",
-      serviceDate: new Date(2022, 6, 4),
+      serviceDate: new Date(2022, 4, 25),
       serviceReview:
         "Service Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+    },
+    {
+      id: "e4",
+      attendance: "10",
+      serviceType: "Sunday",
+      serviceDate: new Date(2022, 6, 5),
+      serviceReview:
+        "New Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
     },
   ];
 
