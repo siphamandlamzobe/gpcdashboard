@@ -16,7 +16,7 @@ const PageNotFound = () => {
               404 Page Not Found
             </h1>
             <p className="font-bold text-center my-4">
-              The page you're looking for doesn't exist
+              Oop! The page you're looking for doesn't exist
             </p>
             <div className="flex mx-auto relative">
               <Link to={"/"}>
