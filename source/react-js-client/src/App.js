@@ -1,70 +1,40 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useState } from "react";
-import Home from "./pages/home/Home";
-import New from "./pages/new/New";
-import List from "./pages/list/List";
+import { useLayoutEffect, useState } from "react";
 import { useEffect } from "react";
-import Edit from "./pages/edit/Edit";
 import PageNotFound from "./components/PageNotFound";
+import api from "./api/serviceReports";
+import { Edit, Home, List, New } from "./pages/index";
 
 function App() {
-  const DUMMY_REPORTS = [
-    {
-      id: "e1",
-      attendance: "10",
-      serviceType: "Sunday",
-      serviceDate: new Date(2020, 5, 2),
-      serviceReview:
-        "New Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
-    },
-    {
-      id: "e2",
-      attendance: "13",
-      serviceType: "Wednesday",
-      serviceDate: new Date(2021, 7, 4),
-      serviceReview:
-        "Review Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
-    },
-    {
-      id: "e3",
-      attendance: "100",
-      serviceType: "Wednesday",
-      serviceDate: new Date(2022, 4, 25),
-      serviceReview:
-        "Service Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
-    },
-    {
-      id: "e4",
-      attendance: "10",
-      serviceType: "Sunday",
-      serviceDate: new Date(2022, 6, 5),
-      serviceReview:
-        "New Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
-    },
-  ];
-
-  const [serviceReports, setServiceReports] = useState(DUMMY_REPORTS);
-  const [data, setData] = useState([]);
+  const [serviceReports, setServiceReports] = useState([]);
   const [editServiceReport, setEditServiceReport] = useState("");
   const [query, setQuery] = useState("");
-  const onAddServiceReportHandler = (report) => {
-    setData((prevReports) => {
-      return [report, ...prevReports];
+  const [isLoading, setIsLoading] = useState(false);
+
+  const onAddServiceReportHandler = async (report) => {
+    const request = {
+      ...report,
+      id: Math.floor(Math.random() * 10).toString(),
+    };
+    const response = await api.post("/serviceReports", request);
+    const serviceReport = response.data;
+    serviceReport.serviceDate = new Date(serviceReport.serviceDate);
+    setServiceReports((prevReports) => {
+      return [serviceReport, ...prevReports];
     });
   };
 
-  const removeServiceReportHandler = (id) => {
-    const newserviceReportList = data.filter((report) => {
+  const removeServiceReportHandler = async (id) => {
+    await api.delete(`/serviceReports/${id}`);
+    const newserviceReportList = serviceReports.filter((report) => {
       return report.id !== id;
     });
-    console.log(newserviceReportList);
-    setData(newserviceReportList);
+    setServiceReports(newserviceReportList);
   };
 
   const onEditServiceReportHandler = (id) => {
-    const serviceReport = data.filter((report) => report.id === id);
+    const serviceReport = serviceReports.filter((report) => report.id === id);
     setEditServiceReport(serviceReport);
-    console.log(editServiceReport);
   };
 
   const keys = ["serviceReview", "attendance", "serviceType"];
@@ -73,13 +43,41 @@ function App() {
     setQuery(query);
   };
 
+  const getAllServiceReports = async () => {
+    const response = await api.get("/serviceReports");
+    return response.data;
+  };
+
+  useLayoutEffect(() => {
+    const getServiceReports = async () => {
+      setIsLoading(true);
+      const allServiceReports = await getAllServiceReports();
+      if (allServiceReports) {
+        allServiceReports.map((report) => {
+          return report.serviceDate = new Date(report.serviceDate);
+        });
+        setServiceReports(allServiceReports);
+        setIsLoading(false);
+      }
+    };
+
+    getServiceReports();
+  }, []);
+
   useEffect(() => {
-    const search = () => {
-      const filteredServiceReports = serviceReports.filter((report) =>
+    const search = async () => {
+      const res = await api.get(
+        `/serviceReports?q=${query}`
+      );
+      const filteredServiceReports = res.data.filter((report) =>
         keys.some((key) => report[key].toLowerCase().includes(query))
       );
-      setData(filteredServiceReports);
-      return data;
+
+      filteredServiceReports.map((report) => {
+        return report.serviceDate = new Date(report.serviceDate);
+      });
+      setServiceReports(filteredServiceReports);
+      return serviceReports;
     };
     search();
   }, [query]);
@@ -96,10 +94,10 @@ function App() {
               index
               element={
                 <List
-                  serviceReports={data}
-                  onEditHandler={onEditServiceReportHandler}
+                  serviceReports={serviceReports}
                   onDeleteHandler={removeServiceReportHandler}
                   searchTerm={getSearchKeyword}
+                  isLoading={isLoading}
                 />
               }
             />
@@ -109,7 +107,9 @@ function App() {
             />
             <Route
               path="edit/:id"
-              element={<Edit onEditServiceReport={editServiceReport} />}
+              element={
+                <Edit onEditServiceReportHandler={onEditServiceReportHandler} />
+              }
             />
           </Route>
           <Route path="*" element={<PageNotFound />} />

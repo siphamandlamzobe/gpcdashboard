@@ -30,8 +30,8 @@ const List = (props) => {
 
         <ServiceReports
           serviceReports={props.serviceReports}
-          onEditHandler={props.onEditHandler}
           onDeleteHandler={props.onDeleteHandler}
+          isLoading={props.isLoading}
         />
       </div>
     </div>

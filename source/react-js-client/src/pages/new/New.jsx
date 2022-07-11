@@ -10,12 +10,7 @@ const New = (props) => {
   const [isEditing, setIsEditing] = useState(false);
 
   const onSaveServiceReportHandler = (enteredServiceReportData) => {
-    const serviceReportData = {
-      ...enteredServiceReportData,
-      id: Math.random().toString(),
-    };
-
-    props.onAddServiceReport(serviceReportData);
+    props.onAddServiceReport(enteredServiceReportData);
   };
 
   const stopEditingHandler = () => {

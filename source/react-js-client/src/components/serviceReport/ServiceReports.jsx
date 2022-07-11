@@ -6,13 +6,16 @@ const ServiceReports = (props) => {
     <div className="flex my-auto max-w-[80%] mx-auto w-full">
       <div className="flex w-full">
         {/* <FilterServiceReports /> */}
-        <div className="w-full">
-          <ServiceReportList
-            serviceReports={props.serviceReports}
-            onEditHandler={props.onEditHandler}
-            onDeleteHandler={props.onDeleteHandler}
-          />
-        </div>
+        {props.isLoading ? (
+          <p>Loading...</p>
+        ) : (
+          <div className="w-full">
+            <ServiceReportList
+              serviceReports={props.serviceReports}
+              onDeleteHandler={props.onDeleteHandler}
+            />
+          </div>
+        )}
       </div>
     </div>
   );

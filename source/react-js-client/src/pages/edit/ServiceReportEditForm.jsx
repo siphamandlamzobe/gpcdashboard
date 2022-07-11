@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import React, { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const ServiceReportEditForm = (props) => {
-  const [obj, setObj] = useState({
+  const [serviceReport, setServiceReport] = useState({
     id: null,
     attendance: "",
     firsttimer: "",
@@ -11,26 +11,24 @@ const ServiceReportEditForm = (props) => {
     serviceType: "",
     serviceReview: "",
   });
-  const [attendance, setAttendance] = useState("");
-  const [firsttimer, setFirsttimer] = useState("");
-  const [soulsSaved, setSoulsSaved] = useState("");
-  const [serviceReview, setServiceReview] = useState("");
-  const [serviceDate, setServiceDate] = useState("");
-  const [serviceType, setServiceType] = useState("");
 
-  let params = useParams();
-  console.log("props", props.onEditServiceReport);
+  const [attendance2, setAttendance] = useState("");
+  const [firsttimer2, setFirsttimer] = useState("");
+  const [soulsSaved2, setSoulsSaved] = useState("");
+  const [serviceReview2, setServiceReview] = useState("");
+  const [serviceDate2, setServiceDate] = useState("");
+  const [serviceType2, setServiceType] = useState("");
 
-  useEffect(() => {
-    const id = params.id;
-    console.log("id  ", id);
-    if (id) {
-      console.log("object ", props.onEditServiceReport);
-      setObj(props.onEditServiceReport);
-      console.log("attendance: ", obj);
-    }
-  }, []);
-
+  const { state } = useLocation();
+  const {
+    id,
+    attendance,
+    firsttimer,
+    soulsSaved,
+    serviceReview,
+    serviceDate,
+    serviceType,
+  } = state;
   const attendanceHandler = (e) => {
     setAttendance(e.target.value);
   };
@@ -60,25 +58,26 @@ const ServiceReportEditForm = (props) => {
   const submitHandler = (e) => {
     e.preventDefault();
 
-    const serviceReportData = {
-      attendance: attendance,
-      firsttimer: firsttimer,
-      soulsSaved: soulsSaved,
-      serviceDate: new Date(serviceDate),
-      serviceType: serviceType,
-      serviceReview: serviceReview,
-    };
+    // const serviceReportData = {
+    //   attendance: attendance,
+    //   firsttimer: firsttimer,
+    //   soulsSaved: soulsSaved,
+    //   serviceDate: new Date(serviceDate),
+    //   serviceType: serviceType,
+    //   serviceReview: serviceReview,
+    // };
 
-    props.onSaveServiceReport(serviceReportData);
+    // console.log(state);
+    // props.onEditServiceReportHandler(state);
 
-    setAttendance("");
-    setFirsttimer("");
-    setSoulsSaved("");
-    setServiceDate("");
-    setServiceType("");
-    setServiceReview("");
+    // setAttendance("");
+    // setFirsttimer("");
+    // setSoulsSaved("");
+    // setServiceDate("");
+    // setServiceType("");
+    // setServiceReview("");
 
-    navigate("/serviceReports");
+    // navigate("/serviceReports");
   };
   return (
     <form onSubmit={submitHandler} className="flex w-full flex-col">
@@ -91,7 +90,7 @@ const ServiceReportEditForm = (props) => {
             className="rounded-md border-2 border-black"
             type="number"
             name="attendance"
-            value={attendance}
+            value={state.attendance}
             onChange={attendanceHandler}
             min="0"
             step="1"
@@ -106,7 +105,7 @@ const ServiceReportEditForm = (props) => {
             className="rounded-md border-2 border-black"
             type="number"
             name="firsttimer"
-            value={firsttimer}
+            value={state.firsttimer}
             min="0"
             step="1"
             onChange={firsttimersHandler}
@@ -121,7 +120,7 @@ const ServiceReportEditForm = (props) => {
             className="rounded-md border-2 border-black"
             type="number"
             name="soulsSaved"
-            value={soulsSaved}
+            value={state.soulsSaved}
             min="0"
             step="1"
             onChange={soulsSavedhandler}
@@ -136,7 +135,7 @@ const ServiceReportEditForm = (props) => {
             className="rounded-md border-2 border-black"
             type="date"
             name="serviceDate"
-            value={serviceDate}
+            value={state.serviceDate}
             min="2022-01-01"
             max="2023-12-31"
             onChange={serviceDateHandler}
@@ -149,7 +148,7 @@ const ServiceReportEditForm = (props) => {
             Service Type
           </label>
           <select
-            value={serviceType}
+            value={state.serviceType}
             onChange={serviceTypeHandler}
             className="rounded-md border-2 border-black"
           >
@@ -165,7 +164,7 @@ const ServiceReportEditForm = (props) => {
           <textarea
             className="rounded-md border-2 border-black"
             name="serviceReview"
-            value={serviceReview}
+            value={state.serviceReview}
             onChange={serviceReviewHandler}
             id="review"
             cols="30"
@@ -174,17 +173,17 @@ const ServiceReportEditForm = (props) => {
         </div>
         <div className="flex-none inline-block pt-2">
           <button
-            type="button"
-            className="bg-gray-500 rounded-lg p-1 text-white font-bold m-1"
-            onClick={props.onCancel}
-          >
-            Cancel
-          </button>
-          <button
             type="submit"
             className="bg-orange-600 rounded-lg p-1 text-white font-bold"
           >
             Update
+          </button>
+          <button
+            type="button"
+            className="border-2 rounded-lg p-1 text-black font-bold m-1"
+            onClick={props.onCancel}
+          >
+            Cancel
           </button>
         </div>
       </div>

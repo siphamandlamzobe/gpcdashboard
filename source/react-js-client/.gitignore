@@ -24,3 +24,5 @@ yarn-error.log*cd
 
 
 /gpcapi
+/server-api
+.vscode
