@@ -2,12 +2,27 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import ServiceReportForm from "./ServiceReportForm";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/navbar/Navbar";
+import { useState } from "react";
+import api from "../../api/serviceReports";
 
-const New = (props) => {
+const New = () => {
   const navigate = useNavigate();
+  const [serviceReports, setServiceReports] = useState();
 
-  const onSaveServiceReportHandler = (enteredServiceReportData) => {
-    props.onAddServiceReport(enteredServiceReportData);
+  const onSaveServiceReportHandler = async (report) => {
+    const request = {
+      ...report,
+      id: Math.floor(Math.random() * 10).toString(),
+    };
+
+    const response = await api.post("/serviceReports", request);
+
+    const serviceReport = response.data;
+    serviceReport.serviceDate = new Date(serviceReport.serviceDate);
+
+    // setServiceReports((prevReports) => {
+    //   return [serviceReport, ...prevReports];
+    // });
   };
 
   const cancelHandler = () => {

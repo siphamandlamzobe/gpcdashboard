@@ -1,14 +1,68 @@
-import React from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import ServiceReports from "../../components/serviceReport/ServiceReports";
 import Sidebar from "../../components/sidebar/Sidebar";
 import { Link } from "react-router-dom";
 import Navbar from "../../components/navbar/Navbar";
 import Search from "../../components/search/Search";
+import api from "../../api/serviceReports";
 
 const List = (props) => {
-  const getQuery = (query) => {
-    props.searchTerm(query);
+  const [serviceReports, setServiceReports] = useState([]);
+  const [query, setQuery] = useState("");
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const onDeleteServiceReportHandler = async (id) => {
+    await api.delete(`/serviceReports/${id}`);
+    const newserviceReportList = serviceReports.filter((report) => {
+      return report.id !== id;
+    });
+    setServiceReports(newserviceReportList);
   };
+
+  const getAllServiceReports = async () => {
+    const response = await api.get("/serviceReports");
+    return response.data;
+  };
+
+  useLayoutEffect(() => {
+    const getServiceReports = async () => {
+      setIsLoading(true);
+      const allServiceReports = await getAllServiceReports();
+      if (allServiceReports) {
+        allServiceReports.map((report) => {
+          return (report.serviceDate = new Date(report.serviceDate));
+        });
+        setServiceReports(allServiceReports);
+        setIsLoading(false);
+      }
+    };
+
+    getServiceReports();
+  }, []);
+
+  const getQuery = (query) => {
+    setQuery(query);
+  };
+
+  const keys = ["serviceReview", "attendance", "serviceType"];
+
+  useEffect(() => {
+    const search = async () => {
+      const res = await api.get(`/serviceReports?q=${query}`);
+      const filteredServiceReports = res.data.filter((report) =>
+        keys.some((key) => report[key].toLowerCase().includes(query))
+      );
+
+      filteredServiceReports.map((report) => {
+        return (report.serviceDate = new Date(report.serviceDate));
+      });
+      setServiceReports(filteredServiceReports);
+      return serviceReports;
+    };
+    search();
+  }, [query]);
+
   return (
     <div className="flex w-full h-screen">
       <Sidebar />
@@ -29,9 +83,9 @@ const List = (props) => {
         </div>
 
         <ServiceReports
-          serviceReports={props.serviceReports}
-          onDeleteHandler={props.onDeleteHandler}
-          isLoading={props.isLoading}
+          serviceReports={serviceReports}
+          onDeleteHandler={onDeleteServiceReportHandler}
+          isLoading={isLoading}
         />
       </div>
     </div>

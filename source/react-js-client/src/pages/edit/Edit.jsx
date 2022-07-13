@@ -2,8 +2,16 @@ import React from "react";
 import Navbar from "../../components/navbar/Navbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import ServiceReportEditForm from "./ServiceReportEditForm";
+import api from "../../api/serviceReports";
 
-const Edit = (props) => {
+const Edit = () => {
+  const onEditServiceReportHandler = async (updatedReport) => {
+    const res = await api.put(
+      `/serviceReports/${updatedReport.id}`,
+      updatedReport
+    );
+    res.data.serviceDate = new Date(res.data.serviceDate);
+  };
   return (
     <div className="flex">
       <Sidebar />
@@ -17,7 +25,9 @@ const Edit = (props) => {
         </div>
 
         <div className="flex p-4 items-center m-8 mx-auto w-auto max-w-[80%] shadow-3xl">
-          <ServiceReportEditForm onEditServiceReportHandler={props.onEditServiceReportHandler}/>
+          <ServiceReportEditForm
+            onEditServiceReportHandler={onEditServiceReportHandler}
+          />
         </div>
         <div></div>
       </div>
