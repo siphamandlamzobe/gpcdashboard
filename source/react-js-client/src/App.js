@@ -7,7 +7,6 @@ import { Edit, Home, List, New } from "./pages/index";
 
 function App() {
   const [serviceReports, setServiceReports] = useState([]);
-  const [editServiceReport, setEditServiceReport] = useState("");
   const [query, setQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -16,9 +15,12 @@ function App() {
       ...report,
       id: Math.floor(Math.random() * 10).toString(),
     };
+
     const response = await api.post("/serviceReports", request);
+
     const serviceReport = response.data;
     serviceReport.serviceDate = new Date(serviceReport.serviceDate);
+
     setServiceReports((prevReports) => {
       return [serviceReport, ...prevReports];
     });
@@ -32,9 +34,13 @@ function App() {
     setServiceReports(newserviceReportList);
   };
 
-  const onEditServiceReportHandler = (id) => {
-    const serviceReport = serviceReports.filter((report) => report.id === id);
-    setEditServiceReport(serviceReport);
+  const onEditServiceReportHandler = async (updatedReport) => {
+    const res = await api.put(`/serviceReports/${updatedReport.id}`, updatedReport);
+    res.data.serviceDate = new Date(res.data.serviceDate);
+    setServiceReports(
+      serviceReports.map((report) =>{
+      return report.id === res.data.id ? {...res.data} : report;
+    }));
   };
 
   const keys = ["serviceReview", "attendance", "serviceType"];
@@ -54,7 +60,7 @@ function App() {
       const allServiceReports = await getAllServiceReports();
       if (allServiceReports) {
         allServiceReports.map((report) => {
-          return report.serviceDate = new Date(report.serviceDate);
+          return (report.serviceDate = new Date(report.serviceDate));
         });
         setServiceReports(allServiceReports);
         setIsLoading(false);
@@ -66,15 +72,14 @@ function App() {
 
   useEffect(() => {
     const search = async () => {
-      const res = await api.get(
-        `/serviceReports?q=${query}`
-      );
+      const res = await api.get(`/serviceReports?q=${query}`);
+      
       const filteredServiceReports = res.data.filter((report) =>
         keys.some((key) => report[key].toLowerCase().includes(query))
       );
 
       filteredServiceReports.map((report) => {
-        return report.serviceDate = new Date(report.serviceDate);
+        return (report.serviceDate = new Date(report.serviceDate));
       });
       setServiceReports(filteredServiceReports);
       return serviceReports;
@@ -108,7 +113,7 @@ function App() {
             <Route
               path="edit/:id"
               element={
-                <Edit onEditServiceReportHandler={onEditServiceReportHandler} />
+                <Edit onEditServiceReportHandler={onEditServiceReportHandler}/>
               }
             />
           </Route>

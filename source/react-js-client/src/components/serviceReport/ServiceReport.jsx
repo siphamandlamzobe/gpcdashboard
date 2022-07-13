@@ -34,15 +34,8 @@ const ServiceReport = (props) => {
         </Link>
         <Link
           to={{ pathname: `/serviceReports/edit/${props.id}` }}
-          state={{
-            id: props.id,
-            attendance: props.attendance,
-            firsttimer: props.firsttimer,
-            soulsSaved: props.soulsSaved,
-            serviceReview: props.serviceReview,
-            serviceDate: props.serviceDate.toISOString().slice(0, 10),
-            serviceType: props.serviceType,
-          }}
+          state={{id:props.id}}
+
         >
           <button>
             <svg

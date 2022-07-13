@@ -17,7 +17,7 @@ const ServiceReportForm = (props) => {
     setFirsttimer(e.target.value);
   };
 
-  const soulsSavedhandler = (e) => {
+  const soulsSavedHandler = (e) => {
     setSoulsSaved(e.target.value);
   };
 
@@ -102,7 +102,7 @@ const ServiceReportForm = (props) => {
             value={soulsSaved}
             min="0"
             step="1"
-            onChange={soulsSavedhandler}
+            onChange={soulsSavedHandler}
             required
           />
         </div>

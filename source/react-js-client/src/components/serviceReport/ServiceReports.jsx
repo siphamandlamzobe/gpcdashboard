@@ -5,7 +5,6 @@ const ServiceReports = (props) => {
   return (
     <div className="flex my-auto max-w-[80%] mx-auto w-full">
       <div className="flex w-full">
-        {/* <FilterServiceReports /> */}
         {props.isLoading ? (
           <p>Loading...</p>
         ) : (

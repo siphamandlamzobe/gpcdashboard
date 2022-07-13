@@ -1,56 +1,35 @@
-import React, { useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import api from "../../api/serviceReports";
 
 const ServiceReportEditForm = (props) => {
-  const [serviceReport, setServiceReport] = useState({
-    id: null,
-    attendance: "",
-    firsttimer: "",
-    soulsSaved: "",
-    serviceDate: "",
-    serviceType: "",
-    serviceReview: "",
-  });
+  const location = useLocation();
+  const stateData = location.state;
 
-  const [attendance2, setAttendance] = useState("");
-  const [firsttimer2, setFirsttimer] = useState("");
-  const [soulsSaved2, setSoulsSaved] = useState("");
-  const [serviceReview2, setServiceReview] = useState("");
-  const [serviceDate2, setServiceDate] = useState("");
-  const [serviceType2, setServiceType] = useState("");
+  const [data, setData] = useState({ ...stateData });
 
-  const { state } = useLocation();
-  const {
-    id,
-    attendance,
-    firsttimer,
-    soulsSaved,
-    serviceReview,
-    serviceDate,
-    serviceType,
-  } = state;
-  const attendanceHandler = (e) => {
-    setAttendance(e.target.value);
+  const getServiceReportById = async (id) => {
+    const response = await api.get(`/serviceReports/${id}`);
+    return response.data;
   };
 
-  const firsttimersHandler = (e) => {
-    setFirsttimer(e.target.value);
-  };
+  useLayoutEffect(() => {
+    const edit = async () => {
+      const editReport = await getServiceReportById(stateData.id);
 
-  const soulsSavedhandler = (e) => {
-    setSoulsSaved(e.target.value);
-  };
+      if (editReport) {
+        editReport.serviceDate = editReport.serviceDate.slice(0, 10);
+        setData(editReport);
+      }
+    };
+    edit();
+  }, [stateData.id]);
 
-  const serviceTypeHandler = (e) => {
-    setServiceType(e.target.value);
-  };
+  const inputHandler = (e) => {
+    const newData = { ...data };
+    newData[e.target.name] = e.target.value;
 
-  const serviceDateHandler = (e) => {
-    setServiceDate(e.target.value);
-  };
-
-  const serviceReviewHandler = (e) => {
-    setServiceReview(e.target.value);
+    setData(newData);
   };
 
   const navigate = useNavigate();
@@ -58,27 +37,15 @@ const ServiceReportEditForm = (props) => {
   const submitHandler = (e) => {
     e.preventDefault();
 
-    // const serviceReportData = {
-    //   attendance: attendance,
-    //   firsttimer: firsttimer,
-    //   soulsSaved: soulsSaved,
-    //   serviceDate: new Date(serviceDate),
-    //   serviceType: serviceType,
-    //   serviceReview: serviceReview,
-    // };
+    props.onEditServiceReportHandler(data);
 
-    // console.log(state);
-    // props.onEditServiceReportHandler(state);
-
-    // setAttendance("");
-    // setFirsttimer("");
-    // setSoulsSaved("");
-    // setServiceDate("");
-    // setServiceType("");
-    // setServiceReview("");
-
-    // navigate("/serviceReports");
+    navigate("/serviceReports");
   };
+
+  const cancelHandler = () => {
+    navigate("/serviceReports");
+  };
+
   return (
     <form onSubmit={submitHandler} className="flex w-full flex-col">
       <div className="flex flex-col content-center justify-center w-full">
@@ -90,8 +57,8 @@ const ServiceReportEditForm = (props) => {
             className="rounded-md border-2 border-black"
             type="number"
             name="attendance"
-            value={state.attendance}
-            onChange={attendanceHandler}
+            value={data.attendance}
+            onChange={inputHandler}
             min="0"
             step="1"
             required
@@ -105,10 +72,10 @@ const ServiceReportEditForm = (props) => {
             className="rounded-md border-2 border-black"
             type="number"
             name="firsttimer"
-            value={state.firsttimer}
+            value={data.firsttimer}
             min="0"
             step="1"
-            onChange={firsttimersHandler}
+            onChange={inputHandler}
             required
           />
         </div>
@@ -120,10 +87,10 @@ const ServiceReportEditForm = (props) => {
             className="rounded-md border-2 border-black"
             type="number"
             name="soulsSaved"
-            value={state.soulsSaved}
+            value={data.soulsSaved}
             min="0"
             step="1"
-            onChange={soulsSavedhandler}
+            onChange={inputHandler}
             required
           />
         </div>
@@ -135,10 +102,10 @@ const ServiceReportEditForm = (props) => {
             className="rounded-md border-2 border-black"
             type="date"
             name="serviceDate"
-            value={state.serviceDate}
+            value={data.serviceDate}
             min="2022-01-01"
             max="2023-12-31"
-            onChange={serviceDateHandler}
+            onChange={inputHandler}
             required
           />
         </div>
@@ -148,8 +115,9 @@ const ServiceReportEditForm = (props) => {
             Service Type
           </label>
           <select
-            value={state.serviceType}
-            onChange={serviceTypeHandler}
+            value={data.serviceType}
+            name="serviceType"
+            onChange={inputHandler}
             className="rounded-md border-2 border-black"
           >
             <option value="">Select...</option>
@@ -164,8 +132,8 @@ const ServiceReportEditForm = (props) => {
           <textarea
             className="rounded-md border-2 border-black"
             name="serviceReview"
-            value={state.serviceReview}
-            onChange={serviceReviewHandler}
+            defaultValue={data.serviceReview}
+            onChange={inputHandler}
             id="review"
             cols="30"
             rows="4"
@@ -181,7 +149,7 @@ const ServiceReportEditForm = (props) => {
           <button
             type="button"
             className="border-2 rounded-lg p-1 text-black font-bold m-1"
-            onClick={props.onCancel}
+            onClick={cancelHandler}
           >
             Cancel
           </button>

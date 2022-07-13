@@ -17,9 +17,7 @@ const Edit = (props) => {
         </div>
 
         <div className="flex p-4 items-center m-8 mx-auto w-auto max-w-[80%] shadow-3xl">
-          <ServiceReportEditForm
-            onEditServiceReportHandler={props.onEditServiceReportHandler}
-          />
+          <ServiceReportEditForm onEditServiceReportHandler={props.onEditServiceReportHandler}/>
         </div>
         <div></div>
       </div>
