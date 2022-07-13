@@ -1,13 +1,9 @@
-import Sidebar from "../../components/sidebar/Sidebar";
 import ServiceReportForm from "./ServiceReportForm";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../../components/navbar/Navbar";
-import { useState } from "react";
 import api from "../../api/serviceReports";
 
 const New = () => {
   const navigate = useNavigate();
-  const [serviceReports, setServiceReports] = useState();
 
   const onSaveServiceReportHandler = async (report) => {
     const request = {
@@ -19,10 +15,6 @@ const New = () => {
 
     const serviceReport = response.data;
     serviceReport.serviceDate = new Date(serviceReport.serviceDate);
-
-    // setServiceReports((prevReports) => {
-    //   return [serviceReport, ...prevReports];
-    // });
   };
 
   const cancelHandler = () => {
@@ -31,10 +23,7 @@ const New = () => {
 
   return (
     <div className="flex">
-      <Sidebar />
       <div className="flex-auto">
-        <Navbar />
-
         <div className="flex p-4 items-center m-8 max-w-[80%] mx-auto w-auto shadow-3xl">
           <div className="flex w-full text-2xl m-2 justify-start bg-white text-gray-500">
             <svg

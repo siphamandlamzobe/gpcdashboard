@@ -1,12 +1,10 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import ServiceReports from "../../components/serviceReport/ServiceReports";
-import Sidebar from "../../components/sidebar/Sidebar";
 import { Link } from "react-router-dom";
-import Navbar from "../../components/navbar/Navbar";
 import Search from "../../components/search/Search";
 import api from "../../api/serviceReports";
 
-const List = (props) => {
+const List = () => {
   const [serviceReports, setServiceReports] = useState([]);
   const [query, setQuery] = useState("");
 
@@ -64,11 +62,8 @@ const List = (props) => {
   }, [query]);
 
   return (
-    <div className="flex w-full h-screen">
-      <Sidebar />
-
+    <div className="flex w-full">
       <div className="flex-auto">
-        <Navbar />
         <div className="flex p-4 items-center m-8 max-w-[80%] mx-auto w-auto shadow-3xl">
           <div className="flex w-full text-2xl m-2 justify-between text-gray-500">
             <Search getSearchKeyword={getQuery} />
