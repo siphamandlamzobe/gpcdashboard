@@ -17,7 +17,7 @@ const ServiceReportForm = (props) => {
     setFirsttimer(e.target.value);
   };
 
-  const soulsSavedhandler = (e) => {
+  const soulsSavedHandler = (e) => {
     setSoulsSaved(e.target.value);
   };
 
@@ -102,7 +102,7 @@ const ServiceReportForm = (props) => {
             value={soulsSaved}
             min="0"
             step="1"
-            onChange={soulsSavedhandler}
+            onChange={soulsSavedHandler}
             required
           />
         </div>
@@ -152,17 +152,17 @@ const ServiceReportForm = (props) => {
         </div>
         <div className="flex-none inline-block pt-2">
           <button
-            type="button"
-            className="bg-gray-500 rounded-lg p-1 text-white font-bold m-1"
-            onClick={props.onCancel}
-          >
-            Cancel
-          </button>
-          <button
             type="submit"
             className="bg-green-700 rounded-lg p-1 text-white font-bold"
           >
             Submit
+          </button>
+          <button
+            type="button"
+            className= "rounded-lg p-1 border-2 text-black font-bold m-1"
+            onClick={props.onCancel}
+          >
+            Cancel
           </button>
         </div>
       </div>

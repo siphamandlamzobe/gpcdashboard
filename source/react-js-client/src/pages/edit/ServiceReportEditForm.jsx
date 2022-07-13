@@ -1,58 +1,35 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import React, { useLayoutEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import api from "../../api/serviceReports";
 
 const ServiceReportEditForm = (props) => {
-  const [obj, setObj] = useState({
-    id: null,
-    attendance: "",
-    firsttimer: "",
-    soulsSaved: "",
-    serviceDate: "",
-    serviceType: "",
-    serviceReview: "",
-  });
-  const [attendance, setAttendance] = useState("");
-  const [firsttimer, setFirsttimer] = useState("");
-  const [soulsSaved, setSoulsSaved] = useState("");
-  const [serviceReview, setServiceReview] = useState("");
-  const [serviceDate, setServiceDate] = useState("");
-  const [serviceType, setServiceType] = useState("");
+  const location = useLocation();
+  const stateData = location.state;
 
-  let params = useParams();
-  console.log("props", props.onEditServiceReport);
+  const [data, setData] = useState({ ...stateData });
 
-  useEffect(() => {
-    const id = params.id;
-    console.log("id  ", id);
-    if (id) {
-      console.log("object ", props.onEditServiceReport);
-      setObj(props.onEditServiceReport);
-      console.log("attendance: ", obj);
-    }
-  }, []);
-
-  const attendanceHandler = (e) => {
-    setAttendance(e.target.value);
+  const getServiceReportById = async (id) => {
+    const response = await api.get(`/serviceReports/${id}`);
+    return response.data;
   };
 
-  const firsttimersHandler = (e) => {
-    setFirsttimer(e.target.value);
-  };
+  useLayoutEffect(() => {
+    const edit = async () => {
+      const editReport = await getServiceReportById(stateData.id);
 
-  const soulsSavedhandler = (e) => {
-    setSoulsSaved(e.target.value);
-  };
+      if (editReport) {
+        editReport.serviceDate = editReport.serviceDate.slice(0, 10);
+        setData(editReport);
+      }
+    };
+    edit();
+  }, [stateData.id]);
 
-  const serviceTypeHandler = (e) => {
-    setServiceType(e.target.value);
-  };
+  const inputHandler = (e) => {
+    const newData = { ...data };
+    newData[e.target.name] = e.target.value;
 
-  const serviceDateHandler = (e) => {
-    setServiceDate(e.target.value);
-  };
-
-  const serviceReviewHandler = (e) => {
-    setServiceReview(e.target.value);
+    setData(newData);
   };
 
   const navigate = useNavigate();
@@ -60,26 +37,15 @@ const ServiceReportEditForm = (props) => {
   const submitHandler = (e) => {
     e.preventDefault();
 
-    const serviceReportData = {
-      attendance: attendance,
-      firsttimer: firsttimer,
-      soulsSaved: soulsSaved,
-      serviceDate: new Date(serviceDate),
-      serviceType: serviceType,
-      serviceReview: serviceReview,
-    };
-
-    props.onSaveServiceReport(serviceReportData);
-
-    setAttendance("");
-    setFirsttimer("");
-    setSoulsSaved("");
-    setServiceDate("");
-    setServiceType("");
-    setServiceReview("");
+    props.onEditServiceReportHandler(data);
 
     navigate("/serviceReports");
   };
+
+  const cancelHandler = () => {
+    navigate("/serviceReports");
+  };
+
   return (
     <form onSubmit={submitHandler} className="flex w-full flex-col">
       <div className="flex flex-col content-center justify-center w-full">
@@ -91,8 +57,8 @@ const ServiceReportEditForm = (props) => {
             className="rounded-md border-2 border-black"
             type="number"
             name="attendance"
-            value={attendance}
-            onChange={attendanceHandler}
+            value={data.attendance}
+            onChange={inputHandler}
             min="0"
             step="1"
             required
@@ -106,10 +72,10 @@ const ServiceReportEditForm = (props) => {
             className="rounded-md border-2 border-black"
             type="number"
             name="firsttimer"
-            value={firsttimer}
+            value={data.firsttimer}
             min="0"
             step="1"
-            onChange={firsttimersHandler}
+            onChange={inputHandler}
             required
           />
         </div>
@@ -121,10 +87,10 @@ const ServiceReportEditForm = (props) => {
             className="rounded-md border-2 border-black"
             type="number"
             name="soulsSaved"
-            value={soulsSaved}
+            value={data.soulsSaved}
             min="0"
             step="1"
-            onChange={soulsSavedhandler}
+            onChange={inputHandler}
             required
           />
         </div>
@@ -136,10 +102,10 @@ const ServiceReportEditForm = (props) => {
             className="rounded-md border-2 border-black"
             type="date"
             name="serviceDate"
-            value={serviceDate}
+            value={data.serviceDate}
             min="2022-01-01"
             max="2023-12-31"
-            onChange={serviceDateHandler}
+            onChange={inputHandler}
             required
           />
         </div>
@@ -149,8 +115,9 @@ const ServiceReportEditForm = (props) => {
             Service Type
           </label>
           <select
-            value={serviceType}
-            onChange={serviceTypeHandler}
+            value={data.serviceType}
+            name="serviceType"
+            onChange={inputHandler}
             className="rounded-md border-2 border-black"
           >
             <option value="">Select...</option>
@@ -165,8 +132,8 @@ const ServiceReportEditForm = (props) => {
           <textarea
             className="rounded-md border-2 border-black"
             name="serviceReview"
-            value={serviceReview}
-            onChange={serviceReviewHandler}
+            defaultValue={data.serviceReview}
+            onChange={inputHandler}
             id="review"
             cols="30"
             rows="4"
@@ -174,17 +141,17 @@ const ServiceReportEditForm = (props) => {
         </div>
         <div className="flex-none inline-block pt-2">
           <button
-            type="button"
-            className="bg-gray-500 rounded-lg p-1 text-white font-bold m-1"
-            onClick={props.onCancel}
-          >
-            Cancel
-          </button>
-          <button
             type="submit"
             className="bg-orange-600 rounded-lg p-1 text-white font-bold"
           >
             Update
+          </button>
+          <button
+            type="button"
+            className="border-2 rounded-lg p-1 text-black font-bold m-1"
+            onClick={cancelHandler}
+          >
+            Cancel
           </button>
         </div>
       </div>

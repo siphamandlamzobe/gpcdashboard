@@ -16,7 +16,6 @@ const ServiceReportList = (props) => {
     <ul className="list-none">
       {props.serviceReports.map((report) => (
         <ServiceReport
-          onEditHandler={props.onEditHandler}
           onDeleteHandler={props.onDeleteHandler}
           id={report.id}
           key={report.id}
@@ -24,6 +23,8 @@ const ServiceReportList = (props) => {
           serviceDate={report.serviceDate}
           serviceType={report.serviceType}
           serviceReview={report.serviceReview}
+          firsttimer={report.firsttimer}
+          soulsSaved={report.soulsSaved}
         />
       ))}
     </ul>

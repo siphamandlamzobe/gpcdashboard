@@ -4,9 +4,13 @@ import { Link } from "react-router-dom";
 const Sidebar = () => {
   return (
     <div className="flex">
-      <div className="flex-none w-48 border-r-2 border-slate-100 min-h-screen  bg-slate-100">
+      <div className="flex-none w-48 border-r-2  border-slate-100 min-h-screen sticky top-0 bg-slate-100">
         <div className="flex h-14 bg-slate-500 items-center justify-center">
-          <span className="text-lg font-bold">GPC</span>
+          <Link to="/">
+            <span className="text-lg text-white font-bold cursor-pointer">
+              GPC
+            </span>
+          </Link>
         </div>
         <hr className="h-0 border-solid border-slate-100" />
         <div className="pl-3">
