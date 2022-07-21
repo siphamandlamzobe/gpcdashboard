@@ -5,7 +5,7 @@ import api from "../../api/serviceReports";
 const Edit = () => {
   const onEditServiceReportHandler = async (updatedReport) => {
     const res = await api.put(
-      `/serviceReports/${updatedReport.id}`,
+      `/api/serviceReports/${updatedReport.id}`,
       updatedReport
     );
     res.data.serviceDate = new Date(res.data.serviceDate);

@@ -11,7 +11,7 @@ const List = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const onDeleteServiceReportHandler = async (id) => {
-    await api.delete(`/serviceReports/${id}`);
+    await api.delete(`/api/serviceReports/${id}`);
     const newserviceReportList = serviceReports.filter((report) => {
       return report.id !== id;
     });
@@ -19,7 +19,7 @@ const List = () => {
   };
 
   const getAllServiceReports = async () => {
-    const response = await api.get("/serviceReports");
+    const response = await api.get("/api/serviceReports");
     return response.data;
   };
 
@@ -47,7 +47,7 @@ const List = () => {
 
   useEffect(() => {
     const search = async () => {
-      const res = await api.get(`/serviceReports?q=${query}`);
+      const res = await api.get(`/api/serviceReports?q=${query}`);
       const filteredServiceReports = res.data.filter((report) =>
         keys.some((key) => report[key].toLowerCase().includes(query))
       );

@@ -9,7 +9,7 @@ const ServiceReportEditForm = (props) => {
   const [data, setData] = useState({ ...stateData });
 
   const getServiceReportById = async (id) => {
-    const response = await api.get(`/serviceReports/${id}`);
+    const response = await api.get(`/api/serviceReports/${id}`);
     return response.data;
   };
 
@@ -65,14 +65,14 @@ const ServiceReportEditForm = (props) => {
           />
         </div>
         <div className="flex flex-col content-center p-1">
-          <label className="font-bold" htmlFor="firsttimer">
+          <label className="font-bold" htmlFor="firsttimers">
             First Timers
           </label>
           <input
             className="rounded-md border-2 border-black"
             type="number"
-            name="firsttimer"
-            value={data.firsttimer}
+            name="firsttimers"
+            value={data.firsttimers}
             min="0"
             step="1"
             onChange={inputHandler}

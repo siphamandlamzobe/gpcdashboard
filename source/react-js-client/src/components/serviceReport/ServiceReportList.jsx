@@ -23,7 +23,7 @@ const ServiceReportList = (props) => {
           serviceDate={report.serviceDate}
           serviceType={report.serviceType}
           serviceReview={report.serviceReview}
-          firsttimer={report.firsttimer}
+          firsttimers={report.firsttimers}
           soulsSaved={report.soulsSaved}
         />
       ))}

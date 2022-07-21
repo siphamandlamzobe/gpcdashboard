@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 const ServiceReportForm = (props) => {
   const [attendance, setAttendance] = useState("");
-  const [firsttimer, setFirsttimer] = useState("");
+  const [firsttimers, setfirsttimers] = useState("");
   const [soulsSaved, setSoulsSaved] = useState("");
   const [serviceReview, setServiceReview] = useState("");
   const [serviceDate, setServiceDate] = useState("");
@@ -13,8 +13,8 @@ const ServiceReportForm = (props) => {
     setAttendance(e.target.value);
   };
 
-  const firsttimersHandler = (e) => {
-    setFirsttimer(e.target.value);
+  const firsttimerssHandler = (e) => {
+    setfirsttimers(e.target.value);
   };
 
   const soulsSavedHandler = (e) => {
@@ -40,7 +40,7 @@ const ServiceReportForm = (props) => {
 
     const serviceReportData = {
       attendance: attendance,
-      firsttimer: firsttimer,
+      firsttimers: firsttimers,
       soulsSaved: soulsSaved,
       serviceDate: new Date(serviceDate),
       serviceType: serviceType,
@@ -50,7 +50,7 @@ const ServiceReportForm = (props) => {
     props.onSaveServiceReport(serviceReportData);
 
     setAttendance("");
-    setFirsttimer("");
+    setfirsttimers("");
     setSoulsSaved("");
     setServiceDate("");
     setServiceType("");
@@ -77,17 +77,17 @@ const ServiceReportForm = (props) => {
           />
         </div>
         <div className="flex flex-col content-center p-1">
-          <label className="font-bold" htmlFor="firsttimer">
+          <label className="font-bold" htmlFor="firsttimers">
             First Timers
           </label>
           <input
             className="rounded-md border-2 border-black"
             type="number"
-            name="firsttimer"
-            value={firsttimer}
+            name="firsttimers"
+            value={firsttimers}
             min="0"
             step="1"
-            onChange={firsttimersHandler}
+            onChange={firsttimerssHandler}
             required
           />
         </div>
@@ -159,7 +159,7 @@ const ServiceReportForm = (props) => {
           </button>
           <button
             type="button"
-            className= "rounded-lg p-1 border-2 text-black font-bold m-1"
+            className="rounded-lg p-1 border-2 text-black font-bold m-1"
             onClick={props.onCancel}
           >
             Cancel
