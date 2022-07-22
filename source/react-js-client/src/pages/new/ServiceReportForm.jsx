@@ -27,7 +27,6 @@ const ServiceReportForm = (props) => {
           <input
             className="rounded-md border-2 border-black"
             type="number"
-            step="1"
             {...register("attendance", { required: true, min: 0 })}
           />
           {errors.attendance && <span className="text-red-600">This field is required</span>}
@@ -39,7 +38,6 @@ const ServiceReportForm = (props) => {
           <input
             className="rounded-md border-2 border-black"
             type="number"
-            step="1"
             {...register("firsttimers", { required: true, min: 0 })}
           />
           {errors.firsttimers && <span className="text-red-600">This field is required</span>}
@@ -51,7 +49,6 @@ const ServiceReportForm = (props) => {
           <input
             className="rounded-md border-2 border-black"
             type="number"
-            step="1"
             {...register("soulsSaved", { required: true, min: 0 })}
           />
           {errors.soulsSaved && <span className="text-red-600">This field is required</span>}

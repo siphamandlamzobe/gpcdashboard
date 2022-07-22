@@ -1,45 +1,49 @@
-import React, { useLayoutEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import api from "../../api/serviceReports";
+import { useForm } from "react-hook-form";
 
 const ServiceReportEditForm = (props) => {
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
+
   const stateData = location.state;
 
   const [data, setData] = useState({ ...stateData });
 
   const getServiceReportById = async (id) => {
-    const response = await api.get(`/api/serviceReports/${id}`);
-    return response.data;
+    const response = await api
+      .get(`/api/serviceReports/${id}`)
+      .then((response) => {
+        return response.data;
+      });
+
+    return response;
   };
 
   useLayoutEffect(() => {
     const edit = async () => {
-      const editReport = await getServiceReportById(stateData.id);
-
-      if (editReport) {
-        editReport.serviceDate = editReport.serviceDate.slice(0, 10);
-        setData(editReport);
-      }
+      await getServiceReportById(stateData.id).then((report) => {
+        report.serviceDate = report.serviceDate.slice(0, 10);
+        setData(report);
+      });
     };
     edit();
   }, [stateData.id]);
 
-  const inputHandler = (e) => {
-    const newData = { ...data };
-    newData[e.target.name] = e.target.value;
+  useEffect(() => {
+    reset(data);
+  }, [data]);
 
-    setData(newData);
-  };
-
-  const navigate = useNavigate();
-
-  const submitHandler = (e) => {
-    e.preventDefault();
-
+  const submitHandler = (data) => {
     props.onEditServiceReportHandler(data);
-
-    navigate("/serviceReports");
   };
 
   const cancelHandler = () => {
@@ -47,7 +51,11 @@ const ServiceReportEditForm = (props) => {
   };
 
   return (
-    <form onSubmit={submitHandler} className="flex w-full flex-col">
+    <form
+      onSubmit={handleSubmit(submitHandler)}
+      className="flex w-full flex-col"
+      onReset={reset}
+    >
       <div className="flex flex-col content-center justify-center w-full">
         <div className="flex flex-col content-center p-1">
           <label className="font-bold" htmlFor="attendance">
@@ -56,13 +64,11 @@ const ServiceReportEditForm = (props) => {
           <input
             className="rounded-md border-2 border-black"
             type="number"
-            name="attendance"
-            value={data.attendance}
-            onChange={inputHandler}
-            min="0"
-            step="1"
-            required
+            {...register("attendance", { required: true, min: 0 })}
           />
+          {errors.attendance && (
+            <span className="text-red-600">This field is required</span>
+          )}
         </div>
         <div className="flex flex-col content-center p-1">
           <label className="font-bold" htmlFor="firsttimers">
@@ -71,13 +77,11 @@ const ServiceReportEditForm = (props) => {
           <input
             className="rounded-md border-2 border-black"
             type="number"
-            name="firsttimers"
-            value={data.firsttimers}
-            min="0"
-            step="1"
-            onChange={inputHandler}
-            required
+            {...register("firsttimers", { required: true, min: 0 })}
           />
+          {errors.firsttimers && (
+            <span className="text-red-600">This field is required</span>
+          )}
         </div>
         <div className="flex flex-col content-center p-1">
           <label className="font-bold" htmlFor="soulsSaved">
@@ -86,13 +90,11 @@ const ServiceReportEditForm = (props) => {
           <input
             className="rounded-md border-2 border-black"
             type="number"
-            name="soulsSaved"
-            value={data.soulsSaved}
-            min="0"
-            step="1"
-            onChange={inputHandler}
-            required
+            {...register("soulsSaved", { required: true, min: 0 })}
           />
+          {errors.soulsSaved && (
+            <span className="text-red-600">This field is required</span>
+          )}
         </div>
         <div className="flex flex-col content-center p-1">
           <label className="font-bold" htmlFor="serviceDate">
@@ -101,13 +103,13 @@ const ServiceReportEditForm = (props) => {
           <input
             className="rounded-md border-2 border-black"
             type="date"
-            name="serviceDate"
-            value={data.serviceDate}
             min="2022-01-01"
             max="2023-12-31"
-            onChange={inputHandler}
-            required
+            {...register("serviceDate", { required: true })}
           />
+          {errors.serviceDate && (
+            <span className="text-red-600">This field is required</span>
+          )}
         </div>
 
         <div className="flex flex-col content-center p-1">
@@ -115,15 +117,16 @@ const ServiceReportEditForm = (props) => {
             Service Type
           </label>
           <select
-            value={data.serviceType}
-            name="serviceType"
-            onChange={inputHandler}
+            {...register("serviceType", { required: true })}
             className="rounded-md border-2 border-black"
           >
             <option value="">Select...</option>
             <option value="Sunday">Sunday</option>
             <option value="Wednesday">Wednesday</option>
           </select>
+          {errors.serviceType && (
+            <span className="text-red-600">This field is required</span>
+          )}
         </div>
         <div className="flex flex-col content-center p-1">
           <label className="font-bold" htmlFor="serviceReview">
@@ -131,14 +134,16 @@ const ServiceReportEditForm = (props) => {
           </label>
           <textarea
             className="rounded-md border-2 border-black"
-            name="serviceReview"
-            defaultValue={data.serviceReview}
-            onChange={inputHandler}
-            id="review"
+            {...register("serviceReview", { required: true })}
+            id="serviceReview"
             cols="30"
             rows="4"
-          ></textarea>
+          />
+          {errors.serviceReview && (
+            <span className="text-red-600">This field is required</span>
+          )}
         </div>
+
         <div className="flex-none inline-block pt-2">
           <button
             type="submit"

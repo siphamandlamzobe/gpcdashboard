@@ -1,14 +1,16 @@
 import React from "react";
 import ServiceReportEditForm from "./ServiceReportEditForm";
 import api from "../../api/serviceReports";
+import { useNavigate } from "react-router-dom";
 
 const Edit = () => {
+  const navigate = useNavigate();
   const onEditServiceReportHandler = async (updatedReport) => {
-    const res = await api.put(
-      `/api/serviceReports/${updatedReport.id}`,
-      updatedReport
-    );
-    res.data.serviceDate = new Date(res.data.serviceDate);
+    await api
+      .put(`/api/serviceReports/${updatedReport.id}`, updatedReport)
+      .then(() => {
+        navigate("/serviceReports");
+      });
   };
   return (
     <div className="flex">

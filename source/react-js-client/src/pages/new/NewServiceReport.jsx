@@ -11,12 +11,12 @@ const NewServiceReport = () => {
       id: Math.floor(Math.random() * 10).toString(),
     };
 
-    console.log("req: ", request);
+    await api.post("/api/serviceReports", request).then((res) => {
+      res.data.serviceDate = new Date(res.data.serviceDate);
+      return res.data;
+    });
 
-    const response = await api.post("/api/serviceReports", request);
-
-    const serviceReport = response.data;
-    serviceReport.serviceDate = new Date(serviceReport.serviceDate);
+    navigate("/serviceReports");
   };
 
   const cancelHandler = () => {
