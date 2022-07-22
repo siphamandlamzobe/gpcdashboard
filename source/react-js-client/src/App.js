@@ -8,10 +8,10 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
+        <Navbar />
         <div className="flex">
           <Sidebar />
           <div className="flex-auto">
-            <Navbar />
             <Routes>
               <Route path="/">
                 <Route index element={<Home />} />

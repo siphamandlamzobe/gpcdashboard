@@ -13,7 +13,7 @@ const NewServiceReport = () => {
 
     console.log("req: ", request);
 
-    const response = await api.post("/serviceReports", request);
+    const response = await api.post("/api/serviceReports", request);
 
     const serviceReport = response.data;
     serviceReport.serviceDate = new Date(serviceReport.serviceDate);
