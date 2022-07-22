@@ -3,7 +3,7 @@ import ServiceReportEditForm from "./ServiceReportEditForm";
 import api from "../../api/serviceReports";
 import { useNavigate } from "react-router-dom";
 
-const Edit = () => {
+const EditServiceReport = () => {
   const navigate = useNavigate();
   const onEditServiceReportHandler = async (updatedReport) => {
     await api
@@ -32,4 +32,4 @@ const Edit = () => {
   );
 };
 
-export default Edit;
+export default EditServiceReport;
