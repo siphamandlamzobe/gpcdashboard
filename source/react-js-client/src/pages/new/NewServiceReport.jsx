@@ -2,7 +2,7 @@ import ServiceReportForm from "./ServiceReportForm";
 import { useNavigate } from "react-router-dom";
 import api from "../../api/serviceReports";
 
-const New = () => {
+const NewServiceReport = () => {
   const navigate = useNavigate();
 
   const onSaveServiceReportHandler = async (report) => {
@@ -10,6 +10,8 @@ const New = () => {
       ...report,
       id: Math.floor(Math.random() * 10).toString(),
     };
+
+    console.log("req: ", request);
 
     const response = await api.post("/serviceReports", request);
 
@@ -55,4 +57,4 @@ const New = () => {
   );
 };
 
-export default New;
+export default NewServiceReport;
