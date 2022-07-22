@@ -13,6 +13,7 @@ const ServiceReport = (props) => {
           <span>
             <Link
               to={{ pathname: `/serviceReports/serviceReport/${props.id}` }}
+              state={{ id: props.id }}
             >
               <button>
                 <svg

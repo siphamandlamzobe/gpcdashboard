@@ -1,6 +1,36 @@
-import React from "react";
+import React, { useLayoutEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import api from "../../api/serviceReports";
+import ReportDate from "./ReportDate";
 
 const ServiceReportItem = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const stateData = location.state;
+
+  const [data, setData] = useState({ ...stateData });
+
+  const getServiceReportById = async (id) => {
+    const response = await api
+      .get(`/api/serviceReports/${id}`)
+      .then((response) => {
+        return response.data;
+      });
+
+    return response;
+  };
+
+  useLayoutEffect(() => {
+    const loadData = async () => {
+      await getServiceReportById(stateData.id).then((report) => {
+        report.serviceDate = new Date(report.serviceDate.slice(0, 10));
+        setData(report);
+      });
+    };
+    loadData();
+  }, [stateData.id]);
+
   return (
     <div className="flex">
       <div className="flex-auto">
@@ -25,7 +55,7 @@ const ServiceReportItem = () => {
         </div>
 
         <div className="flex p-4 items-center m-8 mx-auto w-auto max-w-[80%] shadow-3xl h-80">
-          
+          <ReportDate serviceDate={data.serviceDate} />
         </div>
       </div>
     </div>
