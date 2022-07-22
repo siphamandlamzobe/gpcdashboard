@@ -1,5 +1,5 @@
 import React from "react";
-import ServiceReportEditForm from "./ServiceReportEditForm";
+import ServiceReportEditForm from "../../components/serviceReport/ServiceReportEditForm";
 import api from "../../api/serviceReports";
 import { useNavigate } from "react-router-dom";
 

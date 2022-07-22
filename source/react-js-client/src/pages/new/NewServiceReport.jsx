@@ -1,6 +1,6 @@
-import ServiceReportForm from "./ServiceReportForm";
 import { useNavigate } from "react-router-dom";
 import api from "../../api/serviceReports";
+import ServiceReportForm from "../../components/serviceReport/ServiceReportForm";
 
 const NewServiceReport = () => {
   const navigate = useNavigate();
