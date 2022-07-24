@@ -8,7 +8,6 @@ const NewServiceReport = () => {
   const onSaveServiceReportHandler = async (report) => {
     const request = {
       ...report,
-      id: Math.floor(Math.random() * 10).toString(),
     };
 
     await api.post("/api/serviceReports", request).then((res) => {

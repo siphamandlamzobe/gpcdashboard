@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Search from "../../components/search/Search";
 import api from "../../api/serviceReports";
 
-const List = () => {
+const ListServiceReports = () => {
   const [serviceReports, setServiceReports] = useState([]);
   const [query, setQuery] = useState("");
 
@@ -12,10 +12,10 @@ const List = () => {
 
   const onDeleteServiceReportHandler = async (id) => {
     await api.delete(`/api/serviceReports/${id}`);
-    const newserviceReportList = serviceReports.filter((report) => {
+    const newServiceReportList = serviceReports.filter((report) => {
       return report.id !== id;
     });
-    setServiceReports(newserviceReportList);
+    setServiceReports(newServiceReportList);
   };
 
   const getAllServiceReports = async () => {
@@ -87,4 +87,4 @@ const List = () => {
   );
 };
 
-export default List;
+export default ListServiceReports;

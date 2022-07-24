@@ -3,7 +3,12 @@ import Navbar from "./components/navbar/Navbar";
 import PageNotFound from "./components/PageNotFound";
 import ServiceReportItem from "./components/serviceReport/ServiceReportItem";
 import Sidebar from "./components/sidebar/Sidebar";
-import { Edit, Home, List, NewServiceReport } from "./pages/index";
+import {
+  EditServiceReport,
+  Home,
+  ListServiceReports,
+  NewServiceReport,
+} from "./pages/index";
 
 function App() {
   return (
@@ -18,10 +23,13 @@ function App() {
                 <Route index element={<Home />} />
               </Route>
               <Route path="serviceReports">
-                <Route index element={<List />} />
+                <Route index element={<ListServiceReports />} />
                 <Route path="new" element={<NewServiceReport />} />
-                <Route path="edit/:id" element={<Edit />} />
-                <Route path="serviceReport/:id" element={<ServiceReportItem />} />
+                <Route path="edit/:id" element={<EditServiceReport />} />
+                <Route
+                  path="serviceReport/:id"
+                  element={<ServiceReportItem />}
+                />
               </Route>
               <Route path="*" element={<PageNotFound />} />
             </Routes>

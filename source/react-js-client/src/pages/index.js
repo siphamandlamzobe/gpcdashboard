@@ -1,6 +1,6 @@
 import Home from "./home/Home";
-import List from "./list/List";
+import ListServiceReports from "./list/ListServiceReports";
 import NewServiceReport from "./new/NewServiceReport";
-import Edit from "./edit/EditServiceReport";
+import EditServiceReport from "./edit/EditServiceReport";
 
-export { Home, List, NewServiceReport, Edit };
+export { Home, ListServiceReports, NewServiceReport, EditServiceReport };
