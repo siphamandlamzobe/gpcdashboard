@@ -2,8 +2,8 @@ import ServiceReportList from "./ServiceReportList";
 
 const ServiceReports = (props) => {
   return (
-    <div className="flex my-auto max-w-[80%] mx-auto w-full">
-      <div className="flex w-full">
+    // <div className="flex my-auto max-w-[70%] mx-auto w-full">
+      <div>
         {props.isLoading ? (
           <div className="text-center mx-auto">
             <svg
@@ -24,15 +24,20 @@ const ServiceReports = (props) => {
             </svg>
           </div>
         ) : (
-          <div className="w-full">
-            <ServiceReportList
+          // <div className="flex">
+          //   <ServiceReportList
+          //     serviceReports={props.serviceReports}
+          //     onDeleteHandler={props.onDeleteHandler}
+          //   />
+          // </div>
+          
+          <ServiceReportList
               serviceReports={props.serviceReports}
               onDeleteHandler={props.onDeleteHandler}
             />
-          </div>
         )}
       </div>
-    </div>
+    // </div>
   );
 };
 

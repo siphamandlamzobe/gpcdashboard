@@ -3,7 +3,7 @@ import ReportDate from "./ReportDate";
 
 const ServiceReport = (props) => {
   return (
-    <div className="flex items-center p-3 m-4 justify-between shadow-3xl">
+    <div className="flex items-center p-3 my-4 justify-between shadow-3xl">
       <ReportDate serviceDate={props.serviceDate} />
       <div className="flex text-black justify-between items-center p-5 w-full ">
         {props.serviceReview}

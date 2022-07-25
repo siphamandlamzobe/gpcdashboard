@@ -62,9 +62,9 @@ const ListServiceReports = () => {
   }, [query]);
 
   return (
-    <div className="flex w-full">
+    <div className="flex">
       <div className="flex-auto">
-        <div className="flex p-4 items-center m-8 max-w-[80%] mx-auto w-auto shadow-3xl">
+        <div className="flex p-4 items-center m-8 max-w-[70%] mx-auto w-auto shadow-3xl">
           <div className="flex w-full text-2xl m-2 justify-between text-gray-500">
             <Search getSearchKeyword={getQuery} />
             <Link
@@ -77,11 +77,13 @@ const ListServiceReports = () => {
           </div>
         </div>
 
-        <ServiceReports
-          serviceReports={serviceReports}
-          onDeleteHandler={onDeleteServiceReportHandler}
-          isLoading={isLoading}
-        />
+        <div className="flex mx-auto w-auto max-w-[70%]">
+          <ServiceReports
+            serviceReports={serviceReports}
+            onDeleteHandler={onDeleteServiceReportHandler}
+            isLoading={isLoading}
+          />
+        </div>
       </div>
     </div>
   );

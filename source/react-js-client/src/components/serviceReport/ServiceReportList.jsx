@@ -13,21 +13,23 @@ const ServiceReportList = (props) => {
   }
 
   return (
-    <ul className="list-none">
-      {props.serviceReports.map((report) => (
-        <ServiceReport
-          onDeleteHandler={props.onDeleteHandler}
-          id={report.id}
-          key={report.id}
-          attendance={report.attendance}
-          serviceDate={report.serviceDate}
-          serviceType={report.serviceType}
-          serviceReview={report.serviceReview}
-          firsttimers={report.firsttimers}
-          soulsSaved={report.soulsSaved}
-        />
-      ))}
-    </ul>
+    <div className="container flex w-full mx-auto justify-between">
+      <ul className="list-none">
+        {props.serviceReports.map((report) => (
+          <ServiceReport
+            onDeleteHandler={props.onDeleteHandler}
+            id={report.id}
+            key={report.id}
+            attendance={report.attendance}
+            serviceDate={report.serviceDate}
+            serviceType={report.serviceType}
+            serviceReview={report.serviceReview}
+            firsttimers={report.firsttimers}
+            soulsSaved={report.soulsSaved}
+          />
+        ))}
+      </ul>
+    </div>
   );
 };
 

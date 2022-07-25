@@ -34,7 +34,7 @@ const ServiceReportItem = () => {
   return (
     <div className="flex">
       <div className="flex-auto">
-        <div className="flex p-4 items-center m-8 max-w-[80%] mx-auto w-auto shadow-3xl">
+        <div className="flex p-4 items-center m-8 max-w-[70%] mx-auto w-auto shadow-3xl">
           <div className="flex w-full text-2xl m-2 justify-start bg-white text-gray-500">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -54,7 +54,7 @@ const ServiceReportItem = () => {
           </div>
         </div>
 
-        <div className="flex p-4 items-center m-8 mx-auto w-auto max-w-[80%] shadow-3xl h-80">
+        <div className="flex p-4 items-center m-8 mx-auto w-auto max-w-[70%] shadow-3xl h-80">
           <ReportDate serviceDate={data.serviceDate} />
         </div>
       </div>
