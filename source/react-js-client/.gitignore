@@ -25,3 +25,7 @@ yarn-error.log*cd
 
 hooks
 AppServiceReportRoutes.jsx
+
+**/.firebase
+**/.firebaserc
+**/.runtimeconfig.json
