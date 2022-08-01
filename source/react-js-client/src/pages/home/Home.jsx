@@ -2,7 +2,7 @@ import React from "react";
 
 const Home = () => {
   return (
-    <div className="flex w-full">
+    <div className="flex bg-slate-500">
       <div className="flex-auto">
         container
       </div>
