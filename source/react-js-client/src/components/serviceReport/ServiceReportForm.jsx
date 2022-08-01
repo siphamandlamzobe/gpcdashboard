@@ -111,13 +111,13 @@ const ServiceReportForm = (props) => {
         <div className="flex-none inline-block pt-2">
           <button
             type="submit"
-            className="bg-green-700 rounded-lg p-1 text-white font-bold"
+            className="bg-green-500 hover:bg-green-600 rounded-lg p-1 text-white font-bold"
           >
             Submit
           </button>
           <button
             type="button"
-            className="rounded-lg p-1 border-2 text-black font-bold m-1"
+            className="rounded-lg p-1 border-2 hover:bg-slate-100 text-black font-bold m-1"
             onClick={props.onCancel}
           >
             Cancel
