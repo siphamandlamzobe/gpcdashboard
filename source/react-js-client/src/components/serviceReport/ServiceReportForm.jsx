@@ -25,11 +25,14 @@ const ServiceReportForm = (props) => {
             Attendance
           </label>
           <input
+            id="attendance"
             className="rounded-md border-2 border-black"
             type="number"
             {...register("attendance", { required: true, min: 0 })}
           />
-          {errors.attendance && <span className="text-red-600">This field is required</span>}
+          {errors.attendance && (
+            <span className="text-red-600">This field is required</span>
+          )}
         </div>
         <div className="flex flex-col content-center p-1">
           <label className="font-bold" htmlFor="firsttimers">
@@ -40,7 +43,9 @@ const ServiceReportForm = (props) => {
             type="number"
             {...register("firsttimers", { required: true, min: 0 })}
           />
-          {errors.firsttimers && <span className="text-red-600">This field is required</span>}
+          {errors.firsttimers && (
+            <span className="text-red-600">This field is required</span>
+          )}
         </div>
         <div className="flex flex-col content-center p-1">
           <label className="font-bold" htmlFor="soulsSaved">
@@ -51,7 +56,9 @@ const ServiceReportForm = (props) => {
             type="number"
             {...register("soulsSaved", { required: true, min: 0 })}
           />
-          {errors.soulsSaved && <span className="text-red-600">This field is required</span>}
+          {errors.soulsSaved && (
+            <span className="text-red-600">This field is required</span>
+          )}
         </div>
         <div className="flex flex-col content-center p-1">
           <label className="font-bold" htmlFor="serviceDate">
@@ -64,7 +71,9 @@ const ServiceReportForm = (props) => {
             max="2023-12-31"
             {...register("serviceDate", { required: true })}
           />
-          {errors.serviceDate && <span className="text-red-600">This field is required</span>}
+          {errors.serviceDate && (
+            <span className="text-red-600">This field is required</span>
+          )}
         </div>
 
         <div className="flex flex-col content-center p-1">
@@ -79,7 +88,9 @@ const ServiceReportForm = (props) => {
             <option value="Sunday">Sunday</option>
             <option value="Wednesday">Wednesday</option>
           </select>
-          {errors.serviceType && <span className="text-red-600">This field is required</span>}
+          {errors.serviceType && (
+            <span className="text-red-600">This field is required</span>
+          )}
         </div>
         <div className="flex flex-col content-center p-1">
           <label className="font-bold" htmlFor="serviceReview">
@@ -92,9 +103,11 @@ const ServiceReportForm = (props) => {
             cols="30"
             rows="4"
           />
-          {errors.serviceReview && <span className="text-red-600">This field is required</span>}
+          {errors.serviceReview && (
+            <span className="text-red-600">This field is required</span>
+          )}
         </div>
-        
+
         <div className="flex-none inline-block pt-2">
           <button
             type="submit"
