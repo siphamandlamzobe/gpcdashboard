@@ -147,13 +147,13 @@ const ServiceReportEditForm = (props) => {
         <div className="flex-none inline-block pt-2">
           <button
             type="submit"
-            className="bg-orange-600 rounded-lg p-1 text-white font-bold"
+            className="bg-orange-500 hover:bg-orange-600 rounded-lg p-1 text-white font-bold"
           >
             Update
           </button>
           <button
             type="button"
-            className="border-2 rounded-lg p-1 text-black font-bold m-1"
+            className="border-2 hover:bg-slate-100 rounded-lg p-1 text-black font-bold m-1"
             onClick={cancelHandler}
           >
             Cancel
