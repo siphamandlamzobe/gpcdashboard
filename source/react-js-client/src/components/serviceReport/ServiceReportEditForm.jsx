@@ -75,6 +75,7 @@ const ServiceReportEditForm = (props) => {
             First Timers
           </label>
           <input
+            id="firsttimers"
             className="rounded-md border-2 border-black"
             type="number"
             {...register("firsttimers", { required: true, min: 0 })}
@@ -89,6 +90,7 @@ const ServiceReportEditForm = (props) => {
           </label>
           <input
             className="rounded-md border-2 border-black"
+            id="soulsSaved"
             type="number"
             {...register("soulsSaved", { required: true, min: 0 })}
           />
@@ -102,6 +104,7 @@ const ServiceReportEditForm = (props) => {
           </label>
           <input
             className="rounded-md border-2 border-black"
+            id="serviceDate"
             type="date"
             min="2022-01-01"
             max="2023-12-31"
