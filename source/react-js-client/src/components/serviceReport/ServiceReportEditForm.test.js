@@ -1,12 +1,12 @@
 import { render, screen } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
-import ServiceReportForm from "./ServiceReportForm";
+import ServiceReportEditForm from "./ServiceReportEditForm";
 
-describe("Service Report Form", () => {
+describe("Service Report Edit Form", () => {
   it("render the attandance input", () => {
     render(
       <Router>
-        <ServiceReportForm />
+        <ServiceReportEditForm />
       </Router>
     );
 
@@ -17,7 +17,7 @@ describe("Service Report Form", () => {
   it("render the firsttimers input", () => {
     render(
       <Router>
-        <ServiceReportForm />
+        <ServiceReportEditForm />
       </Router>
     );
 
@@ -28,7 +28,7 @@ describe("Service Report Form", () => {
   it("render the soulsSaved input", () => {
     render(
       <Router>
-        <ServiceReportForm />
+        <ServiceReportEditForm />
       </Router>
     );
 
@@ -39,7 +39,7 @@ describe("Service Report Form", () => {
   it("render the serviceDate input", () => {
     render(
       <Router>
-        <ServiceReportForm />
+        <ServiceReportEditForm />
       </Router>
     );
 
@@ -50,7 +50,7 @@ describe("Service Report Form", () => {
   it("render the serviceReview input", () => {
     render(
       <Router>
-        <ServiceReportForm />
+        <ServiceReportEditForm />
       </Router>
     );
 
@@ -61,22 +61,22 @@ describe("Service Report Form", () => {
   it("render the submit button", () => {
     render(
       <Router>
-        <ServiceReportForm />
+        <ServiceReportEditForm />
       </Router>
     );
 
-    const submitButtonEl = screen.getByRole('button', {name: /submit/i});
+    const submitButtonEl = screen.getByRole("button", { name: /update/i });
     expect(submitButtonEl).toBeInTheDocument();
   });
 
   it("render the cancel button", () => {
     render(
       <Router>
-        <ServiceReportForm />
+        <ServiceReportEditForm />
       </Router>
     );
 
-    const cancelButtonEl = screen.getByRole('button', {name: /cancel/i});
+    const cancelButtonEl = screen.getByRole("button", { name: /cancel/i });
     expect(cancelButtonEl).toBeInTheDocument();
   });
 });
