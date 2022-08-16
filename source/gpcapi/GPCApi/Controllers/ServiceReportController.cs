@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace GPCApi.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("/api/serviceReports")]
 public class ServiceReportController : ControllerBase
 {
     
