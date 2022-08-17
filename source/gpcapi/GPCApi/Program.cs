@@ -7,6 +7,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddTransient<ISqlManager, SqlManager >();
 builder.Services.AddTransient<IServiceReportRepository, ServiceReportRepository>();
 
 var app = builder.Build();
