@@ -1,9 +1,13 @@
+using GPCApi.Repository;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddTransient<IServiceReportRepository, ServiceReportRepository>();
 
 var app = builder.Build();
 
