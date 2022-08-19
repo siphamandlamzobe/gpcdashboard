@@ -1,6 +1,6 @@
-using Microsoft.AspNetCore.Mvc;
 using GPCApi.Repository;
 using GPCApi.Repository.DataModels;
+using Microsoft.AspNetCore.Mvc;
 
 namespace GPCApi.Controllers;
 
@@ -17,102 +17,67 @@ public class ServiceReportController : ControllerBase
     [HttpGet]
     public async Task<ActionResult> GetServiceReports()
     {
-        try
-        {
-            var serviceReports = await _serviceReportRepository.GetAll();
+        var serviceReports = await _serviceReportRepository.GetAll();
 
-            return Ok(serviceReports);
-        }
-        catch (Exception e)
-        {
-            return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
-        }
+        return Ok(serviceReports);
     }
 
     [HttpPost]
     public async Task<ActionResult> AddServiceReport(ServiceReport serviceReport)
     {
-        try
+        if (serviceReport == null)
         {
-            if (serviceReport == null)
-            {
-                return BadRequest();
-            }
-
-            var addedServiceReportId = await _serviceReportRepository.Add(serviceReport: serviceReport);
-
-            return CreatedAtAction(nameof(GetServiceReportById), new { id = serviceReport.Id }, serviceReport);
+            return BadRequest();
         }
-        catch (Exception e)
-        {
-            return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
-        }
+
+        var addedServiceReportId = await _serviceReportRepository.Add(serviceReport: serviceReport);
+
+        return CreatedAtAction(nameof(GetServiceReportById), new { id = serviceReport.Id }, serviceReport);
     }
+
     [HttpGet("{*id}")]
     public async Task<ActionResult> GetServiceReportById(int id)
     {
-        try
-        {
-            var serviceReport = await _serviceReportRepository.GetById(id);
+        var serviceReport = await _serviceReportRepository.GetById(id);
 
-            if (serviceReport == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(serviceReport);
-        }
-        catch (Exception e)
+        if (serviceReport == null)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+            return NotFound();
         }
+
+        return Ok(serviceReport);
     }
 
     [HttpDelete("{*id}")]
     public async Task<ActionResult> DeleteServiceReportById(int id)
     {
-        try
+        var serviceReport = await _serviceReportRepository.GetById(id);
+        if (serviceReport == null)
         {
-            var serviceReport = await _serviceReportRepository.GetById(id);
-            if (serviceReport == null)
-            {
-                return NotFound($"Service report with id = {id} not found");
-            }
-
-            await _serviceReportRepository.Delete(id);
-
-            return Ok("Deleted successfully!");
+            return NotFound($"Service report with id = {id} not found");
         }
-        catch (Exception)
-        {
-            return StatusCode(StatusCodes.Status500InternalServerError,
-            "Error deleting data");
-        }
+
+        await _serviceReportRepository.Delete(id);
+
+        return Ok("Deleted successfully!");
     }
 
     [HttpPut("{*id}")]
     public async Task<ActionResult> UpdateServiceReport(int id, ServiceReport serviceReport)
     {
-        try
+        if (id != serviceReport.Id)
         {
-            if (id != serviceReport.Id)
-            {
-                return BadRequest("Service Report ID mismatch");
-            }
-
-            var serviceReportDto = await _serviceReportRepository.GetById(id);
-
-            if (serviceReportDto == null)
-            {
-                return NotFound($"Service report with id = {id} not found");
-            }
-
-            await _serviceReportRepository.Update(serviceReport);
-            return Ok("Updated successfully!");
+            return BadRequest("Service Report ID mismatch");
         }
-        catch (Exception e)
+
+        var serviceReportDto = await _serviceReportRepository.GetById(id);
+
+        if (serviceReportDto == null)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+            return NotFound($"Service report with id = {id} not found");
         }
+
+        await _serviceReportRepository.Update(serviceReport);
+        return Ok("Updated successfully!");
     }
 }
