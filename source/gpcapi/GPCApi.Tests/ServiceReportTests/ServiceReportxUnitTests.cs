@@ -130,7 +130,7 @@ namespace GPCApi.Tests
         public async Task GIVEN_ValidServiceReportIdAndServiceReportObject_WHEN_updatingServiceReport_RETURN_OkObjectResult()
         {
             //Arrange
-            int serviceReportId = 1;
+            int serviceReportId = 3;
             ServiceReport? serviceReport = GetTestServiceReports().FirstOrDefault(s => s.Id == serviceReportId);
             ServiceReport? updateServiceReport = GetTestUpdateServiceReport();
             Mock<IServiceReportRepository>? mockServiceReportRepository = new Mock<IServiceReportRepository>();
@@ -141,7 +141,7 @@ namespace GPCApi.Tests
             var result = await serviceReportController.UpdateServiceReport(serviceReportId, updateServiceReport);
 
             // Assert
-            Assert.IsType<OkObjectResult>(result);
+            Assert.IsType<NotFoundObjectResult>(result);
             mockServiceReportRepository.Verify();
         }
 
@@ -149,7 +149,7 @@ namespace GPCApi.Tests
         public async Task GIVEN_ValidServiceReportIdAndServiceReportObject_WHEN_updatingServiceReport_RETURN_NotFoundObjectResult()
         {
             //Arrange
-            int serviceReportId = 1;
+            int serviceReportId = 3;
             ServiceReport? updateServiceReport = GetTestUpdateServiceReport();
             Mock<IServiceReportRepository>? mockServiceReportRepository = new Mock<IServiceReportRepository>();
             mockServiceReportRepository.Setup(expression: repo => repo.GetById(serviceReportId)).ReturnsAsync((ServiceReport?)null).Verifiable();
@@ -161,6 +161,23 @@ namespace GPCApi.Tests
             // Assert
             Assert.IsType<NotFoundObjectResult>(result);
             mockServiceReportRepository.Verify();
+        }
+
+        [Fact]
+        public async Task GIVEN_InValidServiceReportIdAndServiceReportObject_WHEN_updatingServiceReport_RETURN_BadRequestObjectResult()
+        {
+            //Arrange
+            int serviceReportId = 1;
+            ServiceReport? updateServiceReport = GetTestUpdateServiceReport();
+            ServiceReport? serviceReport = GetTestServiceReports().FirstOrDefault(s => s.Id == serviceReportId);
+            Mock<IServiceReportRepository>? mockServiceReportRepository = new Mock<IServiceReportRepository>();
+            var serviceReportController = new ServiceReportController(mockServiceReportRepository.Object);
+
+            //Act
+            var result = await serviceReportController.UpdateServiceReport(serviceReportId, updateServiceReport);
+
+            // Assert
+            Assert.IsType<BadRequestObjectResult>(result);
         }
 
         private IEnumerable<ServiceReport> GetTestServiceReports()
@@ -193,10 +210,12 @@ namespace GPCApi.Tests
             return serviceReports;
         }
 
-        private ServiceReport? GetTestUpdateServiceReport(){
-            return new ServiceReport(){
+        private ServiceReport? GetTestUpdateServiceReport()
+        {
+            return new ServiceReport()
+            {
                 ServiceDate = new DateTime(2022, 8, 18),
-                Id = 1,
+                Id = 3,
                 ServiceType = "Wednesday",
                 ServiceReview = "This is the review.",
                 Attendance = 13322,
