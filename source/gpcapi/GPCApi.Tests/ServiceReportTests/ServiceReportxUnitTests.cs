@@ -80,12 +80,11 @@ namespace GPCApi.Tests
         {
             //Arrange
             Mock<IServiceReportRepository>? mockServiceReportRepository = new Mock<IServiceReportRepository>();
-            // mockServiceReportRepository.Setup(repo => repo.Add(serviceReport: serviceReportId)).ReturnsAsync((ServiceReport)null);
             var serviceReportController = new ServiceReportController(mockServiceReportRepository.Object);
 
             //Act
             var result = await serviceReportController.AddServiceReport(new ServiceReport());
-            var x = result.GetType();
+
             // Assert
             Assert.NotNull(result);
             Assert.IsType<CreatedAtActionResult>(result);
