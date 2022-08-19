@@ -2,7 +2,6 @@ using GPCApi.Controllers;
 using GPCApi.Repository;
 using GPCApi.Repository.DataModels;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Core;
 using Moq;
 
 namespace GPCApi.Tests
@@ -51,7 +50,7 @@ namespace GPCApi.Tests
             //Arrange
             int serviceReportId = 1;
             Mock<IServiceReportRepository>? mockServiceReportRepository = new Mock<IServiceReportRepository>();
-            mockServiceReportRepository.Setup(repo => repo.GetById(serviceReportId)).ReturnsAsync((ServiceReport)null);
+            mockServiceReportRepository.Setup(repo => repo.GetById(serviceReportId)).ReturnsAsync((ServiceReport?)null);
             var serviceReportController = new ServiceReportController(mockServiceReportRepository.Object);
 
             //Act
@@ -88,6 +87,22 @@ namespace GPCApi.Tests
             // Assert
             Assert.NotNull(result);
             Assert.IsType<CreatedAtActionResult>(result);
+        }
+
+        [Fact]
+        public async Task GIVEN_InValidServiceReportId_WHEN_DeletingServiceReportById_RETURN_NotFoundObjectResult()
+        {
+            //Arrange
+            int serviceReportId = 1;
+            Mock<IServiceReportRepository>? mockServiceReportRepository = new Mock<IServiceReportRepository>();
+            mockServiceReportRepository.Setup(repo => repo.GetById(serviceReportId)).ReturnsAsync((ServiceReport?)null);
+            var serviceReportController = new ServiceReportController(mockServiceReportRepository.Object);
+
+            //Act
+            var result = await serviceReportController.DeleteServiceReportById(serviceReportId);
+
+            // Assert
+            Assert.IsType<NotFoundObjectResult>(result);
         }
 
         private IEnumerable<ServiceReport> GetTestServiceReports()
