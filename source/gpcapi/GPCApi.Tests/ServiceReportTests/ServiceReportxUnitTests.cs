@@ -126,6 +126,25 @@ namespace GPCApi.Tests
             mockServiceReportRepository.Verify();
         }
 
+        [Fact]
+        public async Task GIVEN_ValidServiceReportIdAndServiceReportObject_WHEN_updatingServiceReport_RETURN_OkObjectResult()
+        {
+            //Arrange
+            int serviceReportId = 1;
+            ServiceReport? serviceReport = GetTestServiceReports().FirstOrDefault(s => s.Id == serviceReportId);
+            ServiceReport? updateServiceReport = GetTestUpdateServiceReport();
+            Mock<IServiceReportRepository>? mockServiceReportRepository = new Mock<IServiceReportRepository>();
+            mockServiceReportRepository.Setup(expression: repo => repo.GetById(serviceReportId)).ReturnsAsync(serviceReport).Verifiable();
+            var serviceReportController = new ServiceReportController(mockServiceReportRepository.Object);
+
+            //Act
+            var result = await serviceReportController.UpdateServiceReport(serviceReportId, updateServiceReport);
+
+            // Assert
+            Assert.IsType<OkObjectResult>(result);
+            mockServiceReportRepository.Verify();
+        }
+
         private IEnumerable<ServiceReport> GetTestServiceReports()
         {
             var serviceReports = new List<ServiceReport>();
@@ -154,6 +173,19 @@ namespace GPCApi.Tests
             });
 
             return serviceReports;
+        }
+
+        private ServiceReport? GetTestUpdateServiceReport(){
+            return new ServiceReport(){
+                ServiceDate = new DateTime(2022, 8, 18),
+                Id = 1,
+                ServiceType = "Wednesday",
+                ServiceReview = "This is the review.",
+                Attendance = 13322,
+                CreatedOn = new DateTime(2022, 8, 18),
+                SoulsSaved = 43232,
+                Firsttimers = 4232
+            };
         }
 
     }
