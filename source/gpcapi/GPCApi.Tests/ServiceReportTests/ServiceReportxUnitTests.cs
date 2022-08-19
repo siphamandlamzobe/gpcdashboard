@@ -13,7 +13,7 @@ namespace GPCApi.Tests
         {
             //Arrange
             var mockServiceReportRepository = new Mock<IServiceReportRepository>();
-            mockServiceReportRepository.Setup(repo => repo.GetAll()).ReturnsAsync(GetTestServiceReports);
+            mockServiceReportRepository.Setup(repo => repo.GetAll()).ReturnsAsync(GetTestServiceReports).Verifiable();
             var serviceReportController = new ServiceReportController(mockServiceReportRepository.Object);
 
             //Act
@@ -23,6 +23,7 @@ namespace GPCApi.Tests
             var okObjectResult = Assert.IsType<OkObjectResult>(result);
             var okObjectResultValueCount = (int)okObjectResult.Value.GetType().GetProperty("Count").GetValue(okObjectResult.Value);
             Assert.Equal(2, okObjectResultValueCount);
+            mockServiceReportRepository.Verify();
         }
 
         [Fact]
@@ -30,8 +31,9 @@ namespace GPCApi.Tests
         {
             //Arrange
             int serviceReportId = 1;
+            ServiceReport? serviceReport = GetTestServiceReports().FirstOrDefault(s => s.Id == serviceReportId);
             Mock<IServiceReportRepository>? mockServiceReportRepository = new Mock<IServiceReportRepository>();
-            mockServiceReportRepository.Setup(repo => repo.GetById(serviceReportId)).ReturnsAsync(GetTestServiceReports().FirstOrDefault(s => s.Id == serviceReportId));
+            mockServiceReportRepository.Setup(repo => repo.GetById(serviceReportId)).ReturnsAsync(serviceReport).Verifiable();
             var serviceReportController = new ServiceReportController(mockServiceReportRepository.Object);
 
             //Act
@@ -42,6 +44,7 @@ namespace GPCApi.Tests
             Assert.Equal("Sunday", okObjectResult.Value.GetType().GetProperty("ServiceType").GetValue(okObjectResult.Value));
             Assert.Equal(12322, okObjectResult.Value.GetType().GetProperty("Attendance").GetValue(okObjectResult.Value));
             Assert.Equal(23232, okObjectResult.Value.GetType().GetProperty("SoulsSaved").GetValue(okObjectResult.Value));
+            mockServiceReportRepository.Verify();
         }
 
         [Fact]
@@ -110,8 +113,9 @@ namespace GPCApi.Tests
         {
             //Arrange
             int serviceReportId = 1;
+            ServiceReport? serviceReport = GetTestServiceReports().FirstOrDefault(s => s.Id == serviceReportId);
             Mock<IServiceReportRepository>? mockServiceReportRepository = new Mock<IServiceReportRepository>();
-            mockServiceReportRepository.Setup(repo => repo.GetById(serviceReportId)).ReturnsAsync(GetTestServiceReports().FirstOrDefault(s => s.Id == serviceReportId));
+            mockServiceReportRepository.Setup(expression: repo => repo.GetById(serviceReportId)).ReturnsAsync(serviceReport).Verifiable();
             var serviceReportController = new ServiceReportController(mockServiceReportRepository.Object);
 
             //Act
@@ -119,6 +123,7 @@ namespace GPCApi.Tests
 
             // Assert
             Assert.IsType<OkObjectResult>(result);
+            mockServiceReportRepository.Verify();
         }
 
         private IEnumerable<ServiceReport> GetTestServiceReports()
