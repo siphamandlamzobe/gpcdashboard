@@ -145,6 +145,24 @@ namespace GPCApi.Tests
             mockServiceReportRepository.Verify();
         }
 
+        [Fact]
+        public async Task GIVEN_ValidServiceReportIdAndServiceReportObject_WHEN_updatingServiceReport_RETURN_NotFoundObjectResult()
+        {
+            //Arrange
+            int serviceReportId = 1;
+            ServiceReport? updateServiceReport = GetTestUpdateServiceReport();
+            Mock<IServiceReportRepository>? mockServiceReportRepository = new Mock<IServiceReportRepository>();
+            mockServiceReportRepository.Setup(expression: repo => repo.GetById(serviceReportId)).ReturnsAsync((ServiceReport?)null).Verifiable();
+            var serviceReportController = new ServiceReportController(mockServiceReportRepository.Object);
+
+            //Act
+            var result = await serviceReportController.UpdateServiceReport(serviceReportId, updateServiceReport);
+
+            // Assert
+            Assert.IsType<NotFoundObjectResult>(result);
+            mockServiceReportRepository.Verify();
+        }
+
         private IEnumerable<ServiceReport> GetTestServiceReports()
         {
             var serviceReports = new List<ServiceReport>();
