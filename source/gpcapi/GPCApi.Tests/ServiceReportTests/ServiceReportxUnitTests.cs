@@ -61,6 +61,20 @@ namespace GPCApi.Tests
             Assert.IsType<NotFoundResult>(result);
         }
 
+        [Fact]
+        public async Task GIVEN_NullServiceReportObject_WHEN_AddingServiceReport_RETURN_BadRequestResult()
+        {
+            //Arrange
+            Mock<IServiceReportRepository>? mockServiceReportRepository = new Mock<IServiceReportRepository>();
+            var serviceReportController = new ServiceReportController(mockServiceReportRepository.Object);
+
+            //Act
+            var result = await serviceReportController.AddServiceReport(null);
+
+            // Assert
+            Assert.IsType<BadRequestResult>(result);
+        }
+
         private IEnumerable<ServiceReport> GetTestServiceReports()
         {
             var serviceReports = new List<ServiceReport>();
