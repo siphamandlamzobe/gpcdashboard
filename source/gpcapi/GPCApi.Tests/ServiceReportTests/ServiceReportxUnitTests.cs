@@ -105,6 +105,22 @@ namespace GPCApi.Tests
             Assert.IsType<NotFoundObjectResult>(result);
         }
 
+        [Fact]
+        public async Task GIVEN_ValidServiceReportId_WHEN_DeletingServiceReportById_RETURN_OkObjectResult()
+        {
+            //Arrange
+            int serviceReportId = 1;
+            Mock<IServiceReportRepository>? mockServiceReportRepository = new Mock<IServiceReportRepository>();
+            mockServiceReportRepository.Setup(repo => repo.GetById(serviceReportId)).ReturnsAsync(GetTestServiceReports().FirstOrDefault(s => s.Id == serviceReportId));
+            var serviceReportController = new ServiceReportController(mockServiceReportRepository.Object);
+
+            //Act
+            var result = await serviceReportController.DeleteServiceReportById(serviceReportId);
+
+            // Assert
+            Assert.IsType<OkObjectResult>(result);
+        }
+
         private IEnumerable<ServiceReport> GetTestServiceReports()
         {
             var serviceReports = new List<ServiceReport>();
