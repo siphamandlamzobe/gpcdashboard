@@ -7,6 +7,7 @@ namespace GPCApi.Repository
     public class ServiceReportRepository : IServiceReportRepository
     {
         private ISqlManager _sqlManager;
+        private const int  CommandTimeout = 30;
         public ServiceReportRepository(ISqlManager sqlManager)
         {
             _sqlManager = sqlManager;
@@ -23,27 +24,33 @@ namespace GPCApi.Repository
             parameters.Add("@serviceReview", serviceReport.ServiceReview);
             parameters.Add("@createdOn", DateTime.Now);
 
-            return await _sqlManager.DbConnection.QuerySingleAsync<int>("AddServiceReport", parameters, null, 120, CommandType.StoredProcedure);
+            return await _sqlManager.DbConnection.QuerySingleAsync<int>("AddServiceReport", parameters, null, CommandTimeout, CommandType.StoredProcedure);
         }
 
         public async Task Delete(int id)
         {
             var parameter = new DynamicParameters();
             parameter.Add("@id", id);
-            await _sqlManager.DbConnection.ExecuteAsync("DeleteServiceReport", parameter, null, 120, CommandType.StoredProcedure);
+            await _sqlManager.DbConnection.ExecuteAsync("DeleteServiceReport", parameter, null, CommandTimeout, CommandType.StoredProcedure);
         }
 
         public async Task<IEnumerable<ServiceReport>> GetAll()
         {
-            object? param = null;
-            return await _sqlManager.DbConnection.QueryAsync<ServiceReport>("GetAllServiceReports", param, null, 120, CommandType.StoredProcedure);
+            return await _sqlManager.DbConnection.QueryAsync<ServiceReport>("GetAllServiceReports", null, null, CommandTimeout, CommandType.StoredProcedure);
         }
 
         public async Task<ServiceReport> GetById(int id)
         {
             var parameter = new DynamicParameters();
             parameter.Add("@id", id);
-            return await _sqlManager.DbConnection.QuerySingleAsync<ServiceReport>("GetServiceReportById", parameter, null, 120, CommandType.StoredProcedure);
+            return await _sqlManager.DbConnection.QuerySingleAsync<ServiceReport>("GetServiceReportById", parameter, null, CommandTimeout, CommandType.StoredProcedure);
+        }
+
+        public async Task<IEnumerable<ServiceReport>> Search(string query)
+        {
+            var parameter = new DynamicParameters();
+            parameter.Add("@query", query);
+            return await _sqlManager.DbConnection.QueryAsync<ServiceReport>("SearchServiceReports", parameter, null, CommandTimeout, CommandType.StoredProcedure);
         }
 
         public async Task Update(ServiceReport serviceReport)
@@ -57,7 +64,7 @@ namespace GPCApi.Repository
             parameters.Add("@serviceDate", serviceReport.ServiceDate);
             parameters.Add("@serviceReview", serviceReport.ServiceReview);
 
-            await _sqlManager.DbConnection.ExecuteAsync("UpdateServiceReport", parameters, null, 120, CommandType.StoredProcedure);
+            await _sqlManager.DbConnection.ExecuteAsync("UpdateServiceReport", parameters, null, CommandTimeout, CommandType.StoredProcedure);
         }
     }
 }

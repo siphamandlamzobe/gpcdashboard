@@ -9,5 +9,6 @@ namespace GPCApi.Repository
         Task<IEnumerable<ServiceReport>> GetAll();
         Task Update(ServiceReport serviceReport);
         Task Delete(int id);
+        Task<IEnumerable<ServiceReport>> Search(string query);
     }
 }
