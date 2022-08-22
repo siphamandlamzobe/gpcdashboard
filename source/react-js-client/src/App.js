@@ -26,7 +26,10 @@ function App() {
                 <Route index element={<ListServiceReports />} />
                 <Route path="new" element={<NewServiceReport />} />
                 <Route path="edit/:id" element={<EditServiceReport />} />
-                <Route path="serviceReport/:id" element={<ServiceReportItem />} />
+                <Route
+                  path="serviceReport/:id"
+                  element={<ServiceReportItem />}
+                />
               </Route>
               <Route path="*" element={<PageNotFound />} />
             </Routes>

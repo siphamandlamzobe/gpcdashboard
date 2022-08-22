@@ -5,13 +5,8 @@ import ServiceReportForm from "../../components/serviceReport/ServiceReportForm"
 const NewServiceReport = () => {
   const navigate = useNavigate();
 
-  const onSaveServiceReportHandler = async (report) => {
-    const request = {
-      ...report,
-    };
-
-    await api.post("/api/serviceReports", request).then((res) => {
-      res.data.serviceDate = new Date(res.data.serviceDate);
+  const onSaveServiceReportHandler = (report) => {
+    api.post("/api/serviceReports", report).then((res) => {
       navigate("/serviceReports");
     });
   };

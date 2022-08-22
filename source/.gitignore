@@ -1,3 +1,4 @@
 .vscode
-gpcapi
 server-api
+bin
+obj
