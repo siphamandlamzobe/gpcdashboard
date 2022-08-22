@@ -18,10 +18,8 @@ const ListServiceReports = () => {
     setServiceReports(newServiceReportList);
   };
 
-  const getAllServiceReports = async (pageNumber, pageSize) => {
-    const response = await api.get(
-      `/api/serviceReports?pageNumber=${pageNumber}&pageSize=${pageSize}`
-    );
+  const getAllServiceReports = async () => {
+    const response = await api.get("/api/serviceReports");
     return response.data;
   };
 
