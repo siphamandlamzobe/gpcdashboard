@@ -27,7 +27,7 @@ public class ServiceReportController : ControllerBase
     {
         if (serviceReport == null)
         {
-            return BadRequest();
+            return BadRequest("Could not add the service report");
         }
 
         var addedServiceReportId = await _serviceReportRepository.Add(serviceReport: serviceReport);
@@ -42,7 +42,7 @@ public class ServiceReportController : ControllerBase
 
         if (serviceReport == null)
         {
-            return NotFound();
+            return NotFound("Could not find the service report");
         }
 
         return Ok(serviceReport);
@@ -78,6 +78,20 @@ public class ServiceReportController : ControllerBase
         }
 
         await _serviceReportRepository.Update(serviceReport);
+
         return Ok("Updated successfully!");
+    }
+
+    [HttpGet("{*q}")]
+    public async Task<ActionResult> Search(string query)
+    {
+        var serviceReport = await _serviceReportRepository.Search(query);
+
+        if (serviceReport == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(serviceReport);
     }
 }
