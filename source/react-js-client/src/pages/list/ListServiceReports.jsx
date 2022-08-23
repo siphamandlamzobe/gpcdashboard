@@ -1,13 +1,12 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import ServiceReports from "../../components/serviceReport/ServiceReports";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Search from "../../components/search/Search";
 import api from "../../api/serviceReports";
 
 const ListServiceReports = () => {
   const [serviceReports, setServiceReports] = useState([]);
   const [query, setQuery] = useState("");
-  const params = useParams();
   const [isLoading, setIsLoading] = useState(false);
 
   const onDeleteServiceReportHandler = async (id) => {
@@ -18,18 +17,15 @@ const ListServiceReports = () => {
     setServiceReports(newServiceReportList);
   };
 
-  const getAllServiceReports = async () => {
-    const response = await api.get("/api/serviceReports");
+  const getAllServiceReports = () => {
+    const response = api.get("/api/serviceReports");
     return response.data;
   };
 
   useLayoutEffect(() => {
-    const getServiceReports = async () => {
+    const getServiceReports =  () => {
       setIsLoading(true);
-      const allServiceReports = await getAllServiceReports(
-        params.pageNumber,
-        params.pageSize
-      );
+      const allServiceReports = getAllServiceReports();
       if (allServiceReports) {
         allServiceReports.map((report) => {
           return (report.serviceDate = new Date(report.serviceDate));
@@ -40,7 +36,7 @@ const ListServiceReports = () => {
     };
 
     getServiceReports();
-  }, []);
+  }, [setServiceReports]);
 
   const getQuery = (query) => {
     setQuery(query);

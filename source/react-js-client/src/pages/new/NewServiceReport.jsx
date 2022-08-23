@@ -6,7 +6,7 @@ const NewServiceReport = () => {
   const navigate = useNavigate();
 
   const onSaveServiceReportHandler = (report) => {
-    api.post("/api/serviceReports", report).then((res) => {
+    api.post("/api/serviceReports", report).then(() => {
       navigate("/serviceReports");
     });
   };

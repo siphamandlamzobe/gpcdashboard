@@ -4,6 +4,10 @@ import axios from "axios";
 //   baseURL: "http://localhost:3006",
 // });
 
+// export default axios.create({
+//   baseURL: "https://localhost:7185",
+// });
+
 export default axios.create({
-  baseURL: "https://localhost:7185",
+  baseURL: "https://gpcapidashboard.azurewebsites.net",
 });
