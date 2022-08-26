@@ -1,3 +1,5 @@
+using System.Data;
+using System.Data.SqlClient;
 using GPCApi.Repository;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
@@ -9,7 +11,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: MyAllowSpecificOrigins,
     policy =>
     {
-        policy.WithOrigins("http://localhost:3002").AllowAnyHeader().AllowAnyMethod();
+        policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
     });
 });
 
@@ -18,7 +20,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddTransient<ISqlManager, SqlManager>();
+builder.Services.AddTransient<IDbConnection>(c => new SqlConnection(Environment.GetEnvironmentVariable("GPCDashboardConnection")));
 builder.Services.AddTransient<IServiceReportRepository, ServiceReportRepository>();
 
 var app = builder.Build();
