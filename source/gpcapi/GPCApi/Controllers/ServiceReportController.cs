@@ -81,17 +81,4 @@ public class ServiceReportController : ControllerBase
 
         return Ok("Updated successfully!");
     }
-
-    // [HttpGet("{*q}")]
-    public async Task<ActionResult> Search(string query)
-    {
-        var serviceReport = await _serviceReportRepository.Search(query);
-
-        if (serviceReport == null)
-        {
-            return NotFound();
-        }
-
-        return Ok(serviceReport);
-    }
 }
