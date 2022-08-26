@@ -36,16 +36,19 @@ namespace GPCApi.Tests
             Mock<IServiceReportRepository> mockServiceReportRepository = new();
             mockServiceReportRepository.Setup(repo => repo.GetById(serviceReportId)).ReturnsAsync(serviceReport).Verifiable();
             var serviceReportController = new ServiceReportController(mockServiceReportRepository.Object);
-
+            var expectedServiceType = "Sunday";
+            var expectedServiceAttendance = 12322;
+            var expectedServiceSoulsSaved = 23232;
+            
             //Act
             var result = await serviceReportController.GetServiceReportById(serviceReportId);
 
             // Assert
             var okObjectResult = Assert.IsType<OkObjectResult>(result);
             var okObjectResultValue = Assert.IsType<ServiceReport>(okObjectResult.Value);
-            Assert.Equal("Sunday", okObjectResultValue.ServiceType);
-            Assert.Equal(12322, okObjectResultValue.Attendance);
-            Assert.Equal(23232, okObjectResultValue.SoulsSaved);
+            Assert.Equal(expectedServiceType, okObjectResultValue.ServiceType);
+            Assert.Equal(expectedServiceAttendance, okObjectResultValue.Attendance);
+            Assert.Equal(expectedServiceSoulsSaved, okObjectResultValue.SoulsSaved);
             mockServiceReportRepository.Verify();
         }
 
