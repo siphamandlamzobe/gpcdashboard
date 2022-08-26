@@ -10,6 +10,7 @@ const NewServiceReport = () => {
       navigate("/serviceReports");
     });
   };
+  
 
   const cancelHandler = () => {
     navigate("/serviceReports");
