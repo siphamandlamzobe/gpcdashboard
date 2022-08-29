@@ -72,7 +72,8 @@ const ListServiceReports = () => {
       }
     };
     search();
-  }, [setQuery, searchParams]);
+    // eslint-disable-next-line
+  }, [setQuery, searchParams, query, serviceReports]);
 
   const getSearchKeyword = (query) => {
     getQuery(query);
@@ -98,6 +99,7 @@ const ListServiceReports = () => {
         <ServiceReports
           serviceReports={serviceReports}
           onDeleteHandler={onDeleteServiceReportHandler}
+          searchTerm={query}
           isLoading={isLoading}
         />
       </div>

@@ -2,11 +2,31 @@ import { Link } from "react-router-dom";
 import ReportDate from "./ReportDate";
 
 const ServiceReport = (props) => {
+  var isSearch = true;
+  if (props.searchTerm === "undefined" || props.searchTerm === "") {
+    isSearch = false;
+  }
+
+  const regex = new RegExp(`(${props.searchTerm})`, "gi");
+  const parts = props.serviceReview.split(regex);
+
   return (
     <div className="flex items-center p-3 my-4 justify-between shadow-3xl">
       <ReportDate serviceDate={props.serviceDate} />
       <div className="flex text-black justify-between items-center p-5 w-full ">
-        {props.serviceReview}
+        {isSearch === true ? (
+          <span>
+            {parts.filter(String).map((part, i) => {
+              return regex.test(part) ? (
+                <mark key={i}>{part}</mark>
+              ) : (
+                <span key={i}>{part}</span>
+              );
+            })}
+          </span>
+        ) : (
+          props.serviceReview
+        )}
       </div>
       <div className="grid grid-cols-1 grid-rows-3 w-28 justify-between">
         <div className="inline-grid grid-cols-3 gap-1 grid-rows-1">

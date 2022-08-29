@@ -14,7 +14,7 @@ const ServiceReportList = (props) => {
 
   return (
     <div className="container flex w-full mx-auto justify-between">
-      <ul className="list-none">
+      <ul className="list-none w-full">
         {props.serviceReports.map((report) => (
           <ServiceReport
             onDeleteHandler={props.onDeleteHandler}
@@ -26,6 +26,7 @@ const ServiceReportList = (props) => {
             serviceReview={report.serviceReview}
             firsttimers={report.firsttimers}
             soulsSaved={report.soulsSaved}
+            searchTerm={props.searchTerm}
           />
         ))}
       </ul>
