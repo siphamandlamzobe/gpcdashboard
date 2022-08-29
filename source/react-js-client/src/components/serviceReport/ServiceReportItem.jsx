@@ -1,7 +1,7 @@
 import React, { useLayoutEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import api from "../../api/serviceReports";
+import { useLocation } from "react-router-dom";
 import ReportDate from "./ReportDate";
+import { getServiceReportById } from "../../utils/utils.js";
 
 const ServiceReportItem = () => {
   const location = useLocation();
@@ -9,16 +9,6 @@ const ServiceReportItem = () => {
   const stateData = location.state;
 
   const [data, setData] = useState({ ...stateData });
-
-  const getServiceReportById = async (id) => {
-    const response = await api
-      .get(`/api/serviceReports/${id}`)
-      .then((response) => {
-        return response.data;
-      });
-
-    return response;
-  };
 
   useLayoutEffect(() => {
     const loadData = async () => {

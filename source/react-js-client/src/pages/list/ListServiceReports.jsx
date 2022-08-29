@@ -3,6 +3,7 @@ import ServiceReports from "../../components/serviceReport/ServiceReports";
 import { Link, useSearchParams } from "react-router-dom";
 import Search from "../../components/search/Search";
 import api from "../../api/serviceReports";
+import { getAllServiceReports, getSearchParams } from "../../utils/utils.js";
 
 const ListServiceReports = () => {
   const [serviceReports, setServiceReports] = useState([]);
@@ -10,17 +11,7 @@ const ListServiceReports = () => {
   const [serviceReportsForSearch, setServiceReportsForSearch] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const getSearchParams = () => {
-    var searchParamsx = searchParams.get("q");
-
-    if (searchParamsx == null) {
-      return (searchParamsx = "");
-    }
-
-    return searchParamsx;
-  };
-
-  const [query, setQuery] = useState(getSearchParams());
+  const [query, setQuery] = useState(getSearchParams(searchParams.get("q")));
 
   const getQuery = (query) => {
     setQuery(query);
@@ -32,11 +23,6 @@ const ListServiceReports = () => {
       return report.id !== id;
     });
     setServiceReports(newServiceReportList);
-  };
-
-  const getAllServiceReports = async () => {
-    const response = await api.get("/api/serviceReports");
-    return response.data;
   };
 
   useLayoutEffect(() => {

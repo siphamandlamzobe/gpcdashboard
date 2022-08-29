@@ -1,7 +1,7 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import api from "../../api/serviceReports";
 import { useForm } from "react-hook-form";
+import { getServiceReportById } from "../../utils/utils.js";
 
 const ServiceReportEditForm = (props) => {
   const location = useLocation();
@@ -17,16 +17,6 @@ const ServiceReportEditForm = (props) => {
   const stateData = location.state;
 
   const [data, setData] = useState({ ...stateData });
-
-  const getServiceReportById = async (id) => {
-    const response = await api
-      .get(`/api/serviceReports/${id}`)
-      .then((response) => {
-        return response.data;
-      });
-
-    return response;
-  };
 
   useLayoutEffect(() => {
     const edit = async () => {
