@@ -7,16 +7,24 @@ import api from "../../api/serviceReports";
 const ListServiceReports = () => {
   const [serviceReports, setServiceReports] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
+  const [serviceReportsForSearch, setServiceReportsForSearch] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const getSearchParams = () => {
     var searchParamsx = searchParams.get("q");
+
     if (searchParamsx == null) {
       return (searchParamsx = "");
     }
+
+    return searchParamsx;
   };
 
   const [query, setQuery] = useState(getSearchParams());
-  const [isLoading, setIsLoading] = useState(false);
+
+  const getQuery = (query) => {
+    setQuery(query);
+  };
 
   const onDeleteServiceReportHandler = async (id) => {
     await api.delete(`/api/serviceReports/${id}`);
@@ -40,6 +48,7 @@ const ListServiceReports = () => {
           return (report.serviceDate = new Date(report.serviceDate));
         });
         setServiceReports(allServiceReports);
+        setServiceReportsForSearch(allServiceReports);
         setIsLoading(false);
       }
     };
@@ -47,21 +56,16 @@ const ListServiceReports = () => {
     getServiceReports();
   }, [setServiceReports]);
 
-  const getQuery = (query) => {
-    setQuery(query);
-  };
-
   const keys = ["serviceReview", "attendance", "serviceType"];
 
   useEffect(() => {
     const search = async () => {
       if (query.length >= 1 || query === "") {
-        const res = await getAllServiceReports();
-
-        const filteredServiceReports = res.filter((report) =>
-          keys.some((key) =>
-            report[key].toString().toLowerCase().includes(query.toLowerCase())
-          )
+        const filteredServiceReports = serviceReportsForSearch.filter(
+          (report) =>
+            keys.some((key) =>
+              report[key].toString().toLowerCase().includes(query.toLowerCase())
+            )
         );
 
         filteredServiceReports.map((report) => {
@@ -73,7 +77,7 @@ const ListServiceReports = () => {
     };
     search();
     // eslint-disable-next-line
-  }, [setQuery, searchParams, query, serviceReports]);
+  }, [setQuery, query]);
 
   const getSearchKeyword = (query) => {
     getQuery(query);
