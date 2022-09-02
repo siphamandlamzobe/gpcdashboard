@@ -52,11 +52,12 @@ public class ServiceReportxUnitTests
         mockServiceReportRepository.Verify();
     }
 
-    [Fact]
-    public async Task GIVEN_ServiceReportId_WHEN_GettingServiceReportById_RETURN_NotFound()
+    [Theory]
+    [InlineData(1)]
+    [InlineData(2)]
+    public async Task GIVEN_ServiceReportId_WHEN_GettingServiceReportById_RETURN_NotFound(int serviceReportId)
     {
         //Arrange
-        int serviceReportId = 1;
         Mock<IServiceReportRepository> mockServiceReportRepository = new();
         mockServiceReportRepository.Setup(repo => repo.GetById(serviceReportId)).ReturnsAsync((ServiceReport?)null);
         var serviceReportController = new ServiceReportController(mockServiceReportRepository.Object);
@@ -65,7 +66,7 @@ public class ServiceReportxUnitTests
         var result = await serviceReportController.GetServiceReportById(serviceReportId);
 
         // Assert
-        Assert.IsType<NotFoundResult>(result);
+        Assert.IsType<NotFoundObjectResult>(result);
     }
 
     [Fact]
