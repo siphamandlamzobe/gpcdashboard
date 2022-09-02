@@ -1,10 +1,9 @@
 
 using System.Data;
 
-namespace GPCApi.Repository
+namespace GPCApi.Repository;
+
+public interface ISqlManager
 {
-    public interface ISqlManager
-    {
-        IDbConnection DbConnection { get; set; }
-    }
+    IDbConnection DbConnection { get; set; }
 }
