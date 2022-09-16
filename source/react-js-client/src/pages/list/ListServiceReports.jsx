@@ -2,15 +2,18 @@ import React, { useEffect, useLayoutEffect, useState } from "react";
 import ServiceReports from "../../components/serviceReport/ServiceReports";
 import { Link, useSearchParams } from "react-router-dom";
 import Search from "../../components/search/Search";
-import api from "../../api/serviceReports";
-import { getAllServiceReports, getSearchParams } from "../../utils/utils.js";
+import {
+  getAllServiceReports,
+  getSearchParams,
+  deleteServiceReportHandler,
+  searchHandler,
+} from "../../utils/utils.js";
 
 const ListServiceReports = () => {
   const [serviceReports, setServiceReports] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const [serviceReportsForSearch, setServiceReportsForSearch] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-
   const [query, setQuery] = useState(getSearchParams(searchParams.get("q")));
 
   const getQuery = (query) => {
@@ -18,10 +21,10 @@ const ListServiceReports = () => {
   };
 
   const onDeleteServiceReportHandler = async (id) => {
-    await api.delete(`/api/serviceReports/${id}`);
-    const newServiceReportList = serviceReports.filter((report) => {
-      return report.id !== id;
-    });
+    const newServiceReportList = await deleteServiceReportHandler(
+      id,
+      serviceReports
+    );
     setServiceReports(newServiceReportList);
   };
 
@@ -42,24 +45,14 @@ const ListServiceReports = () => {
     getServiceReports();
   }, [setServiceReports]);
 
-  const keys = ["serviceReview", "attendance", "serviceType"];
-
   useEffect(() => {
     const search = async () => {
-      if (query.length >= 1 || query === "") {
-        const filteredServiceReports = serviceReportsForSearch.filter(
-          (report) =>
-            keys.some((key) =>
-              report[key].toString().toLowerCase().includes(query.toLowerCase())
-            )
-        );
-
-        filteredServiceReports.map((report) => {
-          return (report.serviceDate = new Date(report.serviceDate));
-        });
-        setServiceReports(filteredServiceReports);
-        return serviceReports;
-      }
+      const filteredServiceReports = searchHandler(
+        query,
+        serviceReportsForSearch
+      );
+      setServiceReports(filteredServiceReports);
+      return serviceReports;
     };
     search();
     // eslint-disable-next-line

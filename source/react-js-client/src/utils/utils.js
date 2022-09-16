@@ -24,3 +24,31 @@ export async function getServiceReportById(id) {
 
   return response;
 }
+
+export async function deleteServiceReportHandler(id, serviceReports) {
+  await api.delete(`/api/serviceReports/${id}`);
+  const newServiceReportList = serviceReports.filter((report) => {
+    return report.id !== id;
+  });
+
+  return newServiceReportList;
+}
+
+export function searchHandler(query, serviceReportsForSearch){
+  const keys = ["serviceReview", "attendance", "serviceType"];
+  
+  if (query.length >= 1 || query === "") {
+    const filteredServiceReports = serviceReportsForSearch.filter(
+      (report) =>
+        keys.some((key) =>
+          report[key].toString().toLowerCase().includes(query.toLowerCase())
+        )
+    );
+
+    filteredServiceReports.map((report) => {
+      return (report.serviceDate = new Date(report.serviceDate));
+    });
+
+    return filteredServiceReports;
+  }
+}
