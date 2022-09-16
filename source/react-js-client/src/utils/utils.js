@@ -36,7 +36,7 @@ export async function deleteServiceReportHandler(id, serviceReports) {
 
 export function searchHandler(query, serviceReportsForSearch){
   const keys = ["serviceReview", "attendance", "serviceType"];
-  
+
   if (query.length >= 1 || query === "") {
     const filteredServiceReports = serviceReportsForSearch.filter(
       (report) =>
@@ -52,3 +52,9 @@ export function searchHandler(query, serviceReportsForSearch){
     return filteredServiceReports;
   }
 }
+
+export async function saveServiceReportHandler(report, navigator) {
+  await api.post("/api/serviceReports", report).then(() => {
+    return navigator;
+  });
+};

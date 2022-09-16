@@ -1,17 +1,14 @@
 import { useNavigate } from "react-router-dom";
-import api from "../../api/serviceReports";
 import ServiceReportForm from "../../components/serviceReport/ServiceReportForm";
+import { saveServiceReportHandler } from "../../utils/utils";
 
 const NewServiceReport = () => {
   const navigate = useNavigate();
 
-  const onSaveServiceReportHandler = (report) => {
-    api.post("/api/serviceReports", report).then(() => {
-      navigate("/serviceReports");
-    });
+  const onSaveServiceReportHandler = async (report) => {
+    return await saveServiceReportHandler(report, navigate("/serviceReports"))
   };
   
-
   const cancelHandler = () => {
     navigate("/serviceReports");
   };
