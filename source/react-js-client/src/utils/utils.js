@@ -34,15 +34,14 @@ export async function deleteServiceReportHandler(id, serviceReports) {
   return newServiceReportList;
 }
 
-export function searchHandler(query, serviceReportsForSearch){
+export function searchHandler(query, serviceReportsForSearch) {
   const keys = ["serviceReview", "attendance", "serviceType"];
 
   if (query.length >= 1 || query === "") {
-    const filteredServiceReports = serviceReportsForSearch.filter(
-      (report) =>
-        keys.some((key) =>
-          report[key].toString().toLowerCase().includes(query.toLowerCase())
-        )
+    const filteredServiceReports = serviceReportsForSearch.filter((report) =>
+      keys.some((key) =>
+        report[key].toString().toLowerCase().includes(query.toLowerCase())
+      )
     );
 
     filteredServiceReports.map((report) => {
@@ -57,4 +56,12 @@ export async function saveServiceReportHandler(report, navigator) {
   await api.post("/api/serviceReports", report).then(() => {
     return navigator;
   });
-};
+}
+
+export async function editServiceReportHandler(updatedReport, navigator) {
+  await api
+    .put(`/api/serviceReports/${updatedReport.id}`, updatedReport)
+    .then(() => {
+      return navigator;
+    });
+}
