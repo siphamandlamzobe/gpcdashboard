@@ -1,6 +1,7 @@
 using GPCApi.Controllers;
 using GPCApi.Repository;
 using GPCApi.Repository.DataModels;
+using GPCApi.Tests.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 
@@ -12,10 +13,12 @@ public class ServiceReportxUnitTests
     public async Task GIVEN_GetAllEndPoint_WHEN_GettingAllServiceReports_RETURN_CorrectCount()
     {
         //Arrange
+        var serviceReport = new ServiceReportBuilder().WithRandomProps().WithId(3).Build();
+        var serviceReports = new List<ServiceReport>() { serviceReport };
         Mock<IServiceReportRepository> mockServiceReportRepository = new();
-        mockServiceReportRepository.Setup(repo => repo.GetAll()).ReturnsAsync(GetTestServiceReports).Verifiable();
+        mockServiceReportRepository.Setup(repo => repo.GetAllAsync()).ReturnsAsync(serviceReports).Verifiable();
         var serviceReportController = new ServiceReportController(mockServiceReportRepository.Object);
-        var expectedServiceReportCount = 2;
+        var expectedServiceReportCount = 1;
 
         //Act
         var result = await serviceReportController.GetServiceReports();
@@ -32,10 +35,18 @@ public class ServiceReportxUnitTests
     {
         //Arrange
         int serviceReportId = 1;
-        ServiceReport serviceReport = GetTestServiceReports().First(s => s.Id == serviceReportId);
+        ServiceReport serviceReport = new ServiceReportBuilder()
+            .WithRandomProps()
+            .WithId(1)
+            .WithServiceType("Sunday")
+            .WithAttendance(12322)
+            .WithSoulsSaved(23232)
+            .Build();
+
         Mock<IServiceReportRepository> mockServiceReportRepository = new();
-        mockServiceReportRepository.Setup(repo => repo.GetById(serviceReportId)).ReturnsAsync(serviceReport).Verifiable();
+        mockServiceReportRepository.Setup(repo => repo.GetByIdAsync(serviceReportId)).ReturnsAsync(serviceReport).Verifiable();
         var serviceReportController = new ServiceReportController(mockServiceReportRepository.Object);
+
         var expectedServiceType = "Sunday";
         var expectedServiceAttendance = 12322;
         var expectedServiceSoulsSaved = 23232;
@@ -59,7 +70,7 @@ public class ServiceReportxUnitTests
     {
         //Arrange
         Mock<IServiceReportRepository> mockServiceReportRepository = new();
-        mockServiceReportRepository.Setup(repo => repo.GetById(serviceReportId)).ReturnsAsync((ServiceReport?)null);
+        mockServiceReportRepository.Setup(repo => repo.GetByIdAsync(serviceReportId)).ReturnsAsync((ServiceReport?)null);
         var serviceReportController = new ServiceReportController(mockServiceReportRepository.Object);
 
         //Act
@@ -91,7 +102,7 @@ public class ServiceReportxUnitTests
         var serviceReportController = new ServiceReportController(mockServiceReportRepository.Object);
 
         //Act
-        var result = await serviceReportController.AddServiceReport(new ServiceReport());
+        var result = await serviceReportController.AddServiceReport(new ServiceReportBuilder().WithRandomProps().Build());
 
         // Assert
         Assert.NotNull(result);
@@ -104,7 +115,7 @@ public class ServiceReportxUnitTests
         //Arrange
         int serviceReportId = 1;
         Mock<IServiceReportRepository> mockServiceReportRepository = new();
-        mockServiceReportRepository.Setup(repo => repo.GetById(serviceReportId)).ReturnsAsync((ServiceReport?)null);
+        mockServiceReportRepository.Setup(repo => repo.GetByIdAsync(serviceReportId)).ReturnsAsync((ServiceReport?)null);
         var serviceReportController = new ServiceReportController(mockServiceReportRepository.Object);
 
         //Act
@@ -119,9 +130,10 @@ public class ServiceReportxUnitTests
     {
         //Arrange
         int serviceReportId = 1;
-        ServiceReport serviceReport = GetTestServiceReports().First(s => s.Id == serviceReportId);
+        ServiceReport serviceReport = new ServiceReportBuilder().WithRandomProps().WithId(1).Build();
+
         Mock<IServiceReportRepository> mockServiceReportRepository = new();
-        mockServiceReportRepository.Setup(expression: repo => repo.GetById(serviceReportId)).ReturnsAsync(serviceReport).Verifiable();
+        mockServiceReportRepository.Setup(expression: repo => repo.GetByIdAsync(serviceReportId)).ReturnsAsync(serviceReport).Verifiable();
         var serviceReportController = new ServiceReportController(mockServiceReportRepository.Object);
 
         //Act
@@ -137,17 +149,17 @@ public class ServiceReportxUnitTests
     {
         //Arrange
         int serviceReportId = 3;
-        ServiceReport serviceReport = GetTestServiceReports().First(s => s.Id == serviceReportId);
-        ServiceReport updateServiceReport = GetTestUpdateServiceReport();
+        ServiceReport serviceReport = new ServiceReportBuilder().WithRandomProps().WithId(3).Build();
+        ServiceReport updateServiceReport = new ServiceReportBuilder().WithRandomProps().WithId(3).Build();
         Mock<IServiceReportRepository> mockServiceReportRepository = new();
-        mockServiceReportRepository.Setup(expression: repo => repo.GetById(serviceReportId)).ReturnsAsync(serviceReport).Verifiable();
+        mockServiceReportRepository.Setup(expression: repo => repo.GetByIdAsync(serviceReportId)).ReturnsAsync(serviceReport).Verifiable();
         var serviceReportController = new ServiceReportController(mockServiceReportRepository.Object);
 
         //Act
         var result = await serviceReportController.UpdateServiceReport(serviceReportId, updateServiceReport);
 
         // Assert
-        Assert.IsType<NotFoundObjectResult>(result);
+        Assert.IsType<OkObjectResult>(result);
         mockServiceReportRepository.Verify();
     }
 
@@ -156,9 +168,9 @@ public class ServiceReportxUnitTests
     {
         //Arrange
         int serviceReportId = 3;
-        ServiceReport updateServiceReport = GetTestUpdateServiceReport();
+        ServiceReport updateServiceReport = new ServiceReportBuilder().WithRandomProps().WithId(3).Build();
         Mock<IServiceReportRepository> mockServiceReportRepository = new();
-        mockServiceReportRepository.Setup(expression: repo => repo.GetById(serviceReportId)).ReturnsAsync((ServiceReport?)null).Verifiable();
+        mockServiceReportRepository.Setup(expression: repo => repo.GetByIdAsync(serviceReportId)).ReturnsAsync((ServiceReport?)null).Verifiable();
         var serviceReportController = new ServiceReportController(mockServiceReportRepository.Object);
 
         //Act
@@ -174,8 +186,7 @@ public class ServiceReportxUnitTests
     {
         //Arrange
         int serviceReportId = 1;
-        ServiceReport updateServiceReport = GetTestUpdateServiceReport();
-        ServiceReport? serviceReport = GetTestServiceReports().FirstOrDefault(s => s.Id == serviceReportId);
+        ServiceReport updateServiceReport = new ServiceReportBuilder().WithRandomProps().WithId(2).Build();
         Mock<IServiceReportRepository> mockServiceReportRepository = new();
         var serviceReportController = new ServiceReportController(mockServiceReportRepository.Object);
 
@@ -185,50 +196,4 @@ public class ServiceReportxUnitTests
         // Assert
         Assert.IsType<BadRequestObjectResult>(result);
     }
-
-    private IEnumerable<ServiceReport> GetTestServiceReports()
-    {
-        var serviceReports = new List<ServiceReport>();
-        serviceReports.Add(new ServiceReport()
-        {
-            ServiceDate = new DateTime(2022, 8, 18),
-            Id = 1,
-            ServiceType = "Sunday",
-            ServiceReview = "This is the review.",
-            Attendance = 12322,
-            CreatedOn = new DateTime(2022, 8, 18),
-            SoulsSaved = 23232,
-            Firsttimers = 4232
-        });
-
-        serviceReports.Add(new ServiceReport()
-        {
-            ServiceDate = new DateTime(2022, 6, 20),
-            Id = 2,
-            ServiceType = "Wednesday",
-            ServiceReview = "This is the review.",
-            Attendance = 12323232,
-            CreatedOn = new DateTime(2022, 6, 20),
-            SoulsSaved = 3343,
-            Firsttimers = 433
-        });
-
-        return serviceReports;
-    }
-
-    private ServiceReport GetTestUpdateServiceReport()
-    {
-        return new ServiceReport()
-        {
-            ServiceDate = new DateTime(2022, 8, 18),
-            Id = 3,
-            ServiceType = "Wednesday",
-            ServiceReview = "This is the review.",
-            Attendance = 13322,
-            CreatedOn = new DateTime(2022, 8, 18),
-            SoulsSaved = 43232,
-            Firsttimers = 4232
-        };
-    }
-
 }
