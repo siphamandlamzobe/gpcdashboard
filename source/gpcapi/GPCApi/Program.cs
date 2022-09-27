@@ -1,6 +1,6 @@
-using System.Data;
-using System.Data.SqlClient;
 using GPCApi.Repository;
+using GPCApi.Repository.DataRepository;
+using GPCApi.Repository.Migrations;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
@@ -20,7 +20,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddTransient<IDbConnection>(c => new SqlConnection(Environment.GetEnvironmentVariable("GPCDashboardConnection")));
+builder.Services.AddTransient<DbContext>();
+builder.Services.AddSingleton<Database>();
 builder.Services.AddTransient<IServiceReportRepository, ServiceReportRepository>();
 
 var app = builder.Build();

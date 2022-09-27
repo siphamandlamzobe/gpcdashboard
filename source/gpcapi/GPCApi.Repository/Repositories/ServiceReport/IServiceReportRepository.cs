@@ -4,9 +4,9 @@ namespace GPCApi.Repository;
 
 public interface IServiceReportRepository
 {
-    Task<int> Add(ServiceReport serviceReport);
-    Task<ServiceReport> GetById(int id);
-    Task<IEnumerable<ServiceReport>> GetAll();
-    Task Update(ServiceReport serviceReport);
+    Task<int> AddAsync(ServiceReport serviceReport);
+    Task<ServiceReport> GetByIdAsync(int id);
+    Task<IEnumerable<ServiceReport>> GetAllAsync();
+    Task UpdateAsync(ServiceReport serviceReport);
     Task Delete(int id);
 }

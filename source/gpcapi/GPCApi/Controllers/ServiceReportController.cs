@@ -17,7 +17,7 @@ public class ServiceReportController : ControllerBase
     [HttpGet]
     public async Task<ActionResult> GetServiceReports()
     {
-        var serviceReports = await _serviceReportRepository.GetAll();
+        var serviceReports = await _serviceReportRepository.GetAllAsync();
 
         return Ok(serviceReports);
     }
@@ -30,7 +30,7 @@ public class ServiceReportController : ControllerBase
             return BadRequest("Could not add the service report");
         }
 
-        var addedServiceReportId = await _serviceReportRepository.Add(serviceReport: serviceReport);
+        var addedServiceReportId = await _serviceReportRepository.AddAsync(serviceReport: serviceReport);
 
         return CreatedAtAction(nameof(GetServiceReportById), new { id = serviceReport.Id }, serviceReport);
     }
@@ -38,7 +38,7 @@ public class ServiceReportController : ControllerBase
     [HttpGet("{*id}")]
     public async Task<ActionResult> GetServiceReportById(int id)
     {
-        var serviceReport = await _serviceReportRepository.GetById(id);
+        var serviceReport = await _serviceReportRepository.GetByIdAsync(id);
 
         if (serviceReport == null)
         {
@@ -51,7 +51,7 @@ public class ServiceReportController : ControllerBase
     [HttpDelete("{*id}")]
     public async Task<ActionResult> DeleteServiceReportById(int id)
     {
-        var serviceReport = await _serviceReportRepository.GetById(id);
+        var serviceReport = await _serviceReportRepository.GetByIdAsync(id);
         if (serviceReport == null)
         {
             return NotFound($"Service report with id = {id} not found");
@@ -70,14 +70,14 @@ public class ServiceReportController : ControllerBase
             return BadRequest("Service Report ID mismatch");
         }
 
-        var serviceReportDto = await _serviceReportRepository.GetById(id);
+        var serviceReportDto = await _serviceReportRepository.GetByIdAsync(id);
 
         if (serviceReportDto == null)
         {
             return NotFound($"Service report with id = {id} not found");
         }
 
-        await _serviceReportRepository.Update(serviceReport);
+        await _serviceReportRepository.UpdateAsync(serviceReport);
 
         return Ok("Updated successfully!");
     }
