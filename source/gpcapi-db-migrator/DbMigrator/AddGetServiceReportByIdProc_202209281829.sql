@@ -1,7 +1,7 @@
 ﻿DROP PROCEDURE [dbo].GetServiceReportById
 GO
 
-CREATE PROCEDURE [dbo].GetServiceReportById
+CREATE OR ALTER  PROCEDURE [dbo].GetServiceReportById
 @id int
 
 AS

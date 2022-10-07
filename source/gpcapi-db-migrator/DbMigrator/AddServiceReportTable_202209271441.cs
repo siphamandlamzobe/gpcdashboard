@@ -2,12 +2,12 @@
 
 namespace DbMigrator;
 
-[Migration(202209282150)]
+[Migration(202210071540)]
 public class AddServiceReportTable_202209271441 : Migration
 {
     public override void Down()
     {
-        Delete.Table("AddServiceReport");
+        Delete.Table("ServiceReport");
     }
 
     public override void Up()
