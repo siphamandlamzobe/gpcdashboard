@@ -1,8 +1,9 @@
 using GPCApi.Repository.DataModels;
+using GPCApi.Repository.Repositories;
 
 namespace GPCApi.Repository;
 
-public interface IServiceReportRepository
+public interface IServiceReportRepository : IRepository
 {
     Task<int> AddAsync(ServiceReport serviceReport);
     Task<ServiceReport> GetByIdAsync(int id);

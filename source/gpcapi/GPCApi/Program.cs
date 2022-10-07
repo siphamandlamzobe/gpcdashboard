@@ -19,7 +19,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddTransient<DbContext>();
+builder.Services.AddTransient<IDbContext, DbContext>();
 builder.Services.AddTransient<IServiceReportRepository, ServiceReportRepository>();
 
 var app = builder.Build();

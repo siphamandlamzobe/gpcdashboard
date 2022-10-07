@@ -8,6 +8,7 @@ public class ServiceReport
     public int SoulsSaved { get; set; }
     public DateTime ServiceDate { get; set; }
     public string? ServiceType { get; set; }
+    public int ServiceTypeId { get; set; }
     public string? ServiceReview { get; set; }
     public DateTime CreatedOn { get; set; }
     public DateTime UpdatedOn { get; set; }

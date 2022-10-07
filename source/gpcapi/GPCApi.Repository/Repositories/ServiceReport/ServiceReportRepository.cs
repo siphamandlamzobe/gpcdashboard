@@ -7,12 +7,13 @@ namespace GPCApi.Repository;
 
 public class ServiceReportRepository : IServiceReportRepository
 {
-    public DbContext _dbContext;
     private const int CommandTimeout = 30;
 
-    public ServiceReportRepository(DbContext dbContext)
+    public IDbContext DbContext { get; init; }
+
+    public ServiceReportRepository(IDbContext dbContext)
     {
-        _dbContext = dbContext;
+        DbContext = dbContext;
     }
 
     public Task<int> AddAsync(ServiceReport serviceReport)
@@ -20,28 +21,27 @@ public class ServiceReportRepository : IServiceReportRepository
         var parameters = new DynamicParameters();
         parameters.Add("@attendance", serviceReport.Attendance);
         parameters.Add("@firsttimers", serviceReport.Firsttimers);
-        parameters.Add("@serviceType", serviceReport.ServiceType);
+        parameters.Add("@serviceTypeId", serviceReport.ServiceTypeId);
         parameters.Add("@soulsSaved", serviceReport.SoulsSaved);
         parameters.Add("@serviceDate", serviceReport.ServiceDate);
         parameters.Add("@serviceReview", serviceReport.ServiceReview);
-        parameters.Add("@createdOn", DateTime.Now);
 
-        return _dbContext.CreateConnection().QuerySingleAsync<int>("AddServiceReport", parameters, null, commandTimeout: CommandTimeout, commandType: CommandType.StoredProcedure);
+        return DbContext.QuerySingleAsync<int>("AddServiceReport", parameters, CommandTimeout, CommandType.StoredProcedure);
     }
 
     public Task Delete(int id)
     {
-        return _dbContext.CreateConnection().ExecuteAsync("DeleteServiceReport", new { id = @id }, null, commandTimeout: CommandTimeout, commandType: CommandType.StoredProcedure);
+        return DbContext.DbConnection.ExecuteAsync("DeleteServiceReport", new { id = @id }, null, commandTimeout: CommandTimeout, commandType: CommandType.StoredProcedure);
     }
 
-    public async Task<IEnumerable<ServiceReport>> GetAllAsync()
+    public Task<IEnumerable<ServiceReport>> GetAllAsync()
     {
-        return await _dbContext.CreateConnection().QueryAsync<ServiceReport>("GetAllServiceReports", null, null, CommandTimeout, CommandType.StoredProcedure);
+        return DbContext.QueryAsync<ServiceReport>("GetAllServiceReports", null, CommandTimeout, CommandType.StoredProcedure);
     }
 
     public Task<ServiceReport> GetByIdAsync(int id)
     {
-        return _dbContext.CreateConnection().QuerySingleAsync<ServiceReport>("GetServiceReportById", new { id = @id }, null, commandTimeout: CommandTimeout, commandType: CommandType.StoredProcedure);
+        return DbContext.QuerySingleAsync<ServiceReport>("GetServiceReportById", new { id = @id }, commandTimeout: CommandTimeout, commandType: CommandType.StoredProcedure);
     }
 
     public Task UpdateAsync(ServiceReport serviceReport)
@@ -55,6 +55,6 @@ public class ServiceReportRepository : IServiceReportRepository
         parameters.Add("@serviceDate", serviceReport.ServiceDate);
         parameters.Add("@serviceReview", serviceReport.ServiceReview);
 
-        return _dbContext.CreateConnection().ExecuteAsync("UpdateServiceReport", parameters, null, commandTimeout: CommandTimeout, commandType: CommandType.StoredProcedure);
+        return DbContext.ExecuteAsync("UpdateServiceReport", parameters, commandTimeout: CommandTimeout, commandType: CommandType.StoredProcedure);
     }
 }
