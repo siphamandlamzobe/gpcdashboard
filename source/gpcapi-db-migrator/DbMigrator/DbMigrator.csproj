@@ -8,15 +8,23 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="AddColumn_ServiceTypeId_202210072021.sql" />
     <None Remove="AddServiceTypeTable_202210071520.sql" />
     <None Remove="AddUpdateServiceReportStoredProc_202209281820.sql" />
+    <None Remove="DropColumn_ServiceType_202210072005.sql" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="DropColumn_ServiceType_202210072005.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="AddDeleteServiceReportProc_202209281832.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="AddGetServiceReportByIdProc_202209281829.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AddColumn_ServiceTypeId_202210072021.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="AddServiceTypeTable_202210071520.sql">
