@@ -1,9 +1,12 @@
-﻿CREATE PROCEDURE DeleteServiceReport
+﻿DROP PROCEDURE [dbo].DeleteServiceReport
+GO
+
+CREATE PROCEDURE [dbo].DeleteServiceReport
 @id int
 
 AS
 BEGIN
-DELETE FROM ServiceReport
+DELETE FROM [dbo].ServiceReport
       WHERE id=@id
 
 END

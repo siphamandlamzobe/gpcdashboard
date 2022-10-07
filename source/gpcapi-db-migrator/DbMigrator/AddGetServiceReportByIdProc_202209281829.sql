@@ -1,4 +1,7 @@
-﻿CREATE PROCEDURE GetServiceReportById
+﻿DROP PROCEDURE [dbo].GetServiceReportById
+GO
+
+CREATE PROCEDURE [dbo].GetServiceReportById
 @id int
 
 AS
@@ -12,7 +15,7 @@ SELECT id
       ,serviceDate
       ,createdOn
       ,updatedOn
-  FROM ServiceReport
+  FROM [dbo].ServiceReport
   WHERE id = @id
 END
 GO

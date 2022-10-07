@@ -1,4 +1,4 @@
-﻿CREATE OR ALTER PROCEDURE AddServiceReport
+﻿CREATE PROCEDURE [dbo].AddServiceReport
 @attendance int,
 @soulsSaved int,
 @firsttimers int,
@@ -8,7 +8,7 @@
 
 AS
 BEGIN
-	INSERT INTO AddServiceReport(Attendance, SoulsSaved, Firsttimers, ServiceReview, ServiceType, ServiceDate, CreatedOn)
+	INSERT INTO [dbo].ServiceReport(Attendance, SoulsSaved, Firsttimers, ServiceReview, ServiceType, ServiceDate, CreatedOn)
 	VALUES(@attendance, @soulsSaved, @firsttimers, @serviceReview, @serviceType, @serviceDate, GetDate())
 END
 GO

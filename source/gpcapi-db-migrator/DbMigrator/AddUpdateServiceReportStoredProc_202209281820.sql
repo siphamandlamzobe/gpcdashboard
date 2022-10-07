@@ -1,4 +1,7 @@
-﻿CREATE PROCEDURE UpdateServiceReport 
+DROP PROCEDURE [dbo].UpdateServiceReport
+GO
+
+CREATE PROCEDURE [dbo].UpdateServiceReport 
 @id INT,
 @serviceType VARCHAR(50),
 @attendance INT,
@@ -10,7 +13,7 @@
 AS
   BEGIN TRANSACTION
   BEGIN
-    UPDATE ServiceReport
+    UPDATE [dbo].ServiceReport
 
     SET [serviceType] = @serviceType
        ,[attendance] = @attendance

@@ -1,4 +1,4 @@
-﻿CREATE TABLE AddServiceReport(
+﻿CREATE TABLE [dbo].ServiceReport(
 	Id int Primary Key,
 	Attendance int,
 	SoulsSaved int,
