@@ -17,9 +17,14 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 6.0.x
+    - name: where are we
+      run: pwd
+    - name: list some key files
+      run: ls -lrt
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore ./source/gpcapi/GPCApi/
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build --configuration Release --no-restore ./source/gpcapi/GPCApi/
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test --no-build --verbosity normal ./source/gpcapi/GPCApi.Tests/
+
