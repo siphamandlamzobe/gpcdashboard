@@ -18,8 +18,8 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Restore dependencies
-      run: dotnet restore ../../source/gpcapi/
+      run: dotnet restore ../../source/gpcapi/GPCApi/
     - name: Build
-      run: dotnet build --configuration Release --no-restore ../../source/gpcapi/
+      run: dotnet build --configuration Release --no-restore ../../source/gpcapi/GPCApi/
     - name: Test
-      run: dotnet test --no-build --verbosity normal ../../source/gpcapi/
+      run: dotnet test --no-build --verbosity normal ../../source/gpcapi/GPCApi.Tests/
