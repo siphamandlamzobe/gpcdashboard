@@ -10,4 +10,5 @@ public interface IServiceReportRepository : IRepository
     Task<IEnumerable<ServiceReport>> GetAllAsync();
     Task UpdateAsync(ServiceReport serviceReport);
     Task Delete(int id);
+    Task<IEnumerable<string>> GetServiceTypeAsync();
 }

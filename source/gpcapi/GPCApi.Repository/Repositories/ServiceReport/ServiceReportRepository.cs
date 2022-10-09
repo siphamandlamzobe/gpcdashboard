@@ -31,7 +31,7 @@ public class ServiceReportRepository : IServiceReportRepository
 
     public Task Delete(int id)
     {
-        return DbContext.DbConnection.ExecuteAsync("DeleteServiceReport", new { id = @id }, null, commandTimeout: CommandTimeout, commandType: CommandType.StoredProcedure);
+        return DbContext.ExecuteAsync("DeleteServiceReport", new { id = @id }, CommandTimeout, CommandType.StoredProcedure);
     }
 
     public Task<IEnumerable<ServiceReport>> GetAllAsync()
@@ -56,5 +56,12 @@ public class ServiceReportRepository : IServiceReportRepository
         parameters.Add("@serviceReview", serviceReport.ServiceReview);
 
         return DbContext.ExecuteAsync("UpdateServiceReport", parameters, commandTimeout: CommandTimeout, commandType: CommandType.StoredProcedure);
+    }
+
+    public Task<IEnumerable<string>> GetServiceTypeAsync()
+    {
+        var query = "SELECT ServiceType FROM LUTServiceType";
+
+        return DbContext.QueryAsync<string>(query, null, CommandTimeout, CommandType.Text);
     }
 }

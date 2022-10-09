@@ -23,7 +23,7 @@ public class DbContext : IDbContext
         return DbConnection.QueryAsync<T>(query, param, null, commandTimeout, commandType);
     }
 
-    public Task<T> QuerySingleAsync<T>(string query, object param = null, int? commandTimeout = null, CommandType? commandType = null)
+    public Task<T> QuerySingleAsync<T>(string query, object? param = null, int? commandTimeout = null, CommandType? commandType = null)
     {
         return DbConnection.QuerySingleAsync<T>(query, param, null, commandTimeout, commandType);
     }

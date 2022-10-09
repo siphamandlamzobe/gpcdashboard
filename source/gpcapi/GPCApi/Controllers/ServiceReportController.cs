@@ -14,7 +14,8 @@ public class ServiceReportController : ControllerBase
     {
         _serviceReportRepository = serviceReportRepository;
     }
-    [HttpGet]
+
+    [HttpGet("getall")]
     public async Task<ActionResult> GetServiceReports()
     {
         var serviceReports = await _serviceReportRepository.GetAllAsync();
@@ -80,5 +81,13 @@ public class ServiceReportController : ControllerBase
         await _serviceReportRepository.UpdateAsync(serviceReport);
 
         return Ok("Updated successfully!");
+    }
+
+    [HttpGet("serviceTypes")]
+    public async Task<ActionResult> GetServiceTypes()
+    {
+        var serviceTypes = await _serviceReportRepository.GetServiceTypeAsync();
+
+        return Ok(serviceTypes);
     }
 }
