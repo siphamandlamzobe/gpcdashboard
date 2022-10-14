@@ -50,7 +50,7 @@ public class ServiceReportRepository : IServiceReportRepository
         parameters.Add("@id", serviceReport.Id);
         parameters.Add("@attendance", serviceReport.Attendance);
         parameters.Add("@firsttimers", serviceReport.Firsttimers);
-        parameters.Add("@serviceType", serviceReport.ServiceType);
+        parameters.Add("@serviceTypeId", serviceReport.ServiceTypeId);
         parameters.Add("@soulsSaved", serviceReport.SoulsSaved);
         parameters.Add("@serviceDate", serviceReport.ServiceDate);
         parameters.Add("@serviceReview", serviceReport.ServiceReview);
