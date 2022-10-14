@@ -1,7 +1,7 @@
 import api from "../api/serviceReports";
 
 export async function getAllServiceReports() {
-  const response = await api.get("/api/serviceReports");
+  const response = await api.get("/api/serviceReports/getall");
   return response.data;
 }
 
@@ -64,4 +64,9 @@ export async function editServiceReportHandler(updatedReport, navigator) {
     .then(() => {
       return navigator;
     });
+}
+
+export async function getServiceTypes() {
+  const response = await api.get("/api/serviceReports/serviceTypes");
+  return response.data;
 }

@@ -6,13 +6,12 @@ const NewServiceReport = () => {
   const navigate = useNavigate();
 
   const onSaveServiceReportHandler = async (report) => {
-    return await saveServiceReportHandler(report, navigate("/serviceReports"))
+    return await saveServiceReportHandler(report, navigate("/serviceReports"));
   };
-  
+
   const cancelHandler = () => {
     navigate("/serviceReports");
   };
-
   return (
     <div>
       <div className="flex p-4 items-center m-8 max-w-[70%] mx-[20%] w-full shadow-3xl">

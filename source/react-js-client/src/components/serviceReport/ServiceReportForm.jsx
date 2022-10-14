@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { getServiceTypes } from "../../utils/utils";
+import { useEffect, useState } from "react";
 
 const ServiceReportForm = (props) => {
   const {
@@ -14,6 +16,29 @@ const ServiceReportForm = (props) => {
     props.onSaveServiceReport(data);
     navigate("/serviceReports");
   };
+
+  const [serviceTypes, setServiceTypes] = useState([]);
+
+  useEffect(() => {
+    const getServiceTypesForNewReport = async () => {
+      const data = await getServiceTypes();
+      console.log(data)
+      setServiceTypes(data);
+    };
+
+    getServiceTypesForNewReport();
+  }, []);
+
+  const getServiceTypeOptions = () => {
+    return serviceTypes.map((serviceType, index) => {
+      return (
+        <option value={serviceType.id} key={index}>
+          {serviceType.serviceType}
+        </option>
+      );
+    });
+  };
+
   return (
     <form
       onSubmit={handleSubmit(submitHandler)}
@@ -84,12 +109,11 @@ const ServiceReportForm = (props) => {
             Service Type
           </label>
           <select
-            {...register("serviceType", { required: true })}
+            {...register("serviceTypeId", { required: true })}
             className="rounded-md border-2 border-black"
           >
             <option value="">Select...</option>
-            <option value="Sunday">Sunday</option>
-            <option value="Wednesday">Wednesday</option>
+            {getServiceTypeOptions()}
           </select>
           {errors.serviceType && (
             <span className="text-red-600">This field is required</span>
