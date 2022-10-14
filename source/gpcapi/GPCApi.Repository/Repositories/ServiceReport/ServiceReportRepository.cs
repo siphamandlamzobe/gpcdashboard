@@ -58,10 +58,10 @@ public class ServiceReportRepository : IServiceReportRepository
         return DbContext.ExecuteAsync("UpdateServiceReport", parameters, commandTimeout: CommandTimeout, commandType: CommandType.StoredProcedure);
     }
 
-    public Task<IEnumerable<string>> GetServiceTypeAsync()
+    public Task<IEnumerable<LUTServiceType>> GetServiceTypeAsync()
     {
-        var query = "SELECT ServiceType FROM LUTServiceType";
+        var query = "SELECT Id, ServiceType FROM LUTServiceType";
 
-        return DbContext.QueryAsync<string>(query, null, CommandTimeout, CommandType.Text);
+        return DbContext.QueryAsync<LUTServiceType>(query, null, CommandTimeout, CommandType.Text);
     }
 }

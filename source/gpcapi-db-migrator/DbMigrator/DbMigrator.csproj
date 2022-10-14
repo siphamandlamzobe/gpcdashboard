@@ -30,7 +30,7 @@
     <EmbeddedResource Include="AddDeleteServiceReportProc_202209281832.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="AddGetServiceReportByIdProc_202209281829.sql">
+    <EmbeddedResource Include="Add_Proc_GetServiceReportById.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="AddColumn_ServiceTypeId_202210072021.sql">
