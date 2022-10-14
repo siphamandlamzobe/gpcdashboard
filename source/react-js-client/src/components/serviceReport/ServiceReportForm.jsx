@@ -14,7 +14,6 @@ const ServiceReportForm = (props) => {
 
   const submitHandler = (data) => {
     props.onSaveServiceReport(data);
-    navigate("/serviceReports");
   };
 
   const [serviceTypes, setServiceTypes] = useState([]);
@@ -22,7 +21,6 @@ const ServiceReportForm = (props) => {
   useEffect(() => {
     const getServiceTypesForNewReport = async () => {
       const data = await getServiceTypes();
-      console.log(data)
       setServiceTypes(data);
     };
 
@@ -37,6 +35,10 @@ const ServiceReportForm = (props) => {
         </option>
       );
     });
+  };
+
+  const cancelHandler = () => {
+    navigate("/serviceReports");
   };
 
   return (
@@ -145,7 +147,7 @@ const ServiceReportForm = (props) => {
           <button
             type="button"
             className="rounded-lg p-1 border-2 hover:bg-slate-100 text-black font-bold m-1"
-            onClick={props.onCancel}
+            onClick={cancelHandler}
           >
             Cancel
           </button>

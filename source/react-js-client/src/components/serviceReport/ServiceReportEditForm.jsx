@@ -1,7 +1,7 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { getServiceReportById } from "../../utils/utils.js";
+import { getServiceReportById, getServiceTypes } from "../../utils/utils.js";
 
 const ServiceReportEditForm = (props) => {
   const location = useLocation();
@@ -17,6 +17,27 @@ const ServiceReportEditForm = (props) => {
   const stateData = location.state;
 
   const [data, setData] = useState({ ...stateData });
+
+  const [serviceTypes, setServiceTypes] = useState([]);
+
+  useEffect(() => {
+    const getServiceTypesForEdit = async () => {
+      const data = await getServiceTypes();
+      setServiceTypes(data);
+    };
+
+    getServiceTypesForEdit();
+  }, []);
+
+  const getServiceTypeOptions = () => {
+    return serviceTypes.map((serviceType, index) => {
+      return (
+        <option value={serviceType.id} key={index}>
+          {serviceType.serviceType}
+        </option>
+      );
+    });
+  };
 
   useLayoutEffect(() => {
     const edit = async () => {
@@ -110,12 +131,11 @@ const ServiceReportEditForm = (props) => {
             Service Type
           </label>
           <select
-            {...register("serviceType", { required: true })}
+            {...register("serviceTypeId", { required: true })}
             className="rounded-md border-2 border-black"
           >
             <option value="">Select...</option>
-            <option value="Sunday">Sunday</option>
-            <option value="Wednesday">Wednesday</option>
+            {getServiceTypeOptions()}
           </select>
           {errors.serviceType && (
             <span className="text-red-600">This field is required</span>
