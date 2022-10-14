@@ -3,7 +3,7 @@
 
 AS
 BEGIN
-SELECT id
+SELECT sr.id
       ,serviceTypeId
       ,attendance
       ,firsttimers
@@ -12,7 +12,9 @@ SELECT id
       ,serviceDate
       ,createdOn
       ,updatedOn
-  FROM [dbo].ServiceReport
-  WHERE id = @id
+      ,st.ServiceType
+  FROM [dbo].ServiceReport sr
+  INNER JOIN LUTServiceType st ON st.Id = sr.serviceTypeId
+  WHERE sr.id = @id
 END
 GO

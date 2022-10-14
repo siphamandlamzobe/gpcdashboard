@@ -2,7 +2,7 @@
 
 namespace DbMigrator;
 
-[Migration(202210141134)]
+[Migration(202210142145)]
 public class Add_Proc_GetAllServiceReports : Migration
 {
     public override void Down()

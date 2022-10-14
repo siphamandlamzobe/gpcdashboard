@@ -2,15 +2,17 @@
 
 AS
 BEGIN
-	SELECT [id]
-      ,[serviceTypeId]
-      ,[attendance]
-      ,[firsttimers]
-      ,[soulsSaved]
-      ,[serviceReview]
-      ,[serviceDate]
-      ,[createdOn]
-      ,[updatedOn]
-  FROM [dbo].[ServiceReport] ORDER BY 1 DESC 
+	SELECT sr.id
+      ,serviceTypeId
+      ,attendance
+      ,firsttimers
+      ,soulsSaved
+      ,serviceReview
+      ,serviceDate
+      ,createdOn
+      ,updatedOn
+      ,st.ServiceType
+  FROM [dbo].ServiceReport sr
+  INNER JOIN LUTServiceType st ON st.Id = sr.serviceTypeId ORDER BY 1 DESC 
 END
 GO

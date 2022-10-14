@@ -3,7 +3,7 @@ GO
 
 CREATE PROCEDURE [dbo].UpdateServiceReport 
 @id INT,
-@serviceType VARCHAR(50),
+@serviceTypeId int,
 @attendance INT,
 @firsttimers INT,
 @soulsSaved INT,
@@ -15,7 +15,7 @@ AS
   BEGIN
     UPDATE [dbo].ServiceReport
 
-    SET [serviceType] = @serviceType
+    SET [serviceTypeId] = @serviceTypeId
        ,[attendance] = @attendance
        ,[firsttimers] = @firsttimers
        ,[soulsSaved] = @soulsSaved
