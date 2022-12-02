@@ -1,12 +1,11 @@
 import React, { useLayoutEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import ReportDate from "./ReportDate";
 import { getServiceReportById } from "../../utils/utils.js";
 
 const ServiceReportItem = () => {
-  const location = useLocation();
 
-  const stateData = location.state;
+  const stateData = useParams();
 
   const [data, setData] = useState({ ...stateData });
 

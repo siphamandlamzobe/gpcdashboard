@@ -1,10 +1,9 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { getServiceReportById, getServiceTypes } from "../../utils/utils.js";
 
 const ServiceReportEditForm = (props) => {
-  const location = useLocation();
   const navigate = useNavigate();
 
   const {
@@ -14,7 +13,8 @@ const ServiceReportEditForm = (props) => {
     formState: { errors },
   } = useForm();
 
-  const stateData = location.state;
+  const stateData = useParams();
+
 
   const [data, setData] = useState({ ...stateData });
 
