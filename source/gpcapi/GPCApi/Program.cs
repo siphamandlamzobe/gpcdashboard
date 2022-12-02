@@ -1,5 +1,5 @@
-using GPCApi.Repository;
-using GPCApi.Repository.DataRepository;
+using GPCApi.Options;
+using GPCApi.ServiceCollectionExtensions;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
@@ -16,24 +16,32 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddControllers();
 
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddDependencyGroup();
 
-builder.Services.AddTransient<IDbContext, DbContext>();
-builder.Services.AddTransient<IServiceReportRepository, ServiceReportRepository>();
+builder.Services.AddEndpointsApiExplorer();
+
+var swaggerOptions = new SwaggerOptions();
+
+builder.Configuration.GetSection(SwaggerOptions.SwaggerOption).Bind(swaggerOptions);
+
+builder.Services.AddServices(builder.Configuration);
 
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwagger(option => { option.RouteTemplate = swaggerOptions.JsonRoute; });
+    app.UseSwaggerUI(option =>
+    {
+        option.SwaggerEndpoint(swaggerOptions.UIEndpoint, swaggerOptions.Description);
+    });
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 
 app.UseCors(MyAllowSpecificOrigins);
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

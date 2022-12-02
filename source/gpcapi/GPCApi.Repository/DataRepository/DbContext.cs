@@ -1,12 +1,12 @@
-﻿using Dapper;
-using System.Data;
+﻿using System.Data;
 using System.Data.SqlClient;
+using Dapper;
 
 namespace GPCApi.Repository.DataRepository;
 
 public class DbContext : IDbContext
 {
-    public IDbConnection DbConnection => new SqlConnection(Environment.GetEnvironmentVariable("GPCDashboardConnection"));
+    public IDbConnection DbConnection => new SqlConnection("Server=gpcdb;Database=GPCDashboard;User=sa;Password=Password@8;"); 
 
     public void Dispose()
     {

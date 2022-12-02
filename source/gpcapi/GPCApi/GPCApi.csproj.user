@@ -2,5 +2,9 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <NameOfLastUsedPublishProfile>F:\2022 Tutorials\FSApplication\gpcdashboard\source\gpcapi\GPCApi\Properties\PublishProfiles\gpcapidashboard - Web Deploy.pubxml</NameOfLastUsedPublishProfile>
+    <ActiveDebugProfile>GPCApi</ActiveDebugProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>
   </PropertyGroup>
 </Project>
