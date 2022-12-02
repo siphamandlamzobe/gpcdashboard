@@ -30,6 +30,7 @@ const ListServiceReports = () => {
 
   useLayoutEffect(() => {
     const getServiceReports = async () => {
+      setIsLoading(true);
       const allServiceReports = await getAllServiceReports();
       if (allServiceReports) {
         allServiceReports.map((report) => {
@@ -41,10 +42,7 @@ const ListServiceReports = () => {
       }
     };
 
-    setIsLoading(true);
-    setTimeout(() => {
-      getServiceReports();
-    }, 1000);
+    getServiceReports();
   }, [setServiceReports]);
 
   useEffect(() => {

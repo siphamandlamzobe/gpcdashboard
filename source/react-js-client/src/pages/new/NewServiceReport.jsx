@@ -6,7 +6,8 @@ const NewServiceReport = () => {
   const navigate = useNavigate();
 
   const onSaveServiceReportHandler = async (report) => {
-    return await saveServiceReportHandler(report, navigate("/serviceReports"));
+    await saveServiceReportHandler(report);
+    navigate("/serviceReports");
   };
 
   const cancelHandler = () => {

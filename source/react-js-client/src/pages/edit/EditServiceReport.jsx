@@ -7,10 +7,8 @@ const EditServiceReport = () => {
   const navigate = useNavigate();
 
   const onEditServiceReportHandler = async (updatedReport) => {
-    return await editServiceReportHandler(
-      updatedReport,
-      navigate("/serviceReports")
-    );
+    await editServiceReportHandler(updatedReport);
+    navigate("/serviceReports");
   };
 
   return (

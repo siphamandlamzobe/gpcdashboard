@@ -15,7 +15,6 @@ const ServiceReportEditForm = (props) => {
 
   const stateData = useParams();
 
-
   const [data, setData] = useState({ ...stateData });
 
   const [serviceTypes, setServiceTypes] = useState([]);

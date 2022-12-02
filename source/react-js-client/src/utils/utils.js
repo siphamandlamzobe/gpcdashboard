@@ -49,20 +49,12 @@ export function searchHandler(query, serviceReportsForSearch) {
   }
 }
 
-export function saveServiceReportHandler(report, navigator) {
+export function saveServiceReportHandler(report) {
   return api.post("/api/serviceReports", report);
-  // .then(() => {
-  //   console.log("nav: ", navigator);
-  //   return navigator;
-  // });
 }
 
-export function editServiceReportHandler(updatedReport, navigator) {
-  return api
-    .put(`/api/serviceReports/${updatedReport.id}`, updatedReport)
-    .then(() => {
-      return navigator;
-    });
+export function editServiceReportHandler(updatedReport) {
+  return api.put(`/api/serviceReports/${updatedReport.id}`, updatedReport);
 }
 
 export function getServiceTypes() {
