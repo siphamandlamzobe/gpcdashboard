@@ -1,6 +1,3 @@
-DROP PROCEDURE [dbo].UpdateServiceReport
-GO
-
 CREATE PROCEDURE [dbo].UpdateServiceReport 
 @id INT,
 @serviceTypeId int,

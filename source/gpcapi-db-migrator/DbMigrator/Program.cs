@@ -1,9 +1,9 @@
-﻿using FluentMigrator.Runner;
+﻿using System.Reflection;
+using FluentMigrator.Runner;
 using FluentMigrator.Runner.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Serilog;
-using System.Reflection;
 
 namespace DbMigrator;
 
@@ -11,11 +11,11 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Debug()
-                .WriteTo.Console()
-                .WriteTo.File("logs/dbMigration.txt", rollingInterval: RollingInterval.Day)
-                .CreateLogger();
+        // Log.Logger = new LoggerConfiguration()
+        //         .MinimumLevel.Debug()
+        //         .WriteTo.Console()
+        //         .WriteTo.File("logs/dbMigration.txt", rollingInterval: RollingInterval.Day)
+        //         .CreateLogger();
 
         var serviceProvider = CreateServices();
 
@@ -23,7 +23,7 @@ public class Program
         // that all resources will be disposed.
         using (var scope = serviceProvider.CreateScope())
         {
-            UpdateDatabase(scope.ServiceProvider);
+            UpdateDatabase(serviceProvider: scope.ServiceProvider);
         }
     }
 
@@ -33,18 +33,18 @@ public class Program
             .AddFluentMigratorCore()
             .ConfigureRunner(rb => rb
                 .AddSqlServer2012()
-                .WithGlobalConnectionString(Environment.GetEnvironmentVariable("GPCDashboardConnection"))
+                .WithGlobalConnectionString("Server=127.0.0.1,1433;Database=GPCDashboard;User=sa;Password=Password@8;")
                 .ScanIn(Assembly.GetExecutingAssembly()).For.Migrations())
             .AddLogging(lb => lb.AddFluentMigratorConsole())
             .AddSingleton<ILoggerProvider, LogFileFluentMigratorLoggerProvider>()
-            .Configure<LogFileFluentMigratorLoggerOptions>(
-                 opt =>
-                 {
-                     opt.ShowElapsedTime = true;
-                     opt.OutputFileName = "logs/dbMigration.sql";
-                     opt.OutputGoBetweenStatements = true;
-                     opt.ShowSql = true;
-                 })
+            // .Configure<LogFileFluentMigratorLoggerOptions>(
+            //      opt =>
+            //      {
+            //          opt.ShowElapsedTime = true;
+            //          opt.OutputFileName = "logs/dbMigration.sql";
+            //          opt.OutputGoBetweenStatements = true;
+            //          opt.ShowSql = true;
+            //      })Environment.GetEnvironmentVariable("GPCDashboardConnection")
             .BuildServiceProvider(false);
     }
 
@@ -52,7 +52,7 @@ public class Program
     {
         var runner = serviceProvider.GetRequiredService<IMigrationRunner>();
         runner.ListMigrations();
-        Log.Information("Migrations running");
+        // Log.Information("Migrations running");
         runner.MigrateUp();
     }
 }

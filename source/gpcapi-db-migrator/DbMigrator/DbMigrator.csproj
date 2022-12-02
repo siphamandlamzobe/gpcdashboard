@@ -5,15 +5,12 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>.</DockerfileContext>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="AddServiceReportStoredProc_202209280949.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="AddColumn_ServiceTypeId_202210072021.sql" />
-    <None Remove="AddServiceReportStoredProc_202209280949.sql" />
     <None Remove="AddServiceTypeTable_202210071520.sql" />
     <None Remove="Add_Proc_GetAllServiceReports.sql" />
     <None Remove="Add_Proc_UpdateServiceReport.sql" />
@@ -51,6 +48,7 @@
     <PackageReference Include="FluentMigrator" Version="3.3.2" />
     <PackageReference Include="FluentMigrator.Runner" Version="3.3.2" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
     <PackageReference Include="Serilog" Version="2.12.0" />
     <PackageReference Include="Serilog.Sinks.Console" Version="4.1.0" />
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
@@ -58,6 +56,18 @@
 
   <ItemGroup>
     <None Include="DbMigrator.sln" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="AddGetServiceReportByIdProc_202209281829.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Update_Column_ServiceReportReview.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Add_Proc_AddServiceReport.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

@@ -1,7 +1,4 @@
-﻿DROP TABLE [dbo].ServiceReport
-GO
-
-CREATE TABLE [dbo].ServiceReport(
+﻿CREATE TABLE [dbo].ServiceReport(
 	Id int identity(1,1) Primary Key,
 	Attendance int not null,
 	SoulsSaved int not null,
