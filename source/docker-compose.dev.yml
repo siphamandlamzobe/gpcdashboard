@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  gpc-reactjs:
+    container_name: gpc-reactjs-dev
+    build:
+      context: ./react-js-client
+      target: development
+    ports:
+      - 3000:3000
+
+  gpcapi-dotnet:
+    container_name: gpcapi
+    build:
+      context: ./gpcapi
+    ports:
+      - "8080:80"
+    depends_on:
+      - gpcdb
+
+  gpcdb:
+    container_name: gpcdb
+    image: mcr.microsoft.com/mssql/server
+    ports:
+      - "1433:1433"
+    environment:
+      MSSQL_SA_PASSWORD: "Password@8"
+      ACCEPT_EULA: "Y"
