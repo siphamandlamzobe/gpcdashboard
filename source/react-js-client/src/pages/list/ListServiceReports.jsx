@@ -30,7 +30,6 @@ const ListServiceReports = () => {
 
   useLayoutEffect(() => {
     const getServiceReports = async () => {
-      setIsLoading(true);
       const allServiceReports = await getAllServiceReports();
       if (allServiceReports) {
         allServiceReports.map((report) => {
@@ -42,11 +41,14 @@ const ListServiceReports = () => {
       }
     };
 
-    getServiceReports();
+    setIsLoading(true);
+    setTimeout(() => {
+      getServiceReports();
+    }, 1000);
   }, [setServiceReports]);
 
   useEffect(() => {
-    const search = async () => {
+    const search = () => {
       const filteredServiceReports = searchHandler(
         query,
         serviceReportsForSearch
