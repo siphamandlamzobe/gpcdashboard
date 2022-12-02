@@ -1,8 +1,9 @@
 import api from "../api/serviceReports";
 
-export async function getAllServiceReports() {
-  const response = await api.get("/api/serviceReports/getall");
-  return response.data;
+export function getAllServiceReports() {
+  return api.get("/api/serviceReports/getall").then((response) => {
+    return response.data;
+  });
 }
 
 export function getSearchParams(searchParams) {
@@ -16,17 +17,13 @@ export function getSearchParams(searchParams) {
 }
 
 export async function getServiceReportById(id) {
-  const response = await api
-    .get(`/api/serviceReports/${id}`)
-    .then((response) => {
-      return response.data;
-    });
-
-  return response;
+  return api.get(`/api/serviceReports/${id}`).then((response) => {
+    return response.data;
+  });
 }
 
-export async function deleteServiceReportHandler(id, serviceReports) {
-  await api.delete(`/api/serviceReports/${id}`);
+export function deleteServiceReportHandler(id, serviceReports) {
+  api.delete(`/api/serviceReports/${id}`);
   const newServiceReportList = serviceReports.filter((report) => {
     return report.id !== id;
   });
@@ -52,21 +49,24 @@ export function searchHandler(query, serviceReportsForSearch) {
   }
 }
 
-export async function saveServiceReportHandler(report, navigator) {
-  await api.post("/api/serviceReports", report).then(() => {
-    return navigator;
-  });
+export function saveServiceReportHandler(report, navigator) {
+  return api.post("/api/serviceReports", report);
+  // .then(() => {
+  //   console.log("nav: ", navigator);
+  //   return navigator;
+  // });
 }
 
-export async function editServiceReportHandler(updatedReport, navigator) {
-  await api
+export function editServiceReportHandler(updatedReport, navigator) {
+  return api
     .put(`/api/serviceReports/${updatedReport.id}`, updatedReport)
     .then(() => {
       return navigator;
     });
 }
 
-export async function getServiceTypes() {
-  const response = await api.get("/api/serviceReports/serviceTypes");
-  return response.data;
+export function getServiceTypes() {
+  return api.get("/api/serviceReports/serviceTypes").then((response) => {
+    return response.data;
+  });
 }
