@@ -7,9 +7,9 @@ const ReportDate = (props) => {
 
   return (
     <div className="flex flex-col w-20 h-20 items-center justify-center bg-black text-white rounded-xl border-white ">
+      <div className="text-base font-bold">{day}</div>
       <div className="text-sm font-bold">{month}</div>
       <div className="text-sm font-bold">{year}</div>
-      <div className="text-base font-bold">{day}</div>
     </div>
   );
 };
