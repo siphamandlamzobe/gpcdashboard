@@ -41,7 +41,7 @@ public class ServiceReportController : ControllerBase
     {
         var serviceReport = await _serviceReportRepository.GetByIdAsync(id);
 
-        if (serviceReport == null)
+       if (serviceReport == null)
         {
             return NotFound("Could not find the service report");
         }

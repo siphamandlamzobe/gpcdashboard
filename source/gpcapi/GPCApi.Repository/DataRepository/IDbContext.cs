@@ -11,4 +11,5 @@ public interface IDbContext : IDisposable
     Task<IEnumerable<T>> QueryAsync<T>(string query, object? param = null, int? commandTimeout = null, CommandType ? commandType = null);
 
     Task<T> QuerySingleAsync<T>(string query, object? param = null, int? commandTimeout = null, CommandType? commandType = null);
+    Task<T> QueryFirstOrDefaultAsync<T>(string query, object? param = null, int? commandTimeout = null, CommandType? commandType = null);
 }

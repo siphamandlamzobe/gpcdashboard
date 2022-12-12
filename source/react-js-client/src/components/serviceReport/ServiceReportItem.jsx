@@ -1,10 +1,11 @@
 import React, { useLayoutEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getServiceReportById } from "../../utils/utils.js";
 import ServiceReportDate from "./ServiceReportDate";
 
 const ServiceReportItem = () => {
   const stateData = useParams();
+  const navigate = useNavigate();
 
   const [data, setData] = useState({ ...stateData });
 
@@ -12,6 +13,10 @@ const ServiceReportItem = () => {
 
   const fullDateHandler = (date) => {
     setFullServiceDate(date);
+  };
+
+  const backHandler = () => {
+    navigate("/serviceReports");
   };
 
   useLayoutEffect(() => {
@@ -34,7 +39,7 @@ const ServiceReportItem = () => {
 
       <div className="p-4 items-center m-8 mx-[20%] w-full max-w-[70%] shadow-3xl min-h-full">
         <div class="grid overflow-hidden grid-cols-3 grid-rows-3 gap-2 h-80">
-          <div class="row-span-2 p-4 h-32 min-h-full min-w-full">
+          <div class="row-span-2 p-2 h-32 min-h-full min-w-full">
             <ServiceReportDate
               serviceDate={data.serviceDate}
               getFullDate={fullDateHandler}
@@ -72,7 +77,7 @@ const ServiceReportItem = () => {
               {data.serviceType}
             </div>
           </div>
-          <div class="col-span-3 rounded-lg p-4 h-32 min-h-full min-w-full">
+          <div class="col-span-3 rounded-lg p-2 h-32 min-h-full min-w-full">
             <span className="flex flex-col text-sm font-normal">
               SERVICE REVIEW
             </span>
@@ -80,6 +85,15 @@ const ServiceReportItem = () => {
               {data.serviceReview}
             </div>
           </div>
+        </div>
+        <div className="flex-none inline-block pt-8">
+          <button
+            type="button"
+            className="border-2 hover:bg-slate-100 rounded-lg p-1 text-black font-normal m-1"
+            onClick={backHandler}
+          >
+            Back
+          </button>
         </div>
       </div>
     </div>

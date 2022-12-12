@@ -41,7 +41,7 @@ public class ServiceReportRepository : IServiceReportRepository
 
     public Task<ServiceReport> GetByIdAsync(int id)
     {
-        return DbContext.QuerySingleAsync<ServiceReport>("GetServiceReportById", new { id = @id }, commandTimeout: CommandTimeout, commandType: CommandType.StoredProcedure);
+        return DbContext.QueryFirstOrDefaultAsync<ServiceReport>("GetServiceReportById", new { id = @id }, commandTimeout: CommandTimeout, commandType: CommandType.StoredProcedure);
     }
 
     public Task UpdateAsync(ServiceReport serviceReport)

@@ -28,4 +28,9 @@ public class DbContext : IDbContext
     {
         return DbConnection.QuerySingleAsync<T>(query, param, null, commandTimeout, commandType);
     }
+
+    public Task<T> QueryFirstOrDefaultAsync<T>(string query, object? param = null, int? commandTimeout = null, CommandType? commandType = null)
+    {
+        return DbConnection.QueryFirstOrDefaultAsync<T>(query, param, null, commandTimeout, commandType);
+    }
 }
