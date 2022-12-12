@@ -7,8 +7,6 @@ namespace GPCApi.Repository.DataRepository;
 public class DbContext : IDbContext
 {
     public IDbConnection DbConnection => new SqlConnection("Server=gpcdb;Database=GPCDashboard;User=sa;Password=Password@8;");
-    //public IDbConnection DbConnection => new SqlConnection(Environment.GetEnvironmentVariable("GPCDashboardConnection"));
-
     public void Dispose()
     {
         DbConnection.Dispose();
