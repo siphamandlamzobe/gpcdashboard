@@ -1,16 +1,23 @@
-# ==== CONFIGURE =====
-FROM node:18-alpine AS development
+FROM node:18-alpine AS builder
 
 WORKDIR /app
 
-COPY . .
-# ==== BUILD =====
+COPY ./package.json /app/package.json
+COPY ./package-lock.json /app/package-lock.json
 
 RUN npm ci 
 
+COPY . .
+
 RUN npm run build
-# ==== RUN =======
+
+FROM nginx:1.25 as production
+ENV NODE_ENV production
+
+COPY --from=builder /app/build /usr/share/nginx/html
+
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 3000
 
-CMD [ "npx", "serve", "build" ]
+CMD ["nginx", "-g", "daemon off;"]
