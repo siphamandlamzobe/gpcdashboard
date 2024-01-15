@@ -3,6 +3,8 @@
   <PropertyGroup>
     <NameOfLastUsedPublishProfile>F:\2022 Tutorials\FSApplication\gpcdashboard\source\gpcapi\GPCApi\Properties\PublishProfiles\gpcapidashboard - Web Deploy.pubxml</NameOfLastUsedPublishProfile>
     <ActiveDebugProfile>GPCApi</ActiveDebugProfile>
+    <Controller_SelectedScaffolderID>ApiControllerEmptyScaffolder</Controller_SelectedScaffolderID>
+    <Controller_SelectedScaffolderCategoryPath>root/Common/Api</Controller_SelectedScaffolderCategoryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>
