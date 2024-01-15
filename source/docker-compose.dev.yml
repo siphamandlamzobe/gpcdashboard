@@ -1,13 +1,23 @@
-version: "3.8"
+networks:
+  gpc-net:
+
+volumes:
+  gpc-vol:
 
 services:
   gpc-reactjs:
     container_name: gpc-reactjs-dev
     build:
       context: ./react-js-client
-      target: development
+      target: production
     ports:
       - 3000:3000
+    networks:
+      - gpc-net
+    volumes:
+      - type: volume
+        source: gpc-vol
+        target: /app
 
   gpcapi-dotnet:
     container_name: gpcapi
@@ -17,6 +27,12 @@ services:
       - "8080:80"
     depends_on:
       - gpcdb
+    networks:
+      - gpc-net
+    volumes:
+      - type: volume
+        source: gpc-vol
+        target: /src
 
   gpcdb:
     container_name: gpcdb
@@ -26,3 +42,5 @@ services:
     environment:
       MSSQL_SA_PASSWORD: "Password@8"
       ACCEPT_EULA: "Y"
+    networks:
+      gpc-net:
