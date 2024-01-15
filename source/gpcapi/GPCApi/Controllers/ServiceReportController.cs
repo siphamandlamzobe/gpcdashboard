@@ -1,9 +1,11 @@
 using GPCApi.Repository;
 using GPCApi.Repository.DataModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GPCApi.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("/api/serviceReports")]
 public class ServiceReportController : ControllerBase
