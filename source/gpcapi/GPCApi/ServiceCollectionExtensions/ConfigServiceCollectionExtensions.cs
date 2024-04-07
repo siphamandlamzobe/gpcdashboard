@@ -1,74 +1,33 @@
-﻿using GPCApi.Options;
-using GPCApi.Repository;
+﻿using GPCApi.Repository;
 using GPCApi.Repository.DataRepository;
+using GPCApi.ServiceCollectionExtensions.Swagger;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.OpenApi.Models;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using System.Text;
 
 namespace GPCApi.ServiceCollectionExtensions;
 
 public static class ConfigServiceCollectionExtensions
 {
-    public static IServiceCollection AddConfig(
-             this IServiceCollection services, IConfiguration config)
-    {
-        return services;
-    }
-
     public static IServiceCollection AddServices(this IServiceCollection services, IConfiguration config)
     {
-        services.Configure<SwaggerOptions>(
-            config.GetSection(SwaggerOptions.SwaggerOption));
+        services.AddSwaggerGen();
 
-        var jwtSettings = new JwtSettings();
-        config.Bind(nameof(jwtSettings), jwtSettings);
-
-        services.AddAuthentication(x =>
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        .AddJwtBearer(options =>
         {
-            x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            x.DefaultForbidScheme = JwtBearerDefaults.AuthenticationScheme;
-            x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-        });
-        //.AddJwtBearer(x =>
-        //{
-        //    x.SaveToken = true;
-        //    x.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
-        //    {
-        //        ValidateIssuerSigningKey = true,
-        //        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtSettings.Secret)),
-        //        ValidateIssuer = false,
-        //        ValidateAudience = false,
-        //        RequireExpirationTime = false,
-        //        ValidateLifetime = true
-        //    };
-        //});
-
-
-        services.AddSwaggerGen(o =>
-        {
-            o.SwaggerDoc("v1", new() { Title = "GPC Api", Version = "v1" });
-
-            o.AddSecurityDefinition("Bearer", new()
+            options.TokenValidationParameters = new TokenValidationParameters
             {
-                Description = "JWT Authorization header using the bearer scheme",
-                Name = "Authorization",
-                In = Microsoft.OpenApi.Models.ParameterLocation.Header,
-                Type = Microsoft.OpenApi.Models.SecuritySchemeType.ApiKey
-            });
-
-            o.AddSecurityRequirement(new()
-            {
-                {
-                    new OpenApiSecurityScheme
-                    {
-                        Reference = new()
-                        {
-                            Type = ReferenceType.SecurityScheme,
-                            Id = "Bearer"
-                        }
-                    },
-                    new string[]{}
-                }
-            });
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                ValidIssuer = config["Jwt:Issuer"],
+                ValidAudience = config["Jwt:Audience"],
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["Jwt:Key"]!))
+            };
         });
 
         return services;
@@ -79,6 +38,7 @@ public static class ConfigServiceCollectionExtensions
     {
         services.AddTransient<IDbContext, DbContext>();
         services.AddTransient<IServiceReportRepository, ServiceReportRepository>();
+        services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
 
         return services;
     }

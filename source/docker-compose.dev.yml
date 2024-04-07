@@ -6,6 +6,7 @@ volumes:
 
 services:
   gpc-reactjs:
+    image: siphamandlamzobe/gpc-reactjs-dev
     container_name: gpc-reactjs-dev
     build:
       context: ./react-js-client
@@ -20,6 +21,7 @@ services:
         target: /app
 
   gpcapi-dotnet:
+    image: siphamandlamzobe/gpcapi
     container_name: gpcapi
     build:
       context: ./gpcapi

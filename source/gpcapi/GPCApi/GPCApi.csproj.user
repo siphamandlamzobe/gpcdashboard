@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <NameOfLastUsedPublishProfile>F:\2022 Tutorials\FSApplication\gpcdashboard\source\gpcapi\GPCApi\Properties\PublishProfiles\gpcapidashboard - Web Deploy.pubxml</NameOfLastUsedPublishProfile>
+    <NameOfLastUsedPublishProfile>C:\Dev\fsa\gpcdashboard\source\gpcapi\GPCApi\Properties\PublishProfiles\IISProfile1.pubxml</NameOfLastUsedPublishProfile>
     <ActiveDebugProfile>GPCApi</ActiveDebugProfile>
     <Controller_SelectedScaffolderID>ApiControllerEmptyScaffolder</Controller_SelectedScaffolderID>
     <Controller_SelectedScaffolderCategoryPath>root/Common/Api</Controller_SelectedScaffolderCategoryPath>
