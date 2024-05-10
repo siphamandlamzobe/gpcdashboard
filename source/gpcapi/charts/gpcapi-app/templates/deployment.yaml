@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gpcapi
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: gpcapi 
+  template:
+    metadata:
+      labels:
+        app: gpcapi
+    spec:
+      containers:
+      - image: siphamandlamzobe/gpcdashboard-api:0.1.0
+        imagePullPolicy: Always
+        name: gpcapi
+        ports:
+        - name: gpcapi
+          containerPort: 4200
