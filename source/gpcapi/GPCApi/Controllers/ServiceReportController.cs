@@ -28,7 +28,7 @@ public class ServiceReportController : ControllerBase
     [HttpPost]
     public async Task<ActionResult> AddServiceReport(ServiceReport serviceReport)
     {
-        if (serviceReport == null)
+        if (serviceReport.Equals(null))
         {
             return BadRequest("Could not add the service report");
         }
@@ -43,7 +43,7 @@ public class ServiceReportController : ControllerBase
     {
         var serviceReport = await _serviceReportRepository.GetByIdAsync(id);
 
-       if (serviceReport == null)
+       if (serviceReport.Equals(null))
         {
             return NotFound("Could not find the service report");
         }
@@ -55,7 +55,7 @@ public class ServiceReportController : ControllerBase
     public async Task<ActionResult> DeleteServiceReportById(int id)
     {
         var serviceReport = await _serviceReportRepository.GetByIdAsync(id);
-        if (serviceReport == null)
+        if (serviceReport.Equals(null))
         {
             return NotFound($"Service report with id = {id} not found");
         }
@@ -75,7 +75,7 @@ public class ServiceReportController : ControllerBase
 
         var serviceReportDto = await _serviceReportRepository.GetByIdAsync(id);
 
-        if (serviceReportDto == null)
+        if (serviceReportDto.Equals(null))
         {
             return NotFound($"Service report with id = {id} not found");
         }
