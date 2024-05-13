@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GPCApi.Repository\GPCApi.Repository.csproj" />
+    <ProjectReference Include="..\GPCApi.Service\GPCApi.Service.csproj" />
   </ItemGroup>
 
 </Project>

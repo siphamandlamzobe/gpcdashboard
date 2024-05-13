@@ -6,6 +6,8 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Text;
+using GPCApi.Repository.Repositories.Users;
+using GPCApi.Service.Users;
 
 namespace GPCApi.ServiceCollectionExtensions;
 
@@ -39,6 +41,8 @@ public static class ConfigServiceCollectionExtensions
         services.AddTransient<IDbContext, DbContext>();
         services.AddTransient<IServiceReportRepository, ServiceReportRepository>();
         services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
+        services.AddTransient<IUserRepository, UserRepository>();
+        services.AddTransient<IUserService, IUserService>();
 
         return services;
     }

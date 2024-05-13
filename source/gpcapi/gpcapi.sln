@@ -4,9 +4,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GPCApi", "GPCApi\GPCApi.csproj", "{BD20344E-3347-41B1-8705-79E423EB6AB3}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GPCApi.Repository", "GPCApi.Repository\GPCApi.Repository.csproj", "{26222BE2-718D-4191-BE49-AD07415D8B41}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GPCApi.Tests", "GPCApi.Tests\GPCApi.Tests.csproj", "{CE1B4CE9-C0EA-4DCE-97D1-4DA728A2BBF0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GPCApi.Service", "GPCApi.Service\GPCApi.Service.csproj", "{95CA43DB-78A8-4F44-84A3-71F99CE8D65C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,5 +32,9 @@ Global
 		{CE1B4CE9-C0EA-4DCE-97D1-4DA728A2BBF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CE1B4CE9-C0EA-4DCE-97D1-4DA728A2BBF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CE1B4CE9-C0EA-4DCE-97D1-4DA728A2BBF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95CA43DB-78A8-4F44-84A3-71F99CE8D65C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95CA43DB-78A8-4F44-84A3-71F99CE8D65C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95CA43DB-78A8-4F44-84A3-71F99CE8D65C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95CA43DB-78A8-4F44-84A3-71F99CE8D65C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
