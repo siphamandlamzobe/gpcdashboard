@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using GPCApi.Service.Auth;
 using GPCApi.Service.Users;
 
-
 namespace GPCApi.Controllers;
 
 [Route("api/[controller]")]
@@ -18,16 +17,29 @@ public class AccountController : ControllerBase
         _userService = userService;
     }
 
-    [HttpPost]
-    public IActionResult Post([FromBody] LoginRequest loginRequest)
+    [HttpPost("login")]
+    public async Task<IActionResult> Login([FromBody] LoginRequest loginRequest)
     {
-        var authenticated = _userService.AuthenticateUser(loginRequest.Email, loginRequest.Password);
+        var authenticated = await _userService.AuthenticateUser(loginRequest.Email, loginRequest.Password);
                 
         if (authenticated)
         {
             return Ok(_authenticationService.GenerateJwtToken(loginRequest.Email));
         }
         
-        return BadRequest("Invalid username/email or password");
+        return BadRequest("Invalid email or password");
+    }
+    
+    [HttpPost("register")]
+    public async Task<IActionResult> Register([FromBody] RegisterRequest registerRequest)
+    {
+        var isUserCreated = await _userService.CreateUser(registerRequest.Email, registerRequest.Password);
+                
+        if (isUserCreated)
+        {
+            return Ok(new { message = "User created successfully" });
+        }
+        
+        return BadRequest("Error Occured");
     }
 }

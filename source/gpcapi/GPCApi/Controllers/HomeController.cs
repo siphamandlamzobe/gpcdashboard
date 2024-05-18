@@ -7,7 +7,7 @@ namespace GPCApi.Controllers
     public class HomeController : ControllerBase
     {
         [HttpGet]
-        public async Task<ActionResult> GetServiceReports()
+        public ActionResult GetServiceReports()
         {
             return Ok(new { message = "live..."});
         }

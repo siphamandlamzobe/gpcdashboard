@@ -1,9 +1,14 @@
+using GPCApi.Options;
 using GPCApi.ServiceCollectionExtensions;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
+var swaggerOptions = new SwaggerOptions();
+
 var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
+
+builder.Configuration.GetSection(SwaggerOptions.SwaggerOption).Bind(swaggerOptions);
 
 builder.Services.AddCors(options =>
 {
@@ -26,8 +31,11 @@ builder.Services.AddServices(builder.Configuration);
 
 var app = builder.Build();
 
-app.UseSwagger();
-app.UseSwaggerUI();
+app.UseSwagger(option => { option.RouteTemplate = swaggerOptions.JsonRoute; });
+app.UseSwaggerUI(option =>
+{
+    option.SwaggerEndpoint(swaggerOptions.UIEndpoint, swaggerOptions.Description);
+});
 
 // app.UseHttpsRedirection();
 

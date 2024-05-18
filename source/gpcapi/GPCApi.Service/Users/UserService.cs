@@ -16,21 +16,21 @@ public class UserService : IUserService
         _userRepository = userRepository;
     }
     
-    public bool CreateUser(string email, string password)
+    public async Task<bool> CreateUser(string email, string password)
     {
-        if (_userRepository.UserExists(email))
+        if (await _userRepository.UserExists(email))
         {
             return false;
         }
         
         var passwordHash = HashPassword(password, out var salt);
         
-        return _userRepository.CreateUser(email, passwordHash, salt);
+        return await _userRepository.CreateUser(email, passwordHash, salt);
     }
     
-    public bool AuthenticateUser(string email, string password)
+    public async Task<bool> AuthenticateUser(string email, string password)
     {
-        var user = _userRepository.GetUserByEmail(email);
+        var user = await _userRepository.GetUserByEmail(email);
 
         if (user == null)
         {

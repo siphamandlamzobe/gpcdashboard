@@ -60,7 +60,7 @@ public class ServiceReportRepository : IServiceReportRepository
 
     public Task<IEnumerable<LUTServiceType>> GetServiceTypeAsync()
     {
-        var query = "SELECT Id, ServiceType FROM LUTServiceType";
+        const string query = @"SELECT Id, ServiceType FROM LUTServiceType";
 
         return DbContext.QueryAsync<LUTServiceType>(query, null, CommandTimeout, CommandType.Text);
     }
